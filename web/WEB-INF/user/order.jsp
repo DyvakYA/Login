@@ -32,12 +32,21 @@
                     <div id="accordion" class="panel-group">
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="#collapse-${orders.key.orderId}-${products.id}" data-parent="#accordion"
-                                       data-toggle="collapse">${products.name} <br> Price: <b>${products.price} uah</b></a>
-                                </h4>
+
+                                <form action="/shop/admin/adminDeleteProduct" method="GET">
+                                    <h4 class="panel-title">
+                                        <INPUT TYPE=hidden NAME=order_id VALUE="${orders.key.orderId}">
+                                        <INPUT TYPE=hidden NAME=product_id VALUE="${products.id}">
+                                        <button class="close" type="submit">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                        <a href="#collapse-${orders.key.orderId}-${products.id}-${orders.key.date}"
+                                           data-parent="#accordion"
+                                           data-toggle="collapse">${products.name}<br> Price: <b>${products.price} uah</b></a>
+                                    </h4>
+                                </form>
                             </div>
-                            <div class="panel-collapse collapse" id="collapse-${orders.key.orderId}-${products.id}">
+                            <div class="panel-collapse collapse" id="collapse-${orders.key.orderId}-${products.id}-${orders.key.date}">
                                 <div class="panel-body">
                                     <p>${products.description}</p>
                                 </div>

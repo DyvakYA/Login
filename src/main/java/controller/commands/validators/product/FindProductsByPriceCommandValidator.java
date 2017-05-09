@@ -17,7 +17,7 @@ public class FindProductsByPriceCommandValidator implements CommandValidator {
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
-        String message = Localization.getInstanse().getLocalizedMessage(request, PRODUCT_ERROR_MSG);
+        String message = Localization.getInstance().getLocalizedMessage(request, PRODUCT_ERROR_MSG);
         
         return CommandValidatorHelper.getInstance().isNullValidate(new String[]{PRICE_FIRST_ATTRIBUTE, PRICE_SECOND_ATTRIBUTE},
                 RESULT_ATTRIBUTE, CommandHelper.getInstance().roleChecker(PRODUCT, request), message, request, response);

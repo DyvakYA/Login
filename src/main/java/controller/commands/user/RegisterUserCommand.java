@@ -32,15 +32,15 @@ public class RegisterUserCommand implements Command {
             User user=new User.Builder()
                     .setName(request.getParameter(USER_NAME_ATTRIBUTE))
                     .setEmail(request.getParameter(USER_EMAIL_ATTRIBUTE))
-                    .setPasswordHash(request.getParameter(USER_PASSWORD_ATTRIBUTE))
+                    .setPasswordHash(request.getParameter(USER_AUTHENTICATE_ATTRIBUTE))
                     .build();
             userService.create(user);
             request.setAttribute(RESULT_ATTRIBUTE,
-                    Localization.getInstanse().
+                    Localization.getInstance().
                             getLocalizedMessage(request, REGISTER_USER_SUCCESSFUL_MSG) + email);
         } else {
             request.setAttribute(RESULT_ATTRIBUTE,
-                    Localization.getInstanse().
+                    Localization.getInstance().
                             getLocalizedMessage(request, REGISTER_USER_ERROR_MSG) + email);
         }
         return INDEX;

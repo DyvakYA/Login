@@ -24,34 +24,37 @@ public class OrderService implements OrderServiceable {
     }
 
     public List<Order> getAll() {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        OrderDao orderDao = daoFactory.createOrderDao(connection);
-        return orderDao.findAll();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            OrderDao orderDao=daoFactory.createOrderDao(connection);
+            return orderDao.findAll();
+        }
     }
 
     public void create(Order order) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        OrderDao orderDao = daoFactory.createOrderDao(connection);
-        orderDao.create(order);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            OrderDao orderDao=daoFactory.createOrderDao(connection);
+            orderDao.create(order);
+            connection.commitTransaction();
+        }
     }
 
     public void update(Order order, int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        OrderDao orderDao = daoFactory.createOrderDao(connection);
-        orderDao.update(order, id);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            OrderDao orderDao=daoFactory.createOrderDao(connection);
+            orderDao.update(order, id);
+            connection.commitTransaction();
+        }
     }
 
     public void delete(int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        OrderDao orderDao = daoFactory.createOrderDao(connection);
-        orderDao.delete(id);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            OrderDao orderDao=daoFactory.createOrderDao(connection);
+            orderDao.delete(id);
+            connection.commitTransaction();
+        }
     }
-
 }

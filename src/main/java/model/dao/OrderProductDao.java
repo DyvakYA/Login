@@ -17,4 +17,7 @@ public interface OrderProductDao extends GenericDao<OrderProduct> {
     void deleteProductFromOrder(int orderId, int productId);
 
     Optional<OrderProduct> findOrderProductByOrderIdAndProductId(int orderId, int productId);
+
+
 }
+

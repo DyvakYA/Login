@@ -32,7 +32,7 @@ public class UpdateProductCommand implements Command {
                 .setPrice(Integer.parseInt(request.getParameter(PRODUCT_PRICE_ATTRIBUTE)))
                 .build();
         productService.update(product, Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)));
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_PRODUCT_SUCCESSFUL_MSG));
         request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, productService.getAll());
         return ADMIN_PRODUCT_DESTINATION_PAGE;

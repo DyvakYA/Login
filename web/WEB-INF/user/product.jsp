@@ -70,7 +70,7 @@
                         <h4>Price: <b>${products.price} uah</b></h4>
                              <div class="cart-item-info much">
                                  <h4>Количество:<input type="text" value="1" name="quantity" size="10"></h4>
-                            </div></br>
+                            </div>
                             <input type=hidden name="product_id" VALUE="${products.id}">
                             <button type="submit" class="btn btn-success btn-default">
                                 <i class="fa"><fmt:message key="AddToOrder"/></i>

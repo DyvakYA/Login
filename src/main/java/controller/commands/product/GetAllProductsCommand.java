@@ -23,6 +23,7 @@ public class GetAllProductsCommand implements Command {
             throws IOException {
 
         request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, productService.getAll());
-        return CommandHelper.getInstance().roleChecker(PRODUCT, request);
+        return CommandHelper.getInstance()
+                .roleChecker(PRODUCT, request);
     }
 }

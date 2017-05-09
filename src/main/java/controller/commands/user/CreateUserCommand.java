@@ -29,12 +29,12 @@ public class CreateUserCommand implements Command {
         User user = new User.Builder()
                 .setName(request.getParameter(USER_NAME_ATTRIBUTE))
                 .setEmail(request.getParameter(USER_EMAIL_ATTRIBUTE))
-                .setPasswordHash(request.getParameter(USER_PASSWORD_ATTRIBUTE))
+                .setPasswordHash(request.getParameter(USER_AUTHENTICATE_ATTRIBUTE))
                 .setAdmin(Boolean.parseBoolean(request.getParameter(USER_ADMIN_ATTRIBUTE)))
                 .setBlocked(Boolean.parseBoolean(request.getParameter(USER_BLOCKED_ATTRIBUTE)))
                 .build();
         userService.create(user);
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, CREATE_USER_SUCCESSFUL_MSG));
         request.setAttribute(USERS_LIST_ATTRIBUTE, userService.getAll());
         return ADMIN_USERS_DESTINATION_PAGE;

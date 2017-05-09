@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Order {
 
-    private Integer orderId;
+    private int orderId;
     private String orderStatus;
     private Date date;
 
     public static class Builder {
         Order instance = new Order();
 
-        public Builder setOrderId(Integer id) {
+        public Builder setOrderId(int id) {
             instance.orderId = id;
             return this;
         }
@@ -31,11 +31,11 @@ public class Order {
         }
     }
 
-    public Integer getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 
@@ -60,16 +60,18 @@ public class Order {
         if (this == o) return true;
         if (!(o instanceof Order)) return false;
 
-        Order order = (Order) o;
+        Order order=(Order) o;
 
-        if (orderId != null ? !orderId.equals(order.orderId) : order.orderId != null) return false;
-        return orderStatus != null ? orderStatus.equals(order.orderStatus) : order.orderStatus == null;
+        if (orderId != order.orderId) return false;
+        if (orderStatus != null ? !orderStatus.equals(order.orderStatus) : order.orderStatus != null) return false;
+        return date != null ? date.equals(order.date) : order.date == null;
     }
 
     @Override
     public int hashCode() {
-        int result = orderId != null ? orderId.hashCode() : 0;
-        result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
+        int result=orderId;
+        result=31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
+        result=31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 

@@ -20,9 +20,10 @@ public class GetAllUserOrdersCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         HttpSession session=request.getSession();
         User user=(User) session.getAttribute(USER_SESSION_ATTRIBUTE);
-        CommandHelper.getInstance().ForUserOrderDestinationPage(request, user.getId() );
+        CommandHelper.getInstance().makeOrdersListForUserOrderDestinationPage(request, user.getId() );
         return USER_ORDER_DESTINATION_PAGE;
     }
 }

@@ -31,7 +31,7 @@ public class CreateUserOrderCommand implements Command {
                 .setOrderId(Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)))
                 .build();
         userOrderService.create(userOrder);
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, CREATE_USER_ORDER_SUCCESSFUL_MSG));
         request.setAttribute(USER_ORDERS_LIST_ATTRIBUTE, userOrderService.getAll());
         return USER_ORDER_DESTINATION_PAGE;

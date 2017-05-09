@@ -31,7 +31,7 @@ public class UpdateOrderProductCommand implements Command {
                 .setProductId(Integer.valueOf(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
                 .build();
         orderProductsService.update(orderProduct, Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)));
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_ORDER_PRODUCTS_SUCCESSFUL_MSG));
         request.setAttribute(ORDER_PRODUCTS_LIST_ATTRIBUTE, orderProductsService.getAll());
         return ORDER_PRODUCT_DESTINATION_PAGE;

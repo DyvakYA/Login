@@ -17,7 +17,6 @@ public interface Command {
      * @return	The path of view page or REDIRECTED constant in case of response.sendRedirect was performed in command
      * @throws IOException in case of troubles with redirect
      */
-    String execute(HttpServletRequest request,
-                   HttpServletResponse response)
+    String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException;
 }

@@ -26,6 +26,7 @@ public class FindProductsByNameCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         if (!new FindProductsByNameCommandValidator().validate(request, response)) {
             return REDIRECTED;
         }

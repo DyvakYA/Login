@@ -16,6 +16,11 @@ import static model.constants.MsgHolder.DELETE_ORDER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ORDER;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ *
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class DeleteOrderCommand implements Command {
 
     private OrderService orderService=OrderService.getInstance();
@@ -24,15 +29,13 @@ public class DeleteOrderCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-
         if (!new DeleteOrderCommandValidator().validate(request, response)) {
             return REDIRECTED;
         }
-        int id= Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE));
-        orderService.delete(id);
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        orderService.delete(Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE)));
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, DELETE_ORDER_SUCCESSFUL_MSG));
-        CommandHelper.getInstance().ForAdminOrderDestinationPage(request);
+        CommandHelper.getInstance().makeOrdersListForAdminOrderDestinationPage(request);
         return CommandHelper.getInstance().roleChecker(ORDER, request);
     }
 }

@@ -11,12 +11,20 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static model.constants.AttributesHolder.RESULT_ATTRIBUTE;
+import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
+import static model.constants.MsgHolder.ACCESS_DENIED;
+import static model.constants.MsgHolder.USER_NOT_AUTHORIZED;
+import static model.constants.UrlHolder.ADMIN;
 import static model.constants.UrlHolder.INDEX;
+import static model.constants.UrlHolder.USER;
 
 public class AuthFilter implements Filter {
 
     private static final Logger logger=Logger.getLogger(AuthFilter.class);
 
+    /**
+     * There is no need to implement the method
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -36,32 +44,36 @@ public class AuthFilter implements Filter {
 
     private boolean isAuthorize(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
-        User user=(User) session.getAttribute("user");
+        User user=(User) session.getAttribute(USER_SESSION_ATTRIBUTE);
         String uri=request.getRequestURI();
         if (user == null) {
-            logger.info("User not authorized");
+            logger.info(USER_NOT_AUTHORIZED);
             request.setAttribute(RESULT_ATTRIBUTE,
-                    Localization.getInstanse().getLocalizedMessage
-                            (request, "UserNotAuthorized"));
+                    Localization.getInstance().getLocalizedMessage
+                            (request, USER_NOT_AUTHORIZED));
             request.getRequestDispatcher(INDEX).forward(request, response);
             return false;
         }
 
-        if (((user.isAdmin() == true) & (uri.startsWith("/shop/user")))
-                || ((user.isAdmin() == false) & (uri.startsWith("/shop/admin"))
-                || (user.isBlocked() == true))) {
-            logger.info("Access Denied");
+        if(((user.isAdmin()) && (uri.startsWith(USER)))
+                || ((!user.isAdmin()) && (uri.startsWith(ADMIN))
+                || (user.isBlocked()))) {
+            logger.info(ACCESS_DENIED);
             request.setAttribute(RESULT_ATTRIBUTE,
-                    Localization.getInstanse().getLocalizedMessage
-                            (request, "AccessDenied"));
+                    Localization.getInstance().getLocalizedMessage
+                            (request, ACCESS_DENIED));
             request.getRequestDispatcher(INDEX).forward(request, response);
             return false;
         }
         return true;
     }
 
+    /**
+     *  There is no need to implement the method
+     */
     @Override
     public void destroy() {
+        throw new UnsupportedOperationException();
     }
 }
 

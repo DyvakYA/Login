@@ -19,9 +19,9 @@ public class AdminGetAllUsersCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         List<User> users=userService.getAll();
         request.setAttribute(USERS_LIST_ATTRIBUTE, users);
         return ADMIN_USERS_DESTINATION_PAGE;
     }
-
 }

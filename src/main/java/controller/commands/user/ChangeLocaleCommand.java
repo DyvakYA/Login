@@ -31,8 +31,7 @@ public class ChangeLocaleCommand implements Command {
         String destinationPage=INDEX;
             if (user == null) {
                 setLocalAttribute(request, session);
-            }
-            if (user != null) {
+            }else if (user != null) {
                 setLocalAttribute(request, session);
                 destinationPage=CommandHelper.getInstance().isAdmin(request, destinationPage, user);
                 destinationPage=CommandHelper.getInstance().isUser(request, destinationPage, user);

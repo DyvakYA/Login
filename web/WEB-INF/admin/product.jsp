@@ -3,10 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page errorPage="/WEB-INF/error/errorPage.jsp" %>
-<c:set var="ADMIN_GET_ALL_PRODUCTS" value="<%=UrlHolder.ADMIN_GET_ALL_PRODUCTS%>" />
+<c:set var="ADMIN_GET_ALL_PRODUCTS" value="<%=UrlHolder.ADMIN_GET_ALL_PRODUCTS_POST%>" />
 <c:set var="ADMIN_CREATE_PRODUCT" value="<%=UrlHolder.ADMIN_CREATE_PRODUCT%>" />
 <c:set var="ADMIN_UPDATE_PRODUCT" value="<%=UrlHolder.ADMIN_UPDATE_PRODUCT%>" />
-<c:set var="ADMIN_DELETE_PRODUCT" value="<%=UrlHolder.ADMIN_DELETE_PRODUCT%>" />
+<c:set var="ADMIN_DELETE_PRODUCT" value="<%=UrlHolder.ADMIN_DELETE_PRODUCT_POST%>" />
 <jsp:include page="../elem/head.jsp"/>
 <body>
 <jsp:include page="../elem/admin-header.jsp"/>

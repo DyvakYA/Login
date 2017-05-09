@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static model.constants.AttributesHolder.*;
 import static model.constants.MsgHolder.CREATE_USER_ORDER_SUCCESSFUL_MSG;
+import static model.constants.MsgHolder.USER_NOT_AUTHORIZED;
 import static model.constants.UrlHolder.INDEX;
 import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
 
@@ -28,7 +29,7 @@ import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
  */
 public class UserAddProductToOrderCommand implements Command {
 
-    private OrderService orderService=OrderService.getInstance();
+        private OrderService orderService=OrderService.getInstance();
     private UserOrderService userOrderService=UserOrderService.getInstance();
     private OrderProductService orderProductService=OrderProductService.getInstance();
 
@@ -42,14 +43,16 @@ public class UserAddProductToOrderCommand implements Command {
 
         if (user == null) {
             request.setAttribute(RESULT_ATTRIBUTE,
-                    Localization.getInstanse().getLocalizedMessage
-                            (request, "UserNotAuthorized"));
+                    Localization.getInstance().getLocalizedMessage
+                            (request, USER_NOT_AUTHORIZED));
             return INDEX;
         }
+
         else {
+
             if(session.getAttribute(ORDER_ID_ATTRIBUTE) == null){
                 Order order=new Order.Builder()
-                        .setOrderStatus("started")
+                        .setOrderStatus(STARTED)
                         .setDate(new Date())
                         .build();
                 orderService.create(order);
@@ -65,18 +68,21 @@ public class UserAddProductToOrderCommand implements Command {
                         .setQuantity(Integer.parseInt(request.getParameter(QUANTITY)))
                         .build();
                 orderProductService.create(orderProduct);
-                request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+                request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                         .getLocalizedMessage(request, CREATE_USER_ORDER_SUCCESSFUL_MSG));
             }
+
             if (session.getAttribute(ORDER_ID_ATTRIBUTE) != null) {
                 Optional<OrderProduct> orderProductFromBase=orderProductService.getOrderProductByOrderIdAndProductId(
                         Integer.parseInt(String.valueOf(session.getAttribute(ORDER_ID_ATTRIBUTE))),
                         Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)));
+
                 if (orderProductFromBase.isPresent()) {
                     OrderProduct orderProduct = orderProductFromBase.get();
                     orderProduct.setQuantity(orderProduct.getQuantity()+Integer.parseInt(request.getParameter(QUANTITY)));
                     orderProductService.update(orderProduct,orderProduct.getId());
                 }
+
                 if (!orderProductFromBase.isPresent()) {
                     OrderProduct orderProduct=new OrderProduct.Builder()
                             .setOrderId(Integer.parseInt(String.valueOf(session.getAttribute(ORDER_ID_ATTRIBUTE))))
@@ -84,13 +90,13 @@ public class UserAddProductToOrderCommand implements Command {
                             .setQuantity(Integer.parseInt(request.getParameter(QUANTITY)))
                             .build();
                     orderProductService.create(orderProduct);
-                    request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+                    request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                             .getLocalizedMessage(request, CREATE_USER_ORDER_SUCCESSFUL_MSG));
                 }
             }
-
         }
-        CommandHelper.getInstance().ForUserOrderDestinationPage(request, user.getId());
+
+        CommandHelper.getInstance().makeOrdersListForUserOrderDestinationPage(request, user.getId());
         return USER_ORDER_DESTINATION_PAGE;
     }
 }

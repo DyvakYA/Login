@@ -5,12 +5,15 @@ import model.dao.exception.DAOException;
 import model.entities.Order;
 import model.entities.UserOrder;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static model.constants.AttributesHolder.*;
+import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
 public class JdbcUserOrderDao implements UserOrderDao {
 
@@ -27,12 +30,7 @@ public class JdbcUserOrderDao implements UserOrderDao {
             "WHERE user_id=?";
     private static final String DELETE_USER_ORDERS_QUERY="DELETE FROM user_orders WHERE user_id=?";
 
-    private static final String SQL_EXCEPTION="SQLException";
-
     private Connection connection;
-
-    public JdbcUserOrderDao() {
-    }
 
     JdbcUserOrderDao(Connection connection) {
         this.connection=connection;
@@ -47,9 +45,9 @@ public class JdbcUserOrderDao implements UserOrderDao {
         Optional<UserOrder> routeStops=Optional.empty();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_USER_ORDER_WHERE_USER_ID)) {
             query.setInt(1, id);
-            ResultSet result=query.executeQuery();
-            if (result.next()) {
-                routeStops=Optional.of(getUserOrderFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                routeStops=Optional.of(ResultSetExtractor.getInstance().getUserOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -61,9 +59,9 @@ public class JdbcUserOrderDao implements UserOrderDao {
     public List<UserOrder> findAll() {
         List<UserOrder> userOrders=new ArrayList<>();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_USER_ORDERS)) {
-            ResultSet result=query.executeQuery();
-            while (result.next()) {
-                userOrders.add(getUserOrderFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                userOrders.add(ResultSetExtractor.getInstance().getUserOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -76,20 +74,15 @@ public class JdbcUserOrderDao implements UserOrderDao {
         List<Order> orders=new ArrayList<>();
         try (PreparedStatement query=connection.prepareStatement(SELECT_ORDERS_FOR_USER_BY_ID)) {
             query.setInt(1, id);
-            ResultSet rs=query.executeQuery();
-            while (rs.next()) {
-                orders.add(new Order.Builder()
-                        .setOrderId(rs.getInt(ORDER_ID_ATTRIBUTE))
-                        .setOrderStatus(rs.getString(ORDER_STATUS_ATTRIBUTE))
-                        .setDate(rs.getDate(ORDER_DATE_ATTRIBUTE))
-                        .build());
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                orders.add(ResultSetExtractor.getInstance().getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
         return orders;
     }
-
 
     @Override
     public void create(UserOrder userOrder) {
@@ -122,13 +115,4 @@ public class JdbcUserOrderDao implements UserOrderDao {
             throw new DAOException(SQL_EXCEPTION, e);
         }
     }
-
-    private UserOrder getUserOrderFromResultSet(ResultSet rs) throws SQLException {
-        UserOrder userOrder = new UserOrder.Builder()
-                    .setUserId(rs.getInt(USER_ID_ATTRIBUTE))
-                    .setOrderId(rs.getInt(ORDER_ID_ATTRIBUTE))
-                    .build();
-        return userOrder;
-    }
-
 }

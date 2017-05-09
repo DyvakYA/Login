@@ -21,12 +21,12 @@ public class DeleteProductCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         if (!new DeleteProductCommandValidator().validate(request, response)) {
             return REDIRECTED;
         }
-        int id= Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE));
-        productService.delete(id);
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        productService.delete(Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)));
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, DELETE_PRODUCT_SUCCESSFUL_MSG));
         request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, productService.getAll());
         return ADMIN_PRODUCT_DESTINATION_PAGE;

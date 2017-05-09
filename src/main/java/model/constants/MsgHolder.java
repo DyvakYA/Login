@@ -1,7 +1,10 @@
 package model.constants;
 
 /**
- * Created by User on 4/3/2017.
+ * This class is a constant holder for messages,
+ * used in java classes and jsp view pages.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class MsgHolder {
 
@@ -27,4 +30,11 @@ public class MsgHolder {
 
     public static final String LOGIN_USER_SUCCESSFUL_MSG = "LoginUserSuccessful";
     public static final String REGISTER_USER_SUCCESSFUL_MSG = "RegisterUserSuccessful";
+
+    public static final String USER_NOT_AUTHORIZED="UserNotAuthorized";
+    public static final String ACCESS_DENIED="Access Denied";
+
+    private MsgHolder(){
+
+    }
 }

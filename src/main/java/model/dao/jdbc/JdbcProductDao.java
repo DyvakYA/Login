@@ -4,15 +4,12 @@ import model.dao.ProductDao;
 import model.dao.exception.DAOException;
 import model.entities.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static model.constants.AttributesHolder.*;
+import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
 public class JdbcProductDao implements ProductDao {
 
@@ -28,14 +25,7 @@ public class JdbcProductDao implements ProductDao {
             "SET product_name=?, product_description=?, product_price=? WHERE product_id=?";
     private static final String DELETE_PRODUCT_QUERY="DELETE FROM products WHERE product_id=?";
 
-
-    private static final String SQL_EXCEPTION="SQLException";
-
-
     private Connection connection;
-
-    public JdbcProductDao() {
-    }
 
     JdbcProductDao(Connection connection) {
         this.connection=connection;
@@ -50,9 +40,9 @@ public class JdbcProductDao implements ProductDao {
         Optional<Product> product=Optional.empty();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS_WHERE_PRODUCT_ID)) {
             query.setInt(1, id);
-            ResultSet result=query.executeQuery();
-            if (result.next()) {
-                product=Optional.of(getProductFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                product=Optional.of(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -64,9 +54,9 @@ public class JdbcProductDao implements ProductDao {
     public List<Product> findAll() {
         List<Product> products=new ArrayList<>();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS)) {
-            ResultSet result=query.executeQuery();
-            while (result.next()) {
-                products.add(getProductFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                products.add(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -81,9 +71,9 @@ public class JdbcProductDao implements ProductDao {
             PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS_BY_PRICE);
             query.setString(1, String.valueOf(first));
             query.setString(2, String.valueOf(second));
-            ResultSet result=query.executeQuery();
-            while (result.next()) {
-                products.add(getProductFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                products.add(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -97,9 +87,9 @@ public class JdbcProductDao implements ProductDao {
         try {
             PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS_BY_NAME);
             query.setString(1, "%" + name + "%");
-            ResultSet result=query.executeQuery();
-            while (result.next()) {
-                products.add(getProductFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                products.add(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -140,15 +130,5 @@ public class JdbcProductDao implements ProductDao {
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
-    }
-
-    private Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
-        Product product=new Product.Builder()
-                .setId(resultSet.getInt(PRODUCT_ID_ATTRIBUTE))
-                .setName(resultSet.getString(PRODUCT_NAME_ATTRIBUTE))
-                .setDescription(resultSet.getString(PRODUCT_DESCRIPTION_ATTRIBUTE))
-                .setPrice(resultSet.getInt(PRODUCT_PRICE_ATTRIBUTE))
-                .build();
-        return product;
     }
 }

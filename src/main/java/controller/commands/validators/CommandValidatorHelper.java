@@ -1,5 +1,7 @@
 package controller.commands.validators;
 
+import controller.exception.ApplicationException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +9,12 @@ import java.io.IOException;
 
 public class CommandValidatorHelper {
 
-    public static CommandValidatorHelper instance = new CommandValidatorHelper();
+    private static final String NULL_VALIDATION_ERROR="Null validation error";
+    private static final String EMPTY_VALIDATION_ERROR="Empty validation error";
+    private static final String MATCHES_VALIDATION_ERROR="Matches validation error";
+
+
+    public static final CommandValidatorHelper instance = new CommandValidatorHelper();
 
     private CommandValidatorHelper() {
     }
@@ -29,7 +36,7 @@ public class CommandValidatorHelper {
                     request.getRequestDispatcher(destPage).forward(request, response);
                     break;
                 } catch (ServletException | IOException e) {
-                    e.printStackTrace();
+                    throw new ApplicationException(NULL_VALIDATION_ERROR, e);
                 }
             }
         }
@@ -49,8 +56,7 @@ public class CommandValidatorHelper {
                     request.getRequestDispatcher(destPage).forward(request, response);
                     break;
                 } catch (ServletException | IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    throw new ApplicationException(EMPTY_VALIDATION_ERROR, e);
                 }
             }
         }
@@ -69,11 +75,9 @@ public class CommandValidatorHelper {
             try {
                 request.getRequestDispatcher(destPage).forward(request, response);
             } catch (ServletException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                throw new ApplicationException(MATCHES_VALIDATION_ERROR, e);
             }
         }
-
         return result;
     }
 }

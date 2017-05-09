@@ -24,49 +24,53 @@ public class ProductService implements ProductServiceable {
     }
 
     public List<Product> getAll() {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        ProductDao productDao = daoFactory.createProductDao(connection);
-        List<Product> as = productDao.findAll();
-        connection.close();
-        return as;
+        try (DaoConnection connection=daoFactory.getConnection()) {
+            connection.beginTransaction();
+            ProductDao productDao=daoFactory.createProductDao(connection);
+            return productDao.findAll();
+        }
     }
 
     public void create(Product product) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        ProductDao productDao = daoFactory.createProductDao(connection);
-        productDao.create(product);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            ProductDao productDao=daoFactory.createProductDao(connection);
+            productDao.create(product);
+            connection.commitTransaction();
+        }
     }
 
     public void update(Product product, int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        ProductDao productDao = daoFactory.createProductDao(connection);
-        productDao.update(product, id);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            ProductDao productDao=daoFactory.createProductDao(connection);
+            productDao.update(product, id);
+            connection.commitTransaction();
+        }
     }
 
     public void delete(int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        ProductDao productDao = daoFactory.createProductDao(connection);
-        productDao.delete(id);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            ProductDao productDao=daoFactory.createProductDao(connection);
+            productDao.delete(id);
+            connection.commitTransaction();
+        }
     }
 
     public List<Product> getProductsByPrice(int first, int second) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        ProductDao productDao = daoFactory.createProductDao(connection);
-        return productDao.findProductsByPrice(first, second);
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            ProductDao productDao=daoFactory.createProductDao(connection);
+            return productDao.findProductsByPrice(first, second);
+        }
     }
 
     public List<Product> getProductsByName(String name) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        ProductDao productDao = daoFactory.createProductDao(connection);
-        return productDao.findProductsByName(name);
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            ProductDao productDao=daoFactory.createProductDao(connection);
+            return productDao.findProductsByName(name);
+        }
     }
 }

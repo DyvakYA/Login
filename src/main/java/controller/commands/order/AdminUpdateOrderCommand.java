@@ -16,6 +16,11 @@ import static model.constants.MsgHolder.UPDATE_ORDER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ADMIN_ORDER_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ *
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class AdminUpdateOrderCommand implements Command {
 
     private OrderService orderService=OrderService.getInstance();
@@ -23,17 +28,17 @@ public class AdminUpdateOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         if (!new UpdateOrderCommandValidator().validate(request, response)) {
-            response.sendRedirect(request.getContextPath());
             return REDIRECTED;
         }
         Order order= new Order.Builder()
                 .setOrderStatus(request.getParameter(ORDER_STATUS_ATTRIBUTE))
                 .build();
         orderService.update(order, Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)));
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_ORDER_SUCCESSFUL_MSG));
-        CommandHelper.getInstance().ForAdminOrderDestinationPage(request);
+        CommandHelper.getInstance().makeOrdersListForAdminOrderDestinationPage(request);
         return ADMIN_ORDER_DESTINATION_PAGE;
     }
 }

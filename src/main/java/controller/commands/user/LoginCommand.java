@@ -36,12 +36,12 @@ public class LoginCommand implements Command {
         String result;
         String destinationPage=INDEX;
         String email=request.getParameter(USER_EMAIL_ATTRIBUTE);
-        String password=request.getParameter(USER_PASSWORD_ATTRIBUTE);
+        String password=request.getParameter(USER_AUTHENTICATE_ATTRIBUTE);
         if (email != null && password != null) {
             Optional<User> user=userService.login(email, password);
             if (user.isPresent()) {
                 logger.info(String.format(USER_LOGGED_IN, user.get().getEmail(), user.get().getId()));
-                result=Localization.getInstanse()
+                result=Localization.getInstance()
                         .getLocalizedMessage(request, LOGIN_USER_SUCCESSFUL_MSG) + user.get().getEmail();
                 request.getSession().setAttribute(USER_SESSION_ATTRIBUTE, user.get());
                 destinationPage=CommandHelper.getInstance()
@@ -49,7 +49,7 @@ public class LoginCommand implements Command {
                 destinationPage=CommandHelper.getInstance()
                         .isUser(request, destinationPage, user.get());
             } else {
-                result=Localization.getInstanse()
+                result=Localization.getInstance()
                         .getLocalizedMessage(request, LOGIN_USER_ERROR_MSG);
             }
             request.setAttribute(RESULT_ATTRIBUTE, result);

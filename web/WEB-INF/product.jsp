@@ -67,10 +67,8 @@
                             <form method="get" action="${ADD_TO_ORDER}">
                             <h3><a href="">${products.name}</a></h3>
                             <p>${products.description}</p>
-                            <h4>Price: <b>${products.price} uah</b></h4>
-                            <div class="cart-item-info much">
-                                <h4>Количество:</h4><input type="text" value="1" name="quantity" size="10">
-                            </div></br>
+                            <h4>Price: <b>${products.price} uah</b><br>
+                            Количество:<input type="text" value="1" name="quantity" size="5"></h4>
                                 <INPUT TYPE=hidden NAME=product_id VALUE="${products.id}">
                                 <button type="submit" class="btn btn-success btn-default">
                                     <i class="fa"><fmt:message key="AddToOrder"/></i>

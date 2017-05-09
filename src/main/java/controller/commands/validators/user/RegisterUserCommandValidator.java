@@ -17,21 +17,21 @@ import static model.constants.UrlHolder.INDEX;
 public class RegisterUserCommandValidator implements CommandValidator {
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    private static final String PASSWORD_PATTERN = "^[a-z0-9_-]{6,18}$";
+    private static final String AUTHENTICATE_PATTERN = "^[a-z0-9_-]{6,18}$";
     private static final String SERVLET_EXCEPTION = "ForwardRequestServletException";
 
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
         boolean result = true;
-        String password = request.getParameter(USER_PASSWORD_ATTRIBUTE);
-        String confirmPassword = request.getParameter(CONFIRM_PASSWORD_ATTRIBUTE);
+        String password = request.getParameter(USER_AUTHENTICATE_ATTRIBUTE);
+        String confirmPassword = request.getParameter(CONFIRM_AUTHENTICATE_ATTRIBUTE);
         String email = request.getParameter(USER_EMAIL_ATTRIBUTE);
 
-        Localization localization = Localization.getInstanse();
-        String passwordDifferMessage = localization.getLocalizedMessage(request, PASSWORD_DIFFER_ERROR_MSG);
+        Localization localization = Localization.getInstance();
+        String passwordDifferMessage = localization.getLocalizedMessage(request, AUTHENTICATE_DIFFER_ERROR_MSG);
         String badLoginMessage = localization.getLocalizedMessage(request, NOT_VALID_LOGIN_ERROR_MSG);
-        String badPasswordMessage = localization.getLocalizedMessage(request, NOT_VALID_PASSWORD_ERROR_MSG);
+        String badPasswordMessage = localization.getLocalizedMessage(request, NOT_VALID_AUTHENTICATE_ERROR_MSG);
 
         if (!password.equals(confirmPassword)) {
             request.setAttribute(RESULT_ATTRIBUTE, passwordDifferMessage);
@@ -41,7 +41,7 @@ public class RegisterUserCommandValidator implements CommandValidator {
             request.setAttribute(RESULT_ATTRIBUTE, badLoginMessage);
             forward(request, response);
             result = false;
-        } else if (!password.matches(PASSWORD_PATTERN)) {
+        } else if (!password.matches(AUTHENTICATE_PATTERN)) {
             request.setAttribute(RESULT_ATTRIBUTE, badPasswordMessage);
             forward(request, response);
             result = false;

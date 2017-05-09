@@ -13,6 +13,8 @@ import java.sql.SQLException;
  */
 public class JdbcDaoFactory extends DaoFactory {
 
+    public static final String JAVA_COMP_ENV_JDBC_MYDB="java:comp/env/jdbc/mydb";
+
     private Connection connection;
     private static final String DB_URL = "url";
 
@@ -29,7 +31,7 @@ public class JdbcDaoFactory extends DaoFactory {
 //            connection = DriverManager.getConnection(url, dbProps);
 
             InitialContext ic = new InitialContext();
-            dataSource = (DataSource) ic.lookup("java:comp/env/jdbc/mydb");
+            dataSource = (DataSource) ic.lookup(JAVA_COMP_ENV_JDBC_MYDB);
 
         } catch (Exception e) {
             throw new DAOException(e);

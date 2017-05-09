@@ -17,7 +17,7 @@ public class DeleteProductCommandValidator implements CommandValidator {
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
-         String message = Localization.getInstanse().getLocalizedMessage(request, PRODUCT_ERROR_MSG);
+         String message = Localization.getInstance().getLocalizedMessage(request, PRODUCT_ERROR_MSG);
          
         return CommandValidatorHelper.getInstance().isNullValidate(new String[]{PRODUCT_ID_ATTRIBUTE},
                 RESULT_ATTRIBUTE, ADMIN_PRODUCT_DESTINATION_PAGE, message, request, response);

@@ -1,7 +1,10 @@
 package model.constants;
 
 /**
- * Created by User on 4/3/2017.
+ * This class is a constant holder for error messages,
+ * used in java classes and jsp view pages.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class ErrorMsgHolder {
 
@@ -11,12 +14,18 @@ public class ErrorMsgHolder {
     public static final String USER_ERROR_MSG = "UserNotSelected";
     public static final String USER_ORDER_ERROR_MSG = "UserOrderNotSelected";
 
-    public static final String PASSWORD_DIFFER_ERROR_MSG = "NotValidPasswordAndPasswordConfirmationMsg";
+    public static final String AUTHENTICATE_DIFFER_ERROR_MSG= "NotValidPasswordAndPasswordConfirmationMsg";
     public static final String NOT_VALID_LOGIN_ERROR_MSG = "NotValidLogin";
-    public static final String NOT_VALID_PASSWORD_ERROR_MSG = "NotValidPassword";
+    public static final String NOT_VALID_AUTHENTICATE_ERROR_MSG= "NotValidPassword";
 
-    public static final String NOT_VALID_EMPTY_LOGIN_AND_PASSWORD = "NotValidEmptyLoginAndPassword";
+    public static final String NOT_VALID_EMPTY_LOGIN_AND_AUTHENTICATE= "NotValidEmptyLoginAndPassword";
 
     public static final String LOGIN_USER_ERROR_MSG = "AuthenticateUserError";
     public static final String REGISTER_USER_ERROR_MSG = "RegisterUserError";
+
+    public static final String SQL_EXCEPTION="SQLException";
+
+    private ErrorMsgHolder(){
+
+    }
 }

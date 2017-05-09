@@ -16,9 +16,9 @@ public class CreateUserCommandValidator implements CommandValidator {
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
-        String message = Localization.getInstanse().getLocalizedMessage(request, USER_ERROR_MSG);
+        String message = Localization.getInstance().getLocalizedMessage(request, USER_ERROR_MSG);
         
-        return CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{USER_EMAIL_ATTRIBUTE,USER_PASSWORD_ATTRIBUTE},
+        return CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{USER_EMAIL_ATTRIBUTE, USER_AUTHENTICATE_ATTRIBUTE},
                 RESULT_ATTRIBUTE, ADMIN_USERS_DESTINATION_PAGE, message, request, response);
     }
     

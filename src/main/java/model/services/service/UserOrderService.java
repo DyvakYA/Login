@@ -14,17 +14,17 @@ import java.util.List;
  */
 public class UserOrderService implements UserOrderServiceable {
 
-    private DaoFactory daoFactory = DaoFactory.getInstance();
+    private DaoFactory daoFactory=DaoFactory.getInstance();
 
     public List<Order> getOrdersForUser(int user) {
-        DaoConnection connection = daoFactory.getConnection();
+        DaoConnection connection=daoFactory.getConnection();
         connection.beginTransaction();
-        UserOrderDao userOrderDao = daoFactory.createUserOrderDao(connection);
+        UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
         return userOrderDao.findAllOrdersForUser(user);
     }
 
     private static class Holder {
-        static final UserOrderService INSTANCE = new UserOrderService();
+        static final UserOrderService INSTANCE=new UserOrderService();
     }
 
     public static UserOrderService getInstance() {
@@ -32,34 +32,37 @@ public class UserOrderService implements UserOrderServiceable {
     }
 
     public List<UserOrder> getAll() {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserOrderDao userOrderDao = daoFactory.createUserOrderDao(connection);
-        return userOrderDao.findAll();
+        try (DaoConnection connection=daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
+            return userOrderDao.findAll();
+        }
     }
 
     public void create(UserOrder userOrder) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserOrderDao userOrderDao = daoFactory.createUserOrderDao(connection);
-        userOrderDao.create(userOrder);
-        connection.commitTransaction();
+        try (DaoConnection connection=daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
+            userOrderDao.create(userOrder);
+            connection.commitTransaction();
+        }
     }
 
     public void update(UserOrder userOrder, int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserOrderDao userOrderDao = daoFactory.createUserOrderDao(connection);
-        userOrderDao.update(userOrder, id);
-        connection.commitTransaction();
+        try (DaoConnection connection=daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
+            userOrderDao.update(userOrder, id);
+            connection.commitTransaction();
+        }
     }
 
     public void delete(int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserOrderDao transportDao = daoFactory.createUserOrderDao(connection);
-        transportDao.delete(id);
-        connection.commitTransaction();
+        try (DaoConnection connection=daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserOrderDao transportDao=daoFactory.createUserOrderDao(connection);
+            transportDao.delete(id);
+            connection.commitTransaction();
+        }
     }
-
 }

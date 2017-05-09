@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static model.constants.AttributesHolder.*;
+import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
 /**
  * Created by Dyvak on 24.12.2016.
@@ -26,12 +27,7 @@ public class JdbcUserDao implements UserDao {
             "SET user_name=?, email=?, password=?, isAdmin=?, isBlocked=? WHERE user_id=?";
     private static final String DELETE_USER_QUERY="DELETE FROM users WHERE user_id=?";
 
-    private static final String SQL_EXCEPTION="SQLException";
-
     private Connection connection;
-
-    public JdbcUserDao() {
-    }
 
     JdbcUserDao(Connection connection) {
         this.connection=connection;
@@ -46,9 +42,9 @@ public class JdbcUserDao implements UserDao {
         Optional<User> user=Optional.empty();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_USERS_WHERE_USER_ID)) {
             query.setInt(1, id);
-            ResultSet result=query.executeQuery();
-            if (result.next()) {
-                user=Optional.of(getUserFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                user=Optional.of(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -61,9 +57,9 @@ public class JdbcUserDao implements UserDao {
         Optional<User> user=Optional.empty();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_USERS_WHERE_NAME)) {
             query.setString(1, name);
-            ResultSet result=query.executeQuery();
-            if (result.next()) {
-                user=Optional.of(getUserFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                user=Optional.of(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
             }
             return user;
         } catch (SQLException e) {
@@ -76,9 +72,9 @@ public class JdbcUserDao implements UserDao {
         Optional<User> user=Optional.empty();
         try (PreparedStatement query=connection.prepareStatement(SELECT_USER_BY_EMAIL)) {
             query.setString(1, email.toLowerCase());
-            ResultSet result=query.executeQuery();
-            if (result.next()) {
-                user=Optional.of(getUserFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                user=Optional.of(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
             }
             return user;
         } catch (SQLException e) {
@@ -91,9 +87,9 @@ public class JdbcUserDao implements UserDao {
         List<User> users=new ArrayList<>();
         try {
             PreparedStatement query=connection.prepareStatement(SELECT_FROM_USERS);
-            ResultSet result=query.executeQuery();
-            while (result.next()) {
-                users.add(getUserFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                users.add(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -110,7 +106,6 @@ public class JdbcUserDao implements UserDao {
             query.setBoolean(4, user.isAdmin());
             query.setBoolean(5, user.isBlocked());
             query.executeUpdate();
-            query.close();
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
@@ -126,11 +121,9 @@ public class JdbcUserDao implements UserDao {
             query.setBoolean(5, user.isBlocked());
             query.setString(6, String.valueOf(id));
             query.executeUpdate();
-            query.close();
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
-
     }
 
     @Override
@@ -138,21 +131,8 @@ public class JdbcUserDao implements UserDao {
         try (PreparedStatement query=connection.prepareStatement(DELETE_USER_QUERY)) {
             query.setInt(1, id);
             query.executeUpdate();
-            query.close();
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
-    }
-
-    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
-        User user = new User.Builder()
-                    .setId(resultSet.getInt(USER_ID_ATTRIBUTE))
-                    .setName(resultSet.getString(USER_NAME_ATTRIBUTE))
-                    .setEmail(resultSet.getString(USER_EMAIL_ATTRIBUTE))
-                    .setPasswordString(resultSet.getString(USER_PASSWORD_ATTRIBUTE))
-                    .setAdmin(resultSet.getBoolean(USER_ADMIN_ATTRIBUTE))
-                    .setBlocked(resultSet.getBoolean(USER_BLOCKED_ATTRIBUTE))
-                    .build();
-        return user;
     }
 }

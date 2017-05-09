@@ -26,59 +26,65 @@ public class UserService implements UserServiceable {
     }
 
     public Optional<User> login(String email, String password) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        return userDao.getUserByEmail(email)
-                .filter(user -> (user.calcPasswordHash(password))
-                        .equals(user.getPasswordHash()));
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            return userDao.getUserByEmail(email)
+                    .filter(user -> (user.calcPasswordHash(password))
+                            .equals(user.getPasswordHash()));
+        }
     }
 
 
     public List<User> getAll() {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        return userDao.findAll();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            return userDao.findAll();
+        }
     }
 
 
     public Optional<User> getByEmail(String email) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        return userDao.getUserByEmail(email);
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            return userDao.getUserByEmail(email);
+        }
     }
 
     public Optional<User> getById(int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        return userDao.findById(id);
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            return userDao.findById(id);
+        }
     }
 
     public void create(User user) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        userDao.create(user);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            userDao.create(user);
+            connection.commitTransaction();
+        }
     }
 
     public void update(User user, int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        userDao.update(user, id);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            userDao.update(user, id);
+            connection.commitTransaction();
+        }
     }
 
     public void delete(int id) {
-        DaoConnection connection = daoFactory.getConnection();
-        connection.beginTransaction();
-        UserDao userDao = daoFactory.createUserDao(connection);
-        userDao.delete(id);
-        connection.commitTransaction();
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            connection.beginTransaction();
+            UserDao userDao=daoFactory.createUserDao(connection);
+            userDao.delete(id);
+            connection.commitTransaction();
+        }
     }
-
 }

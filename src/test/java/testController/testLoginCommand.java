@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static model.constants.AttributesHolder.USER_EMAIL_ATTRIBUTE;
-import static model.constants.AttributesHolder.USER_PASSWORD_ATTRIBUTE;
+import static model.constants.AttributesHolder.USER_AUTHENTICATE_ATTRIBUTE;
 import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -47,7 +47,7 @@ public class testLoginCommand {
     @Test
     public void whenNullUserRedirectToLogin() throws ServletException, IOException {
         when(request.getParameter(USER_EMAIL_ATTRIBUTE)).thenReturn("");
-        when(request.getParameter(USER_PASSWORD_ATTRIBUTE)).thenReturn("");
+        when(request.getParameter(USER_AUTHENTICATE_ATTRIBUTE)).thenReturn("");
 //        verify(request).getRequestDispatcher("pagePost");
         verify(request).getRequestDispatcher(USER_ORDER_DESTINATION_PAGE);
     }

@@ -26,7 +26,7 @@ public class DeleteOrderProductCommand implements Command {
             return REDIRECTED;
         }
         orderProductsService.delete(Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE)));
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, DELETE_ORDER_PRODUCTS_SUCCESSFUL_MSG));
         request.setAttribute(ORDER_PRODUCTS_LIST_ATTRIBUTE, orderProductsService.getAll());
         return ORDER_PRODUCT_DESTINATION_PAGE;

@@ -32,7 +32,7 @@ public class CreateProductCommand implements Command {
                 .setPrice(Long.parseLong(request.getParameter(PRODUCT_PRICE_ATTRIBUTE)))
                 .build();
         productService.create(product);
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, CREATE_PRODUCT_SUCCESSFUL_MSG));
         request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, productService.getAll());
         return ADMIN_PRODUCT_DESTINATION_PAGE;

@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 import static controller.servlet.CommandHolder.DELIMITER;
+import static controller.servlet.CommandHolder.POST;
 import static model.constants.AttributesHolder.COMMAND_ATTRIBUTE;
 import static model.constants.UrlHolder.REDIRECTED;
 
@@ -53,15 +55,12 @@ public class MainController extends HttpServlet {
 
         String method=getMethod(request);
         String commandKey = getMethod(request) + DELIMITER + getUri(request);
-        if (method.equals("POST")) {
+        if (method.equals(POST)) {
             commandKey=getMethod(request) + DELIMITER + request.getParameter(COMMAND_ATTRIBUTE);
         }
-        System.out.println(commandKey);
-
         Command command=commandHolder.findCommand(commandKey);
         String view=command.execute(request, response);
         if (!isRedirected(view)) {
-            System.out.println(view);
             request.getRequestDispatcher(view).forward(request, response);
         }
     }
@@ -80,11 +79,13 @@ public class MainController extends HttpServlet {
         return REDIRECTED.equals(view);
     }
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);

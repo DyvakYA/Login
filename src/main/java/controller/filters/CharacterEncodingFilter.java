@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  * This class represents character encoding filter.
  * It changes charset encoding of request and response to specified.
  *
- *  @author
+ *  @author dyvakyurii@gmail.com
  */
 public class CharacterEncodingFilter implements Filter {
     private static final String ENCODING = "utf-8";
@@ -28,11 +28,20 @@ public class CharacterEncodingFilter implements Filter {
         chain.doFilter(request,response);
     }
 
+    /**
+     * There is no need to implement the method
+     * @param filterConfig
+     * @throws ServletException
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
+    /**
+     * There is no need to implement the method
+     */
     @Override
     public void destroy() {
+        throw new UnsupportedOperationException();
     }
 }

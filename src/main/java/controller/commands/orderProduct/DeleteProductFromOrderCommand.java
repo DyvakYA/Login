@@ -24,15 +24,16 @@ public class DeleteProductFromOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+
         if (!new DeleteProductCommandValidator().validate(request, response)) {
             return REDIRECTED;
         }
-        int orderId= Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE));
-        int productId= Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE));
-        orderProductService.deleteProductFromOrder(orderId, productId);
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        orderProductService.deleteProductFromOrder(
+                Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE)),
+                Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)));
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, DELETE_PRODUCT_SUCCESSFUL_MSG));
-        CommandHelper.getInstance().ForAdminOrderDestinationPage(request);
+        CommandHelper.getInstance().makeOrdersListForAdminOrderDestinationPage(request);
         return CommandHelper.getInstance().roleChecker(ORDER, request);
     }
 }

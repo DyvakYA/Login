@@ -29,7 +29,6 @@ public class FindProductsByPriceCommand implements Command {
         if (!new FindProductsByPriceCommandValidator().validate(request, response)) {
             return REDIRECTED;
         }
-
         List<Product> products=productService.getProductsByPrice(
                 Integer.parseInt(request.getParameter(PRICE_FIRST_ATTRIBUTE)),
                 Integer.parseInt(request.getParameter(PRICE_SECOND_ATTRIBUTE)));

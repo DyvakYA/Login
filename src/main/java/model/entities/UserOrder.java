@@ -2,18 +2,18 @@ package model.entities;
 
 public class UserOrder {
 
-    private Integer userId;
-    private Integer orderId;
+    private int userId;
+    private int orderId;
 
     public static class Builder {
         UserOrder instance = new UserOrder();
 
-        public Builder setUserId(Integer userId) {
+        public Builder setUserId(int userId) {
             instance.userId = userId;
             return this;
         }
 
-        public Builder setOrderId(Integer orderId) {
+        public Builder setOrderId(int orderId) {
             instance.orderId = orderId;
             return this;
         }
@@ -23,19 +23,19 @@ public class UserOrder {
         }
     }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Integer getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 
@@ -44,16 +44,16 @@ public class UserOrder {
         if (this == o) return true;
         if (!(o instanceof UserOrder)) return false;
 
-        UserOrder that = (UserOrder) o;
+        UserOrder userOrder=(UserOrder) o;
 
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        return orderId != null ? orderId.equals(that.orderId) : that.orderId == null;
+        if (userId != userOrder.userId) return false;
+        return orderId == userOrder.orderId;
     }
 
     @Override
     public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
+        int result=userId;
+        result=31 * result + orderId;
         return result;
     }
 

@@ -10,14 +10,17 @@ import java.io.IOException;
 import static model.constants.UrlHolder.ADMIN_ORDER_DESTINATION_PAGE;
 
 /**
- * Created by User on 4/2/2017.
+ *
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class AdminGetProductsFromOrderCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        CommandHelper.getInstance().ForAdminOrderDestinationPage(request);
+
+        CommandHelper.getInstance().makeOrdersListForAdminOrderDestinationPage(request);
         return ADMIN_ORDER_DESTINATION_PAGE;
     }
 }

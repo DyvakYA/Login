@@ -17,7 +17,7 @@ public class UpdateOrderCommandValidator implements CommandValidator {
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
-        String message = Localization.getInstanse().getLocalizedMessage(request, ORDER_ERROR_MSG);
+        String message = Localization.getInstance().getLocalizedMessage(request, ORDER_ERROR_MSG);
 
         return (CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_ID_ATTRIBUTE},
                 RESULT_ATTRIBUTE, ADMIN_ORDER_DESTINATION_PAGE, message, request, response));

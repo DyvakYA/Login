@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static model.constants.AttributesHolder.*;
+import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
 /**
  * Created by Dyvak on 24.12.2016.
@@ -23,12 +23,7 @@ public class JdbcOrderDao implements OrderDao {
     private static final String UPDATE_ORDER_QUERY="UPDATE orders SET order_status=? WHERE order_id=?";
     private static final String DELETE_ORDER_QUERY="DELETE FROM orders WHERE order_id=?";
 
-    private static final String SQL_EXCEPTION="SQLException";
-
     private Connection connection;
-
-    public JdbcOrderDao() {
-    }
 
     JdbcOrderDao(Connection connection) {
         this.connection=connection;
@@ -43,9 +38,9 @@ public class JdbcOrderDao implements OrderDao {
         Optional<Order> order=Optional.empty();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_ORDERS_WHERE_ORDER_ID)) {
             query.setInt(1, id);
-            ResultSet result=query.executeQuery();
-            if (result.next()) {
-                order=Optional.of(getOrderFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                order=Optional.of(ResultSetExtractor.getInstance().getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -57,9 +52,9 @@ public class JdbcOrderDao implements OrderDao {
     public List<Order> findAll() {
         List<Order> orders=new ArrayList<>();
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_ORDERS)) {
-            ResultSet result=query.executeQuery();
-            while (result.next()) {
-                orders.add(getOrderFromResultSet(result));
+            ResultSet resultSet=query.executeQuery();
+            while (resultSet.next()) {
+                orders.add(ResultSetExtractor.getInstance().getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -69,7 +64,8 @@ public class JdbcOrderDao implements OrderDao {
 
     @Override
     public void create(Order order) {
-        try (PreparedStatement query=connection.prepareStatement(CREATE_ORDER_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement query=connection
+                .prepareStatement(CREATE_ORDER_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             query.setString(1, order.getOrderStatus());
             query.setDate(2, java.sql.Date.valueOf(order.getDate()
                     .toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
@@ -102,14 +98,5 @@ public class JdbcOrderDao implements OrderDao {
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
-    }
-
-    private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
-        Order order = new Order.Builder()
-                    .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
-                    .setOrderStatus(resultSet.getString(ORDER_STATUS_ATTRIBUTE))
-                    .setDate(resultSet.getDate(ORDER_DATE_ATTRIBUTE))
-                    .build();
-        return order;
     }
 }

@@ -26,11 +26,9 @@ public class DeleteUserCommand implements Command {
             return REDIRECTED;
         }
         userService.delete(Integer.valueOf(request.getParameter(USER_ID_ATTRIBUTE)));
-        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstanse()
+        request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
             .getLocalizedMessage(request, DELETE_USER_SUCCESSFUL_MSG));
         request.setAttribute(USERS_LIST_ATTRIBUTE, userService.getAll());
         return ADMIN_USERS_DESTINATION_PAGE;
-
     }
-
 }

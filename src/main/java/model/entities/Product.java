@@ -69,7 +69,7 @@ public class Product {
     }
 
     public double getRealPrice(){
-        return price/100;
+        return (double) price/100;
     }
 
     public void setPrice(long price) {
