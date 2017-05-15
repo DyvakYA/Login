@@ -1,5 +1,6 @@
 package model.dao;
 
+import model.entities.Order;
 import model.entities.OrderProduct;
 import model.entities.Product;
 
@@ -12,12 +13,19 @@ public interface OrderProductDao extends GenericDao<OrderProduct> {
 
     List<OrderProduct> findAll();
 
-    List<Product> findProductsByOrderId(int orderId);
-
     void deleteProductFromOrder(int orderId, int productId);
 
     Optional<OrderProduct> findOrderProductByOrderIdAndProductId(int orderId, int productId);
 
+    List<OrderProduct> findOrderProductsByOrderId(int orderId);
 
+    Optional<Product> findProductByOrderProductId(int orderProductId);
+
+    int getProductPrice(OrderProduct orderProduct);
+
+    long getOrderTotalPrice(Order order);
+
+    Optional<Order> findOrderByOrderProductId(int id);
 }
+
 

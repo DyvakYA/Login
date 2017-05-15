@@ -1,32 +1,38 @@
 package model.entities;
 
-public class OrderProduct {
+public class OrderProduct implements Identified {
 
     private int id;
     private int orderId;
     private int productId;
     private int quantity;
+    private long productSum;
 
     public static class Builder {
-        OrderProduct instance = new OrderProduct();
+        OrderProduct instance=new OrderProduct();
 
         public Builder setId(int id) {
-            instance.id = id;
+            instance.id=id;
             return this;
         }
 
         public Builder setOrderId(int orderId) {
-            instance.orderId = orderId;
+            instance.orderId=orderId;
             return this;
         }
 
         public Builder setProductId(int productId) {
-            instance.productId = productId;
+            instance.productId=productId;
             return this;
         }
 
         public Builder setQuantity(int quantity) {
-            instance.quantity = quantity;
+            instance.quantity=quantity;
+            return this;
+        }
+
+        public Builder setProductSum(long productSum) {
+            instance.productSum=productSum;
             return this;
         }
 
@@ -39,12 +45,16 @@ public class OrderProduct {
         return id;
     }
 
+    public void setId(int id) {
+        this.id=id;
+    }
+
     public int getOrderId() {
         return orderId;
     }
 
     public void setOrderId(int orderId) {
-        this.orderId = orderId;
+        this.orderId=orderId;
     }
 
     public int getProductId() {
@@ -52,15 +62,27 @@ public class OrderProduct {
     }
 
     public void setProductId(int productId) {
-        this.productId = productId;
+        this.productId=productId;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        this.quantity=quantity;
+    }
+
+    public long getProductSum() {
+        return productSum;
+    }
+
+    public double getRealProductSum() {
+        return productSum / 100;
+    }
+
+    public void setProductSum(long productSum) {
+        this.productSum=productSum;
     }
 
     @Override
@@ -92,6 +114,7 @@ public class OrderProduct {
                 ", orderId=" + orderId +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
+                ", productSum=" + productSum +
                 '}';
     }
 }

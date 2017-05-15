@@ -14,6 +14,9 @@ import static model.constants.MsgHolder.DELETE_USER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ADMIN_USERS_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class DeleteUserCommand implements Command {
 
     private UserService userService = UserService.getInstance();

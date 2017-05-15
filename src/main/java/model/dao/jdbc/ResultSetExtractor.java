@@ -12,20 +12,13 @@ import static model.constants.AttributesHolder.*;
  */
 public class ResultSetExtractor {
 
-    private static class Holder {
-        static final ResultSetExtractor INSTANCE = new ResultSetExtractor();
-    }
-
-    public static ResultSetExtractor getInstance() {
-        return ResultSetExtractor.Holder.INSTANCE;
-    }
-
     public OrderProduct getOrderProductFromResultSet(ResultSet resultSet) throws SQLException {
         return new OrderProduct.Builder()
                 .setId(resultSet.getInt(ORDER_PRODUCT_ID_ATTRIBUTE))
                 .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
                 .setProductId(resultSet.getInt(PRODUCT_ID_ATTRIBUTE))
                 .setQuantity(resultSet.getInt(QUANTITY))
+                .setProductSum(resultSet.getInt(PRODUCT_SUM))
                 .build();
     }
 
@@ -33,7 +26,8 @@ public class ResultSetExtractor {
         return new Order.Builder()
                 .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
                 .setOrderStatus(resultSet.getString(ORDER_STATUS_ATTRIBUTE))
-                .setDate(resultSet.getDate(ORDER_DATE_ATTRIBUTE))
+                .setDate(resultSet.getTimestamp(ORDER_DATE_ATTRIBUTE))
+                .setTotalPrice(resultSet.getInt(ORDER_SUM_ATTRIBUTE))
                 .build();
     }
 

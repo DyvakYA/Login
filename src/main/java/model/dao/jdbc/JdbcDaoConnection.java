@@ -17,11 +17,11 @@ public class JdbcDaoConnection implements DaoConnection {
     private static final String CAN_NOT_ROLLBACK_TRANSACTION="Can not rollback transaction";
 
     private Connection connection;
-    private boolean inTransaction = false;
+    private boolean inTransaction=false;
 
-    JdbcDaoConnection(Connection connection) {
+    public JdbcDaoConnection(Connection connection) {
         super();
-        this.connection = connection;
+        this.connection=connection;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class JdbcDaoConnection implements DaoConnection {
         try {
             connection.commit();
             connection.setAutoCommit(true);
-            inTransaction = false;
+            inTransaction=false;
         } catch (SQLException e) {
             throw new DAOException(CAN_NOT_COMMIT_TRANSACTION, e);
         }
@@ -72,7 +72,7 @@ public class JdbcDaoConnection implements DaoConnection {
         try {
             connection.rollback();
             connection.setAutoCommit(true);
-            inTransaction = false;
+            inTransaction=false;
         } catch (SQLException e) {
             throw new DAOException(CAN_NOT_ROLLBACK_TRANSACTION, e);
         }

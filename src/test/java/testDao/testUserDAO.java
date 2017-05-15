@@ -1,3 +1,5 @@
+package testDao;
+
 import model.dao.DaoConnection;
 import model.dao.jdbc.JdbcDaoFactory;
 import model.dao.jdbc.JdbcUserDao;
@@ -92,7 +94,6 @@ public class testUserDAO {
                     .setBlocked(true)
                     .build(),user1.get().getId());
             user2 = dao.findById(user1.get().getId());
-
         }
         Assert.assertFalse(user1.equals(user2));
     }

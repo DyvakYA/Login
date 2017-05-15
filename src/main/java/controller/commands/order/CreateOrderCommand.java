@@ -10,17 +10,16 @@ import model.services.service.OrderService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
+import java.sql.Timestamp;
 
-import static model.constants.AttributesHolder.*;
+import static model.constants.AttributesHolder.ORDER_STATUS_ATTRIBUTE;
+import static model.constants.AttributesHolder.RESULT_ATTRIBUTE;
 import static model.constants.MsgHolder.CREATE_ORDER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ADMIN_ORDER_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- *
- *
- * @author dyvakyurii@gmail.com
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class CreateOrderCommand implements Command {
 
@@ -35,7 +34,7 @@ public class CreateOrderCommand implements Command {
         }
         Order order = new Order.Builder()
                 .setOrderStatus(request.getParameter(ORDER_STATUS_ATTRIBUTE))
-                .setDate(new Date())
+                .setDate(new Timestamp(System.currentTimeMillis()))
                 .build();
         orderService.create(order);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()

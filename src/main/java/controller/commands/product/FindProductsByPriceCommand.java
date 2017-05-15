@@ -16,7 +16,7 @@ import static model.constants.UrlHolder.PRODUCT;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * Created by User on 5/2/2017.
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class FindProductsByPriceCommand implements Command {
 

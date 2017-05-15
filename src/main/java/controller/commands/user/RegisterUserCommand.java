@@ -17,6 +17,9 @@ import static model.constants.MsgHolder.REGISTER_USER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.INDEX;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class RegisterUserCommand implements Command {
 
     private UserService userService=UserService.getInstance();

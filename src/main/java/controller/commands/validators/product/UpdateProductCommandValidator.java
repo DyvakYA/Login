@@ -20,6 +20,8 @@ public class UpdateProductCommandValidator implements CommandValidator {
         String message = Localization.getInstance().getLocalizedMessage(request, PRODUCT_ERROR_MSG);
         
         return CommandValidatorHelper.getInstance().isNullValidate(new String[]{PRODUCT_ID_ATTRIBUTE},
+                RESULT_ATTRIBUTE, ADMIN_PRODUCT_DESTINATION_PAGE, message, request, response)
+                && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{PRODUCT_ID_ATTRIBUTE},
                 RESULT_ATTRIBUTE, ADMIN_PRODUCT_DESTINATION_PAGE, message, request, response);
     }
 }

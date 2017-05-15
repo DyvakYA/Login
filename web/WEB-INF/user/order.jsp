@@ -16,43 +16,46 @@
         <c:forEach var="orders" items="${orderMap}">
             <div class="item">
                 <form action="/shop/user/userDeleteOrder" method="GET" >
-                    <INPUT TYPE=hidden NAME=order_id VALUE="${orders.key.orderId}">
+                    <INPUT TYPE=hidden NAME=order_id VALUE="${orders.key.id}">
                     <button class="close" type="submit">
                         <i class="fa fa-close"></i>
                     </button>
                 </form>
                 <div class="thumbnail">
                     <div class="caption">
-                        <h4><b>Номер заказа: ${orders.key.orderId}</b></h4>
-                        <h4><b>Дата заказа: ${orders.key.date}</b></h4>
-                        <p>${orders.key.orderStatus}</p>
+                        <h5><b><fmt:message key="Number"/> ${orders.key.id}</b><br>
+                        <b><fmt:message key="Date"/> ${orders.key.date}</b><br>
+                        <b><fmt:message key="Status"/> ${orders.key.orderStatus}</b><br>
+                        <b><fmt:message key="Sum"/> ${orders.key.getRealTotalPrice()} <fmt:message key="UAH"/></b></h5>
                     </div>
 
                     <c:forEach var="products" items="${orders.value}">
-                    <div id="accordion" class="panel-group">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-
-                                <form action="/shop/admin/adminDeleteProduct" method="GET">
-                                    <h4 class="panel-title">
-                                        <INPUT TYPE=hidden NAME=order_id VALUE="${orders.key.orderId}">
-                                        <INPUT TYPE=hidden NAME=product_id VALUE="${products.id}">
-                                        <button class="close" type="submit">
-                                            <i class="fa fa-close"></i>
-                                        </button>
-                                        <a href="#collapse-${orders.key.orderId}-${products.id}-${orders.key.date}"
-                                           data-parent="#accordion"
-                                           data-toggle="collapse">${products.name}<br> Price: <b>${products.price} uah</b></a>
-                                    </h4>
-                                </form>
-                            </div>
-                            <div class="panel-collapse collapse" id="collapse-${orders.key.orderId}-${products.id}-${orders.key.date}">
-                                <div class="panel-body">
-                                    <p>${products.description}</p>
+                        <div id="accordion" class="panel-group">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <form action="/shop/user/adminDeleteProduct" method="GET">
+                                        <h4 class="panel-title">
+                                            <INPUT TYPE=hidden NAME=order_id VALUE="${orders.key.id}">
+                                            <INPUT TYPE=hidden NAME=product_id VALUE="${products.value.id}">
+                                            <button class="close" type="submit">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                            <a href="#collapse-${products.key.id}"
+                                               data="#accordion"
+                                               data-toggle="collapse">${products.value.name}</a></h4>
+                                    </form>
+                                </div>
+                                <div class="panel-collapse collapse"
+                                     id="collapse-${products.key.id}">
+                                    <div class="panel-body">
+                                        <h5> <fmt:message key="Price"/> <b>${products.value.getRealPrice()} <fmt:message key="UAH"/></b>
+                                            <br><fmt:message key="Quantity"/> <b>${products.key.quantity} <fmt:message key="pc"/></b>
+                                            <br><fmt:message key="Sum"/> <b>${products.key.getRealProductSum()} <fmt:message key="UAH"/></b></h5>
+                                        <p>${products.value.description}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </c:forEach>
 
                     <button type="button" class="btn btn-success btn-default" data-toggle="modal"

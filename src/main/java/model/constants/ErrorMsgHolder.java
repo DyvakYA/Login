@@ -11,6 +11,7 @@ public class ErrorMsgHolder {
     public static final String ORDER_ERROR_MSG = "OrderNotSelected";
     public static final String ORDER_PRODUCT_ERROR_MSG = "OrderProductNotSelected";
     public static final String PRODUCT_ERROR_MSG = "ProductNotSelected";
+    public static final String FIND_PRICE_ERROR_MSG = "PriceNotNormal";
     public static final String USER_ERROR_MSG = "UserNotSelected";
     public static final String USER_ORDER_ERROR_MSG = "UserOrderNotSelected";
 

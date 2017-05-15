@@ -1,20 +1,26 @@
 package model.entities;
 
-public class UserOrder {
+public class UserOrder implements Identified {
 
+    private int id;
     private int userId;
     private int orderId;
 
     public static class Builder {
-        UserOrder instance = new UserOrder();
+        UserOrder instance=new UserOrder();
+
+        public Builder setId(int id) {
+            instance.id=id;
+            return this;
+        }
 
         public Builder setUserId(int userId) {
-            instance.userId = userId;
+            instance.userId=userId;
             return this;
         }
 
         public Builder setOrderId(int orderId) {
-            instance.orderId = orderId;
+            instance.orderId=orderId;
             return this;
         }
 
@@ -23,12 +29,20 @@ public class UserOrder {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id=id;
+    }
+
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+        this.userId=userId;
     }
 
     public int getOrderId() {
@@ -36,7 +50,7 @@ public class UserOrder {
     }
 
     public void setOrderId(int orderId) {
-        this.orderId = orderId;
+        this.orderId=orderId;
     }
 
     @Override

@@ -16,13 +16,6 @@ public class UserOrderService implements UserOrderServiceable {
 
     private DaoFactory daoFactory=DaoFactory.getInstance();
 
-    public List<Order> getOrdersForUser(int user) {
-        DaoConnection connection=daoFactory.getConnection();
-        connection.beginTransaction();
-        UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
-        return userOrderDao.findAllOrdersForUser(user);
-    }
-
     private static class Holder {
         static final UserOrderService INSTANCE=new UserOrderService();
     }
@@ -39,7 +32,14 @@ public class UserOrderService implements UserOrderServiceable {
         }
     }
 
-    public void create(UserOrder userOrder) {
+    public List<Order> getOrdersForUser(int user) {
+        DaoConnection connection=daoFactory.getConnection();
+        connection.beginTransaction();
+        UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
+        return userOrderDao.findAllOrdersForUser(user);
+    }
+
+     public void create(UserOrder userOrder) {
         try (DaoConnection connection=daoFactory.getConnection()) {
             connection.beginTransaction();
             UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);

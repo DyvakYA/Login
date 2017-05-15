@@ -15,12 +15,12 @@ import java.util.Optional;
 
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
-public class JdbcUserOrderDao implements UserOrderDao {
+public class JdbcUserOrderDao extends AbstractDao<UserOrder> implements UserOrderDao {
 
     private static final String SELECT_FROM_USER_ORDER_WHERE_USER_ID="SELECT * FROM user_orders WHERE user_id=?";
     private static final String SELECT_FROM_USER_ORDERS="SELECT * FROM user_orders";
     private static final String SELECT_ORDERS_FOR_USER_BY_ID="SELECT " +
-            "Orders.order_id, Orders.order_status, Orders.order_date\n" +
+            "Orders.order_id, Orders.order_status, Orders.order_date, Orders.order_sum\n" +
             "FROM Orders\n" +
             "INNER JOIN user_orders ON orders.order_id=user_orders.order_id\n" +
             "WHERE user_id=?;";
@@ -30,14 +30,8 @@ public class JdbcUserOrderDao implements UserOrderDao {
             "WHERE user_id=?";
     private static final String DELETE_USER_ORDERS_QUERY="DELETE FROM user_orders WHERE user_id=?";
 
-    private Connection connection;
-
     JdbcUserOrderDao(Connection connection) {
-        this.connection=connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection=connection;
+        super(connection);
     }
 
     @Override
@@ -47,7 +41,7 @@ public class JdbcUserOrderDao implements UserOrderDao {
             query.setInt(1, id);
             ResultSet resultSet=query.executeQuery();
             if (resultSet.next()) {
-                routeStops=Optional.of(ResultSetExtractor.getInstance().getUserOrderFromResultSet(resultSet));
+                routeStops=Optional.of(resultSetExtractor.getUserOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -61,7 +55,7 @@ public class JdbcUserOrderDao implements UserOrderDao {
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_USER_ORDERS)) {
             ResultSet resultSet=query.executeQuery();
             while (resultSet.next()) {
-                userOrders.add(ResultSetExtractor.getInstance().getUserOrderFromResultSet(resultSet));
+                userOrders.add(resultSetExtractor.getUserOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -76,7 +70,7 @@ public class JdbcUserOrderDao implements UserOrderDao {
             query.setInt(1, id);
             ResultSet resultSet=query.executeQuery();
             while (resultSet.next()) {
-                orders.add(ResultSetExtractor.getInstance().getOrderFromResultSet(resultSet));
+                orders.add(resultSetExtractor.getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -86,6 +80,8 @@ public class JdbcUserOrderDao implements UserOrderDao {
 
     @Override
     public void create(UserOrder userOrder) {
+        checkForNull(userOrder);
+        checkIsUnsaved(userOrder);
         try (PreparedStatement query=connection.prepareStatement(CREATE_USER_ORDER_QUERY)) {
             query.setInt(1, userOrder.getUserId());
             query.setInt(2, userOrder.getOrderId());
@@ -97,6 +93,8 @@ public class JdbcUserOrderDao implements UserOrderDao {
 
     @Override
     public void update(UserOrder userOrder, int id) {
+        checkForNull(userOrder);
+        checkIsSaved(userOrder);
         try (PreparedStatement query=connection.prepareStatement(UPDATE_USER_ORDERS_QUERY)) {
             query.setInt(1, userOrder.getOrderId());
             query.setInt(2, id);

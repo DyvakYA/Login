@@ -26,7 +26,7 @@
                         <h4 class="panel-title">
                             <a href="#collapse-1"
                                data-parent="#accordion"
-                               data-toggle="collapse">Фильтр</a>
+                               data-toggle="collapse"><fmt:message key="Filter"/></a>
                         </h4>
                     </div>
 
@@ -42,7 +42,7 @@
                                     <input type="text" class="form-control" placeholder="until" required="required" name="second">
                                 </div>
                                 <button type="submit" class="btn btn-success btn-default">
-                                    <i class="fa">Найти по цене</i>
+                                    <i class="fa"><fmt:message key="FindByPrice"/></i>
                                 </button>
 
                             </form>
@@ -54,7 +54,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-success btn-default">
-                                    <i class="fa">Найти по названию</i>
+                                    <i class="fa"><fmt:message key="FindByName"/></i>
                                 </button>
 
                             </form>
@@ -69,15 +69,15 @@
                     <div class="thumbnail">
                         <img src="http://placehold.it/600x340" alt="" class="img-responsive">
                         <div class="caption">
-                            <h3><a href="">${products.id} ${products.name}</a></h3>
+                            <h4><a href="">${products.id} ${products.name}</a></h4>
                             <p>${products.description}</p>
-                            <h4>Price: <b>${products.price} uah</b></h4>
+                            <h5><fmt:message key="Price"/> <b>${products.getRealPrice()}<fmt:message key="UAH"/></b></h5>
                         </div>
                     </div>
                 </div>
             </c:forEach>
         </div>
-        <form method="post" action="./MainController">
+        <form method="POST" action="./MainController">
             <table class="table">
                 <tr>
                     <td><fmt:message key="Id"/></td>

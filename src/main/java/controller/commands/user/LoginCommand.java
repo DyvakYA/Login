@@ -16,8 +16,12 @@ import java.util.Optional;
 import static model.constants.AttributesHolder.*;
 import static model.constants.ErrorMsgHolder.LOGIN_USER_ERROR_MSG;
 import static model.constants.MsgHolder.LOGIN_USER_SUCCESSFUL_MSG;
-import static model.constants.UrlHolder.*;
+import static model.constants.UrlHolder.INDEX;
+import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class LoginCommand implements Command {
 
     private static final Logger logger = Logger.getLogger(LoginCommand.class);
@@ -38,16 +42,15 @@ public class LoginCommand implements Command {
         String email=request.getParameter(USER_EMAIL_ATTRIBUTE);
         String password=request.getParameter(USER_AUTHENTICATE_ATTRIBUTE);
         if (email != null && password != null) {
-            Optional<User> user=userService.login(email, password);
-            if (user.isPresent()) {
-                logger.info(String.format(USER_LOGGED_IN, user.get().getEmail(), user.get().getId()));
+            Optional<User> optionalUser=userService.login(email, password);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                logger.info(String.format(USER_LOGGED_IN, user.getEmail(), user.getId()));
                 result=Localization.getInstance()
-                        .getLocalizedMessage(request, LOGIN_USER_SUCCESSFUL_MSG) + user.get().getEmail();
-                request.getSession().setAttribute(USER_SESSION_ATTRIBUTE, user.get());
-                destinationPage=CommandHelper.getInstance()
-                        .isAdmin(request, destinationPage, user.get());
-                destinationPage=CommandHelper.getInstance()
-                        .isUser(request, destinationPage, user.get());
+                        .getLocalizedMessage(request, LOGIN_USER_SUCCESSFUL_MSG) + user.getEmail();
+                request.getSession().setAttribute(USER_SESSION_ATTRIBUTE, user);
+                destinationPage = CommandHelper.getInstance()
+                        .getDestinationPageByRole(request, user);
             } else {
                 result=Localization.getInstance()
                         .getLocalizedMessage(request, LOGIN_USER_ERROR_MSG);

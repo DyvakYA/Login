@@ -3,7 +3,7 @@ package model.entities;
 /**
  * Created by Dyvak on 16.12.2016.
  */
-public class Product {
+public class Product implements Identified {
 
     private int id;
     private String name;
@@ -11,25 +11,30 @@ public class Product {
     private long price;
 
     public static class Builder {
-        Product instance = new Product();
+        Product instance=new Product();
 
         public Builder setId(int id) {
-            instance.id = id;
+            instance.id=id;
             return this;
         }
 
         public Builder setName(String name) {
-            instance.name = name;
+            instance.name=name;
             return this;
         }
 
         public Builder setDescription(String description) {
-            instance.description = description;
+            instance.description=description;
+            return this;
+        }
+
+        public Builder setDoublePrice(double price) {
+            instance.price=(long)price*100;
             return this;
         }
 
         public Builder setPrice(long price) {
-            instance.price = price;
+            instance.price=price;
             return this;
         }
 
@@ -41,7 +46,7 @@ public class Product {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id=id;
     }
 
     public int getId() {
@@ -53,7 +58,7 @@ public class Product {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name=name;
     }
 
     public String getDescription() {
@@ -68,12 +73,12 @@ public class Product {
         return price;
     }
 
-    public double getRealPrice(){
-        return (double) price/100;
+    public double getRealPrice() {
+        return (double) price / 100;
     }
 
     public void setPrice(long price) {
-        this.price = price;
+        this.price=price;
     }
 
     @Override

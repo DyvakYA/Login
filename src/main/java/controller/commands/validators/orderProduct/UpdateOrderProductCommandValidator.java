@@ -21,12 +21,11 @@ public class UpdateOrderProductCommandValidator implements CommandValidator {
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
-        String message = Localization.getInstance().getLocalizedMessage(request, ORDER_PRODUCT_ERROR_MSG);
-        
-        return (CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_ID_ATTRIBUTE},
-                RESULT_ATTRIBUTE,  ORDER_PRODUCT_DESTINATION_PAGE, message, request, response)
-                && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{PRODUCT_ID_ATTRIBUTE},
-                RESULT_ATTRIBUTE, ORDER_PRODUCT_DESTINATION_PAGE, message, request, response));
-        }
+        String message=Localization.getInstance().getLocalizedMessage(request, ORDER_PRODUCT_ERROR_MSG);
 
-        }
+        return (CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_PRODUCT_ID_ATTRIBUTE},
+                RESULT_ATTRIBUTE, ORDER_PRODUCT_DESTINATION_PAGE, message, request, response)
+                && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{ORDER_PRODUCT_ID_ATTRIBUTE},
+                RESULT_ATTRIBUTE, ORDER_PRODUCT_DESTINATION_PAGE, message, request, response));
+    }
+}

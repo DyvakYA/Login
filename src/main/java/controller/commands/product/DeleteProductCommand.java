@@ -1,6 +1,7 @@
 package controller.commands.product;
 
 import controller.commands.Command;
+import controller.commands.CommandHelper;
 import controller.commands.validators.product.DeleteProductCommandValidator;
 import model.extras.Localization;
 import model.services.service.ProductService;
@@ -11,9 +12,12 @@ import java.io.IOException;
 
 import static model.constants.AttributesHolder.*;
 import static model.constants.MsgHolder.DELETE_PRODUCT_SUCCESSFUL_MSG;
-import static model.constants.UrlHolder.ADMIN_PRODUCT_DESTINATION_PAGE;
+import static model.constants.UrlHolder.PRODUCT;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class DeleteProductCommand implements Command {
 
     private ProductService productService=ProductService.getInstance();
@@ -29,6 +33,6 @@ public class DeleteProductCommand implements Command {
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, DELETE_PRODUCT_SUCCESSFUL_MSG));
         request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, productService.getAll());
-        return ADMIN_PRODUCT_DESTINATION_PAGE;
+        return CommandHelper.getInstance().roleChecker(PRODUCT, request);
     }
 }

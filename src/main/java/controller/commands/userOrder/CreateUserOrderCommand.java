@@ -15,6 +15,9 @@ import static model.constants.MsgHolder.CREATE_USER_ORDER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.REDIRECTED;
 import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class CreateUserOrderCommand implements Command {
 
     private UserOrderService userOrderService=UserOrderService.getInstance();
@@ -26,7 +29,7 @@ public class CreateUserOrderCommand implements Command {
         if (!new CreateProductCommandValidator().validate(request, response)) {
             return REDIRECTED;
         }
-        UserOrder userOrder = new UserOrder.Builder()
+        UserOrder userOrder=new UserOrder.Builder()
                 .setUserId(Integer.valueOf(request.getParameter(USER_ID_ATTRIBUTE)))
                 .setOrderId(Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)))
                 .build();

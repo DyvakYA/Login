@@ -15,6 +15,9 @@ import static model.constants.MsgHolder.UPDATE_USER_ORDERS_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.REDIRECTED;
 import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class UpdateUserOrderCommand implements Command {
 
     private UserOrderService userOrderService = UserOrderService.getInstance();

@@ -6,7 +6,10 @@ import model.dao.OrderDao;
 import model.entities.Order;
 import model.services.OrderServiceable;
 
+import java.util.Date;
 import java.util.List;
+
+import static model.constants.AttributesHolder.STARTED;
 
 /**
  * Created by Dyvak on 21.01.2017.
@@ -14,6 +17,8 @@ import java.util.List;
 public class OrderService implements OrderServiceable {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
+
+
 
     private static class Holder {
         static final OrderService INSTANCE = new OrderService();
@@ -29,6 +34,21 @@ public class OrderService implements OrderServiceable {
             OrderDao orderDao=daoFactory.createOrderDao(connection);
             return orderDao.findAll();
         }
+    }
+
+    public Order createDefaultOrder() {
+        Order order;
+        try (DaoConnection connection=daoFactory.getConnection()) {
+            connection.beginTransaction();
+            OrderDao orderDao=daoFactory.createOrderDao(connection);
+            order=new Order.Builder()
+                    .setOrderStatus(STARTED)
+                    .setDate(new Date())
+                    .build();
+            orderDao.create(order);
+            connection.commitTransaction();
+        }
+        return order;
     }
 
     public void create(Order order) {

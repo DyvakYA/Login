@@ -5,7 +5,7 @@ import model.security.PasswordEncrypt;
 /**
  * Created by Dyvak on 16.12.2016.
  */
-public class User {
+public class User implements Identified {
 
     private int id;
     private String name;
@@ -16,40 +16,40 @@ public class User {
 
     public static class Builder {
 
-        User instance = new User();
+        User instance=new User();
 
         public Builder setId(int id) {
-            instance.id = id;
+            instance.id=id;
             return this;
         }
 
         public Builder setName(String name) {
-            instance.name = name;
+            instance.name=name;
             return this;
         }
 
         public Builder setEmail(String email) {
-            instance.email = email;
+            instance.email=email;
             return this;
         }
 
         public Builder setPasswordHash(String password) {
-            instance.passwordHash = calcPasswordHash(password);
+            instance.passwordHash=calcPasswordHash(password);
             return this;
         }
 
         public Builder setPasswordString(String password) {
-            instance.passwordHash = password;
+            instance.passwordHash=password;
             return this;
         }
 
         public Builder setAdmin(boolean isAdmin) {
-            instance.isAdmin = isAdmin;
+            instance.isAdmin=isAdmin;
             return this;
         }
 
         public Builder setBlocked(boolean isBlocked) {
-            instance.isBlocked = isBlocked;
+            instance.isBlocked=isBlocked;
             return this;
         }
 
@@ -63,7 +63,7 @@ public class User {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id=id;
     }
 
     public String getName() {
@@ -79,7 +79,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email=email;
     }
 
     public String getPasswordHash() {
@@ -87,7 +87,7 @@ public class User {
     }
 
     public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+        this.passwordHash=passwordHash;
     }
 
     public boolean isAdmin() {
@@ -95,7 +95,7 @@ public class User {
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        isAdmin=admin;
     }
 
     public boolean isBlocked() {
@@ -103,11 +103,18 @@ public class User {
     }
 
     public void setBlocked(boolean blocked) {
-        isBlocked = blocked;
+        isBlocked=blocked;
     }
 
     public static String calcPasswordHash(String password) {
         return PasswordEncrypt.encryptPassword(password);
+    }
+
+    public static Integer passwordEncryptor(String password) {
+        Integer seed=131;
+        Integer hash=12;
+        hash=seed * hash + password.hashCode();
+        return hash;
     }
 
     @Override
@@ -115,7 +122,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
 
-        User user = (User) o;
+        User user=(User) o;
 
         if (id != user.id) return false;
         if (isAdmin != user.isAdmin) return false;
@@ -126,11 +133,11 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
-        result = 31 * result + (isAdmin ? 1 : 0);
-        result = 31 * result + (isBlocked ? 1 : 0);
+        int result=id;
+        result=31 * result + (email != null ? email.hashCode() : 0);
+        result=31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
+        result=31 * result + (isAdmin ? 1 : 0);
+        result=31 * result + (isBlocked ? 1 : 0);
         return result;
     }
 

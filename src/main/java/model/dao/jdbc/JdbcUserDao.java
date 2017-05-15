@@ -15,7 +15,7 @@ import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 /**
  * Created by Dyvak on 24.12.2016.
  */
-public class JdbcUserDao implements UserDao {
+public class JdbcUserDao extends AbstractDao<User> implements UserDao {
 
     private static final String SELECT_FROM_USERS_WHERE_USER_ID="SELECT * FROM users WHERE user_id=?";
     private static final String SELECT_FROM_USERS="SELECT * FROM users";
@@ -26,16 +26,17 @@ public class JdbcUserDao implements UserDao {
     private static final String UPDATE_USER_QUERY="UPDATE users " +
             "SET user_name=?, email=?, password=?, isAdmin=?, isBlocked=? WHERE user_id=?";
     private static final String DELETE_USER_QUERY="DELETE FROM users WHERE user_id=?";
-
-    private Connection connection;
+    private static final String SELECT_USERS_FROM_USER_ORDERS_UNIQUE="" +
+            "SELECT DISTINCT users.user_id, users.user_name, users.email, " +
+            "users.password, users.isAdmin, users.isBlocked\n" +
+            "FROM users\n" +
+            "INNER JOIN user_orders\n" +
+            "ON users.user_id=user_orders.user_id";
 
     JdbcUserDao(Connection connection) {
-        this.connection=connection;
+        super(connection);
     }
 
-    public void setConnection(Connection connection) {
-        this.connection=connection;
-    }
 
     @Override
     public Optional<User> findById(int id) {
@@ -44,7 +45,7 @@ public class JdbcUserDao implements UserDao {
             query.setInt(1, id);
             ResultSet resultSet=query.executeQuery();
             if (resultSet.next()) {
-                user=Optional.of(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
+                user=Optional.of(resultSetExtractor.getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -59,12 +60,17 @@ public class JdbcUserDao implements UserDao {
             query.setString(1, name);
             ResultSet resultSet=query.executeQuery();
             if (resultSet.next()) {
-                user=Optional.of(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
+                user=Optional.of(resultSetExtractor.getUserFromResultSet(resultSet));
             }
             return user;
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
+    }
+
+    @Override
+    public List<User> findAllUsersWithOrders() {
+        return getUsers(SELECT_USERS_FROM_USER_ORDERS_UNIQUE);
     }
 
     @Override
@@ -74,7 +80,7 @@ public class JdbcUserDao implements UserDao {
             query.setString(1, email.toLowerCase());
             ResultSet resultSet=query.executeQuery();
             if (resultSet.next()) {
-                user=Optional.of(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
+                user=Optional.of(resultSetExtractor.getUserFromResultSet(resultSet));
             }
             return user;
         } catch (SQLException e) {
@@ -84,21 +90,13 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        List<User> users=new ArrayList<>();
-        try {
-            PreparedStatement query=connection.prepareStatement(SELECT_FROM_USERS);
-            ResultSet resultSet=query.executeQuery();
-            while (resultSet.next()) {
-                users.add(ResultSetExtractor.getInstance().getUserFromResultSet(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
-        }
-        return users;
+        return getUsers(SELECT_FROM_USERS);
     }
 
     @Override
     public void create(User user) {
+        checkForNull(user);
+        checkIsUnsaved(user);
         try (PreparedStatement query=connection.prepareStatement(CREATE_USER_QUERY)) {
             query.setString(1, user.getName());
             query.setString(2, user.getEmail());
@@ -113,6 +111,8 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void update(User user, int id) {
+        checkForNull(user);
+        checkIsSaved(user);
         try (PreparedStatement query=connection.prepareStatement(UPDATE_USER_QUERY)) {
             query.setString(1, user.getName());
             query.setString(2, user.getEmail());

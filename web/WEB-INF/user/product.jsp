@@ -22,7 +22,7 @@
                 <h4 class="panel-title">
                     <a href="#collapse-1"
                        data-parent="#accordion"
-                       data-toggle="collapse">Фильтр</a>
+                       data-toggle="collapse"><fmt:message key="Filter"/></a>
                 </h4>
             </div>
 
@@ -38,7 +38,7 @@
                             <input type="text" class="form-control" placeholder="until" required="required" name="second">
                         </div>
                         <button type="submit" class="btn btn-success btn-default">
-                            <i class="fa">Найти по цене</i>
+                            <i class="fa"><fmt:message key="FindByPrice"/></i>
                         </button>
 
                     </form>
@@ -50,7 +50,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-success btn-default">
-                            <i class="fa">Найти по названию</i>
+                            <i class="fa"><fmt:message key="FindByName"/></i>
                         </button>
 
                     </form>
@@ -67,9 +67,9 @@
                         <form method="get" action="${ADD_TO_ORDER}">
                         <h3><a href="">${products.name}</a></h3>
                         <p>${products.description}</p>
-                        <h4>Price: <b>${products.price} uah</b></h4>
+                        <h4><fmt:message key="Price"/><b> ${products.getRealPrice()} uah</b></h4>
                              <div class="cart-item-info much">
-                                 <h4>Количество:<input type="text" value="1" name="quantity" size="10"></h4>
+                                 <h4><fmt:message key="Quantity"/><input type="text" value="1" name="quantity" size="10"></h4>
                             </div>
                             <input type=hidden name="product_id" VALUE="${products.id}">
                             <button type="submit" class="btn btn-success btn-default">
@@ -81,9 +81,6 @@
             </div>
         </c:forEach>
     </div>
-</div>
-<div style="color: red;">
-    <c:out value="${result}" />
 </div>
 <jsp:include page="../elem/footer.jsp"/>
 </body>

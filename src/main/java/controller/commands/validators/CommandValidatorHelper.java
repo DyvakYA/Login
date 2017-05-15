@@ -13,7 +13,6 @@ public class CommandValidatorHelper {
     private static final String EMPTY_VALIDATION_ERROR="Empty validation error";
     private static final String MATCHES_VALIDATION_ERROR="Matches validation error";
 
-
     public static final CommandValidatorHelper instance = new CommandValidatorHelper();
 
     private CommandValidatorHelper() {
@@ -63,19 +62,21 @@ public class CommandValidatorHelper {
         return result;
     }
 
-    public boolean matchesValidate(String attribute, String regEx, String resultAttribute,
+    public boolean matchesValidate(String[] attributes, String regEx, String resultAttribute,
                                    String destPage, String errorMgs, HttpServletRequest request,
                                    HttpServletResponse response) {
 
         boolean result = true;
-
-        if (!request.getParameter(attribute).matches(regEx)) {
-            result = false;
-            request.setAttribute(resultAttribute, errorMgs);
-            try {
-                request.getRequestDispatcher(destPage).forward(request, response);
-            } catch (ServletException | IOException e) {
-                throw new ApplicationException(MATCHES_VALIDATION_ERROR, e);
+        for (String attribute : attributes) {
+            if (!request.getParameter(attribute).matches(regEx)) {
+                result=false;
+                request.setAttribute(resultAttribute, errorMgs);
+                try {
+                    request.getRequestDispatcher(destPage).forward(request, response);
+                    break;
+                } catch (ServletException | IOException e) {
+                    throw new ApplicationException(MATCHES_VALIDATION_ERROR, e);
+                }
             }
         }
         return result;

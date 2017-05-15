@@ -12,6 +12,8 @@ import java.io.IOException;
 public interface Command {
 
     /**
+     * This method execute some logic according to request
+     *
      * @param request request instance
      * @param response response instance
      * @return	The path of view page or REDIRECTED constant in case of response.sendRedirect was performed in command

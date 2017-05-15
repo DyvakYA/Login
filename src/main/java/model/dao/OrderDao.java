@@ -13,4 +13,5 @@ public interface OrderDao extends GenericDao<Order> {
     Optional<Order> findById(int id);
 
     List<Order> findAll();
+
 }

@@ -18,4 +18,5 @@ public interface UserDao extends GenericDao<User> {
 
     Optional<User> findByName(String login);
 
+    List<User> findAllUsersWithOrders();
 }

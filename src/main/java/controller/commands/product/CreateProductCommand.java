@@ -15,6 +15,9 @@ import static model.constants.MsgHolder.CREATE_PRODUCT_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ADMIN_PRODUCT_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class CreateProductCommand implements Command {
 
     private ProductService productService=ProductService.getInstance();
@@ -29,7 +32,7 @@ public class CreateProductCommand implements Command {
         Product product = new Product.Builder()
                 .setName(request.getParameter(PRODUCT_NAME_ATTRIBUTE))
                 .setDescription(request.getParameter(PRODUCT_DESCRIPTION_ATTRIBUTE))
-                .setPrice(Long.parseLong(request.getParameter(PRODUCT_PRICE_ATTRIBUTE)))
+                .setDoublePrice(Double.parseDouble(request.getParameter(PRODUCT_PRICE_ATTRIBUTE)))
                 .build();
         productService.create(product);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()

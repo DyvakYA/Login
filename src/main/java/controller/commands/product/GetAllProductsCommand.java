@@ -12,7 +12,7 @@ import static model.constants.AttributesHolder.PRODUCTS_LIST_ATTRIBUTE;
 import static model.constants.UrlHolder.PRODUCT;
 
 /**
- * Created by User on 4/7/2017.
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class GetAllProductsCommand implements Command {
 

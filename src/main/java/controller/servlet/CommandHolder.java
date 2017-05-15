@@ -7,7 +7,7 @@ import controller.commands.order.DeleteOrderCommand;
 import controller.commands.orderProduct.DeleteProductFromOrderCommand;
 import controller.commands.product.*;
 import controller.commands.user.*;
-import controller.commands.userOrder.GetAllUserOrdersCommand;
+import controller.commands.userOrder.UserGetAllUserOrdersCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,10 +44,13 @@ public class CommandHolder {
         commands.put(GET + ADMIN_PRODUCTS, new GetAllProductsCommand());
         commands.put(GET + ADMIN_DELETE_ORDER, new DeleteOrderCommand());
         commands.put(GET + USER_DELETE_ORDER, new DeleteOrderCommand());
+
         commands.put(GET + ADMIN_DELETE_PRODUCT_GET, new DeleteProductFromOrderCommand());
+        commands.put(GET + USER_DELETE_PRODUCT_GET, new DeleteProductFromOrderCommand());
+
         commands.put(GET + FIND_PRODUCT_BY_PRICE, new FindProductsByPriceCommand());
         commands.put(GET + FIND_PRODUCT_BY_NAME, new FindProductsByNameCommand());
-        commands.put(GET + USER_ORDERS, new GetAllUserOrdersCommand());
+        commands.put(GET + USER_ORDERS, new UserGetAllUserOrdersCommand());
         commands.put(GET + ADMIN_ORDERS, new AdminGetProductsFromOrderCommand());
         commands.put(GET + ADMIN_GET_ALL_USERS, new AdminGetAllUsersCommand());
         commands.put(GET + USER_ADD_TO_ORDER, new UserAddProductToOrderCommand());
@@ -60,7 +63,9 @@ public class CommandHolder {
         commands.put(POST + ADMIN_UPDATE_USER, new UpdateUserCommand());
         commands.put(POST + ADMIN_DELETE_USER, new DeleteUserCommand());
         commands.put(POST + ADMIN_CREATE_PRODUCT, new CreateProductCommand());
+
         commands.put(POST + ADMIN_UPDATE_PRODUCT, new UpdateProductCommand());
+
         commands.put(POST + ADMIN_DELETE_PRODUCT_POST, new DeleteProductCommand());
 
     }

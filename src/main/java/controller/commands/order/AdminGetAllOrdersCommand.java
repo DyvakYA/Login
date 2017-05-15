@@ -11,9 +11,7 @@ import static model.constants.AttributesHolder.ORDERS_LIST_ATTRIBUTE;
 import static model.constants.UrlHolder.ADMIN_ORDER_DESTINATION_PAGE;
 
 /**
- *
- *
- * @author dyvakyurii@gmail.com
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class AdminGetAllOrdersCommand implements Command {
 

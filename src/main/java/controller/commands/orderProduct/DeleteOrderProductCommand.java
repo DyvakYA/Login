@@ -14,6 +14,9 @@ import static model.constants.MsgHolder.DELETE_ORDER_PRODUCTS_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class DeleteOrderProductCommand implements Command {
 
     private OrderProductService orderProductsService = OrderProductService.getInstance();

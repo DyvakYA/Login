@@ -13,7 +13,7 @@ import static model.constants.AttributesHolder.ORDER_PRODUCTS_LIST_ATTRIBUTE;
 import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 
 /**
- * Created by Dyvak on 21.01.2017.
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class GetAllOrderProductCommand implements Command {
 

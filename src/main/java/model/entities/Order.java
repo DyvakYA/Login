@@ -2,22 +2,23 @@ package model.entities;
 
 import java.util.Date;
 
-public class Order {
+public class Order implements Identified {
 
-    private int orderId;
+    private int id;
     private String orderStatus;
     private Date date;
+    private long totalPrice;
 
     public static class Builder {
-        Order instance = new Order();
+        Order instance=new Order();
 
         public Builder setOrderId(int id) {
-            instance.orderId = id;
+            instance.id=id;
             return this;
         }
 
         public Builder setOrderStatus(String status) {
-            instance.orderStatus = status;
+            instance.orderStatus=status;
             return this;
         }
 
@@ -26,17 +27,22 @@ public class Order {
             return this;
         }
 
+        public Builder setTotalPrice(long totalPrice) {
+            instance.totalPrice=totalPrice;
+            return this;
+        }
+
         public Order build() {
             return instance;
         }
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getId() {
+        return id;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setId(int id) {
+        this.id=id;
     }
 
     public String getOrderStatus() {
@@ -44,7 +50,7 @@ public class Order {
     }
 
     public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+        this.orderStatus=orderStatus;
     }
 
     public Date getDate() {
@@ -55,6 +61,18 @@ public class Order {
         this.date=date;
     }
 
+    public long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public double getRealTotalPrice() {
+        return totalPrice / 100;
+    }
+
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice=totalPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,14 +80,14 @@ public class Order {
 
         Order order=(Order) o;
 
-        if (orderId != order.orderId) return false;
+        if (id != order.id) return false;
         if (orderStatus != null ? !orderStatus.equals(order.orderStatus) : order.orderStatus != null) return false;
         return date != null ? date.equals(order.date) : order.date == null;
     }
 
     @Override
     public int hashCode() {
-        int result=orderId;
+        int result=id;
         result=31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
         result=31 * result + (date != null ? date.hashCode() : 0);
         return result;
@@ -78,9 +96,10 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "orderId=" + orderId +
+                "id=" + id +
                 ", orderStatus='" + orderStatus + '\'' +
                 ", date=" + date +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

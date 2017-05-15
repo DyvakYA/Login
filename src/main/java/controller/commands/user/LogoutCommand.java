@@ -13,7 +13,7 @@ import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
 import static model.constants.UrlHolder.INDEX;
 
 /**
- * Created by Dyvak on 26.01.2017.
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class LogoutCommand implements Command {
 

@@ -1,11 +1,11 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.validators.user.UserAddProductToOrderValidator;
 import model.entities.Order;
 import model.entities.OrderProduct;
+import model.entities.Product;
 import model.entities.User;
-import model.entities.UserOrder;
 import model.extras.Localization;
 import model.services.service.OrderProductService;
 import model.services.service.OrderService;
@@ -15,21 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static model.constants.AttributesHolder.*;
-import static model.constants.MsgHolder.CREATE_USER_ORDER_SUCCESSFUL_MSG;
-import static model.constants.MsgHolder.USER_NOT_AUTHORIZED;
-import static model.constants.UrlHolder.INDEX;
-import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
+import static model.constants.MsgHolder.*;
+import static model.constants.UrlHolder.*;
 
 /**
- * Created by User on 4/23/2017.
+ * @author Dyvak Yurii dyvakyurii@gmail.com
  */
 public class UserAddProductToOrderCommand implements Command {
 
-        private OrderService orderService=OrderService.getInstance();
+    private OrderService orderService=OrderService.getInstance();
     private UserOrderService userOrderService=UserOrderService.getInstance();
     private OrderProductService orderProductService=OrderProductService.getInstance();
 
@@ -37,66 +36,75 @@ public class UserAddProductToOrderCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-
+        if (!new UserAddProductToOrderValidator().validate(request, response)) {
+            return REDIRECTED;
+        }
         HttpSession session=request.getSession();
         User user=(User) session.getAttribute(USER_SESSION_ATTRIBUTE);
 
+        int productId=Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE));
+        int orderId;
+        int userId=user.getId();
+        int quantity=Integer.parseInt(request.getParameter(QUANTITY));
+
         if (user == null) {
+            //set error message when user = null
             request.setAttribute(RESULT_ATTRIBUTE,
                     Localization.getInstance().getLocalizedMessage
                             (request, USER_NOT_AUTHORIZED));
             return INDEX;
-        }
-
-        else {
-
-            if(session.getAttribute(ORDER_ID_ATTRIBUTE) == null){
-                Order order=new Order.Builder()
-                        .setOrderStatus(STARTED)
-                        .setDate(new Date())
-                        .build();
-                orderService.create(order);
-                session.setAttribute(ORDER_ID_ATTRIBUTE, order.getOrderId());
-                UserOrder userOrder=new UserOrder.Builder()
-                        .setUserId(user.getId())
-                        .setOrderId(order.getOrderId())
-                        .build();
-                userOrderService.create(userOrder);
-                OrderProduct orderProduct=new OrderProduct.Builder()
-                        .setOrderId(order.getOrderId())
-                        .setProductId(Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
-                        .setQuantity(Integer.parseInt(request.getParameter(QUANTITY)))
-                        .build();
-                orderProductService.create(orderProduct);
+        } else if (user.isBlocked()) {
+            //set error message when user = null
+            request.setAttribute(RESULT_ATTRIBUTE,
+                    Localization.getInstance().getLocalizedMessage
+                            (request, ACCESS_DENIED));
+            return INDEX;
+        } else {
+            //action when user != null
+            if (session.getAttribute(ORDER_ID_ATTRIBUTE) == null) {
+                //create Order
+                Order order=orderService.createDefaultOrder();
+                //set attribute order_id
+                orderId=order.getId();
+                session.setAttribute(ORDER_ID_ATTRIBUTE, orderId);
+                //create UserOrder + OrderProduct
+                orderProductService.createUserOrderAndOrderProduct(userId, orderId, productId, quantity);
                 request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                         .getLocalizedMessage(request, CREATE_USER_ORDER_SUCCESSFUL_MSG));
-            }
-
-            if (session.getAttribute(ORDER_ID_ATTRIBUTE) != null) {
-                Optional<OrderProduct> orderProductFromBase=orderProductService.getOrderProductByOrderIdAndProductId(
-                        Integer.parseInt(String.valueOf(session.getAttribute(ORDER_ID_ATTRIBUTE))),
-                        Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)));
-
-                if (orderProductFromBase.isPresent()) {
-                    OrderProduct orderProduct = orderProductFromBase.get();
-                    orderProduct.setQuantity(orderProduct.getQuantity()+Integer.parseInt(request.getParameter(QUANTITY)));
-                    orderProductService.update(orderProduct,orderProduct.getId());
-                }
-
-                if (!orderProductFromBase.isPresent()) {
-                    OrderProduct orderProduct=new OrderProduct.Builder()
-                            .setOrderId(Integer.parseInt(String.valueOf(session.getAttribute(ORDER_ID_ATTRIBUTE))))
-                            .setProductId(Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
-                            .setQuantity(Integer.parseInt(request.getParameter(QUANTITY)))
-                            .build();
-                    orderProductService.create(orderProduct);
-                    request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
-                            .getLocalizedMessage(request, CREATE_USER_ORDER_SUCCESSFUL_MSG));
-                }
+            } else if (session.getAttribute(ORDER_ID_ATTRIBUTE) != null) {
+                orderId=Integer.parseInt(String.valueOf(session.getAttribute(ORDER_ID_ATTRIBUTE)));
+                OrderIdAttributeNotNull(request, productId, orderId, quantity);
             }
         }
-
-        CommandHelper.getInstance().makeOrdersListForUserOrderDestinationPage(request, user.getId());
+        List<Order> orderList=userOrderService.getOrdersForUser(userId);
+        Map<Order, Map<OrderProduct, Product>> orderMap=orderProductService.getOrdersMap(orderList);
+        request.setAttribute(ORDER_MAP_ATTRIBUTE, orderMap);
         return USER_ORDER_DESTINATION_PAGE;
+    }
+
+    private void OrderIdAttributeNotNull(HttpServletRequest request, int productId, int orderId, int quantity) {
+        //get orderProduct from data base
+        Optional<OrderProduct> orderProductFromBase=orderProductService
+                .getOrderProductByOrderIdAndProductId(orderId, productId);
+        //action when orderProduct exist in base
+        if (orderProductFromBase.isPresent()) {
+            OrderProduct orderProduct=orderProductFromBase.get();
+            orderProductService.increaseQuantityWhenAddProduct(orderProduct, quantity);
+            request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
+                    .getLocalizedMessage(request, "AmountIncreased"));
+            //action when orderProduct not exist in base
+        }
+        if (!orderProductFromBase.isPresent()) {
+            //create orderProduct
+            OrderProduct orderProduct=new OrderProduct.Builder()
+                    .setOrderId(orderId)
+                    .setProductId(productId)
+                    .setQuantity(quantity)
+                    .build();
+            orderProductService.create(orderProduct);
+            //set message about successful creation userOrder
+            request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
+                    .getLocalizedMessage(request, CREATE_USER_ORDER_SUCCESSFUL_MSG));
+        }
     }
 }

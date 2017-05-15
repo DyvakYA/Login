@@ -15,6 +15,9 @@ import static model.constants.MsgHolder.CREATE_ORDER_PRODUCTS_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class CreateOrderProductCommand implements Command {
 
     private OrderProductService orderProductService=OrderProductService.getInstance();
@@ -27,7 +30,7 @@ public class CreateOrderProductCommand implements Command {
             return REDIRECTED;
         }
         OrderProduct orderProduct = new OrderProduct.Builder()
-                .setOrderId(Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)))
+                .setOrderId(Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE)))
                 .setProductId(Integer.valueOf(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
                 .build();
         orderProductService.create(orderProduct);

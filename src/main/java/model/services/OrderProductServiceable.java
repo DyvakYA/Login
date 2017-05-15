@@ -1,7 +1,6 @@
 package model.services;
 
 import model.entities.OrderProduct;
-import model.entities.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +19,6 @@ public interface OrderProductServiceable {
     void delete(int id);
 
     Optional<OrderProduct> findById(int id);
-
-    List<Product> getAllProductsOnOrder(int orderId);
 
     Optional<OrderProduct> getOrderProductByOrderIdAndProductId(int orderId, int productId);
 

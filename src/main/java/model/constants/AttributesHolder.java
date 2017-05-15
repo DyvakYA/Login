@@ -10,6 +10,7 @@ public class AttributesHolder {
     public static final String ORDER_ID_ATTRIBUTE = "order_id";
     public static final String ORDER_STATUS_ATTRIBUTE = "order_status";
     public static final String ORDER_DATE_ATTRIBUTE = "order_date";
+    public static final String ORDER_SUM_ATTRIBUTE = "order_sum";
 
     public static final String PRODUCT_ID_ATTRIBUTE = "product_id";
     public static final String PRODUCT_NAME_ATTRIBUTE = "product_name";
@@ -26,6 +27,9 @@ public class AttributesHolder {
 
     public static final String ORDER_PRODUCT_ID_ATTRIBUTE="order_product_id";
     public static final String QUANTITY = "quantity";
+    public static final String PRODUCT_SUM = "product_sum";
+
+    public static final String USER_ORDER_ID_ATTRIBUTE="user_order_id";
 
     public static final String ORDERS_LIST_ATTRIBUTE = "ordersList";
     public static final String ORDER_PRODUCTS_LIST_ATTRIBUTE = "orderProductsList";
@@ -34,6 +38,7 @@ public class AttributesHolder {
     public static final String USER_ORDERS_LIST_ATTRIBUTE = "userOrdersList";
 
     public static final String ORDER_MAP_ATTRIBUTE = "orderMap";
+    public static final String USER_MAP_ATTRIBUTE="userMap";
 
     public static final String COMMAND_ATTRIBUTE = "command";
     public static final String PRICE_FIRST_ATTRIBUTE="first";

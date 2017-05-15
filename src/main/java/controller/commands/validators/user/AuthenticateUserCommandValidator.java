@@ -18,7 +18,9 @@ public class AuthenticateUserCommandValidator implements CommandValidator {
 
         String message = Localization.getInstance().getLocalizedMessage(request, NOT_VALID_EMPTY_LOGIN_AND_AUTHENTICATE);
 
-        return CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{USER_EMAIL_ATTRIBUTE, USER_AUTHENTICATE_ATTRIBUTE},
-                RESULT_ATTRIBUTE,  USER_ORDER_DESTINATION_PAGE, message, request, response);
+        return CommandValidatorHelper.getInstance().isNullValidate(new String[]{USER_EMAIL_ATTRIBUTE, USER_AUTHENTICATE_ATTRIBUTE},
+                RESULT_ATTRIBUTE,  USER_ORDER_DESTINATION_PAGE, message, request, response)
+                && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{USER_EMAIL_ATTRIBUTE, USER_AUTHENTICATE_ATTRIBUTE},
+                RESULT_ATTRIBUTE, USER_ORDER_DESTINATION_PAGE, message, request, response);
     }
 }

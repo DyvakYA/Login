@@ -14,6 +14,9 @@ import static model.constants.AttributesHolder.LOCALE_ATTRIBUTE;
 import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
 import static model.constants.UrlHolder.INDEX;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class ChangeLocaleCommand implements Command {
 
     private static final String RU_COUNTRY="RU";
@@ -29,20 +32,19 @@ public class ChangeLocaleCommand implements Command {
         HttpSession session=request.getSession();
         User user=(User) session.getAttribute(USER_SESSION_ATTRIBUTE);
         String destinationPage=INDEX;
-            if (user == null) {
-                setLocalAttribute(request, session);
-            }else if (user != null) {
-                setLocalAttribute(request, session);
-                destinationPage=CommandHelper.getInstance().isAdmin(request, destinationPage, user);
-                destinationPage=CommandHelper.getInstance().isUser(request, destinationPage, user);
-            }
+        if (user == null) {
+            setLocalAttribute(request, session);
+        } else if (user != null) {
+            setLocalAttribute(request, session);
+            destinationPage=CommandHelper.getInstance().getDestinationPageByRole(request, user);
+        }
         return destinationPage;
     }
 
     private void setLocalAttribute(HttpServletRequest request, HttpSession session) {
-        if (session.getAttribute(LOCALE_ATTRIBUTE) == null){
+        if (session.getAttribute(LOCALE_ATTRIBUTE) == null) {
             session.setAttribute(LOCALE_ATTRIBUTE, changeLocale(request.getLocale()));
-        }else {
+        } else {
             session.setAttribute(LOCALE_ATTRIBUTE, changeLocale((Locale) session.getAttribute(LOCALE_ATTRIBUTE)));
         }
     }

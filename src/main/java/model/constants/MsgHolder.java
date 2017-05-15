@@ -32,7 +32,9 @@ public class MsgHolder {
     public static final String REGISTER_USER_SUCCESSFUL_MSG = "RegisterUserSuccessful";
 
     public static final String USER_NOT_AUTHORIZED="UserNotAuthorized";
-    public static final String ACCESS_DENIED="Access Denied";
+    public static final String ACCESS_DENIED="AccessDenied";
+    public static final String USER_BLOCKED="UserBlocked";
+
 
     private MsgHolder(){
 

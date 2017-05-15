@@ -14,9 +14,7 @@ import static model.constants.AttributesHolder.RESULT_ATTRIBUTE;
 import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
 import static model.constants.MsgHolder.ACCESS_DENIED;
 import static model.constants.MsgHolder.USER_NOT_AUTHORIZED;
-import static model.constants.UrlHolder.ADMIN;
-import static model.constants.UrlHolder.INDEX;
-import static model.constants.UrlHolder.USER;
+import static model.constants.UrlHolder.*;
 
 public class AuthFilter implements Filter {
 
@@ -55,9 +53,8 @@ public class AuthFilter implements Filter {
             return false;
         }
 
-        if(((user.isAdmin()) && (uri.startsWith(USER)))
-                || ((!user.isAdmin()) && (uri.startsWith(ADMIN))
-                || (user.isBlocked()))) {
+        if(isAdmin(user, uri)|| (isUser(user, uri) || (user.isBlocked()))) {
+            System.out.println(user.isBlocked());
             logger.info(ACCESS_DENIED);
             request.setAttribute(RESULT_ATTRIBUTE,
                     Localization.getInstance().getLocalizedMessage
@@ -66,6 +63,14 @@ public class AuthFilter implements Filter {
             return false;
         }
         return true;
+    }
+
+    private boolean isAdmin(User user, String uri){
+        return ((user.isAdmin()) && (uri.startsWith(USER)));
+    }
+
+    private boolean isUser(User user, String uri){
+        return ((!user.isAdmin()) && (uri.startsWith(ADMIN)));
     }
 
     /**

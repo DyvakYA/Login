@@ -12,6 +12,9 @@ import java.util.List;
 import static model.constants.AttributesHolder.USERS_LIST_ATTRIBUTE;
 import static model.constants.UrlHolder.ADMIN_USERS_DESTINATION_PAGE;
 
+/**
+ * @author Dyvak Yurii dyvakyurii@gmail.com
+ */
 public class AdminGetAllUsersCommand implements Command {
 
     private UserService userService=UserService.getInstance();

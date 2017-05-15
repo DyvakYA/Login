@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
-public class JdbcProductDao implements ProductDao {
+public class JdbcProductDao extends AbstractDao<Product> implements ProductDao {
 
     private static final String SELECT_FROM_PRODUCTS_WHERE_PRODUCT_ID="SELECT * FROM products WHERE product_id=?";
     private static final String SELECT_FROM_PRODUCTS_BY_PRICE="SELECT * FROM products\n" +
@@ -25,29 +25,13 @@ public class JdbcProductDao implements ProductDao {
             "SET product_name=?, product_description=?, product_price=? WHERE product_id=?";
     private static final String DELETE_PRODUCT_QUERY="DELETE FROM products WHERE product_id=?";
 
-    private Connection connection;
-
     JdbcProductDao(Connection connection) {
-        this.connection=connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection=connection;
+        super(connection);
     }
 
     @Override
     public Optional<Product> findById(int id) {
-        Optional<Product> product=Optional.empty();
-        try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS_WHERE_PRODUCT_ID)) {
-            query.setInt(1, id);
-            ResultSet resultSet=query.executeQuery();
-            if (resultSet.next()) {
-                product=Optional.of(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
-        }
-        return product;
+        return getProduct(id, SELECT_FROM_PRODUCTS_WHERE_PRODUCT_ID);
     }
 
     @Override
@@ -56,7 +40,7 @@ public class JdbcProductDao implements ProductDao {
         try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS)) {
             ResultSet resultSet=query.executeQuery();
             while (resultSet.next()) {
-                products.add(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
+                products.add(resultSetExtractor.getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -73,7 +57,7 @@ public class JdbcProductDao implements ProductDao {
             query.setString(2, String.valueOf(second));
             ResultSet resultSet=query.executeQuery();
             while (resultSet.next()) {
-                products.add(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
+                products.add(resultSetExtractor.getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -89,7 +73,7 @@ public class JdbcProductDao implements ProductDao {
             query.setString(1, "%" + name + "%");
             ResultSet resultSet=query.executeQuery();
             while (resultSet.next()) {
-                products.add(ResultSetExtractor.getInstance().getProductFromResultSet(resultSet));
+                products.add(resultSetExtractor.getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -99,6 +83,8 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public void create(Product product) {
+        checkForNull(product);
+        checkIsUnsaved(product);
         try (PreparedStatement query=connection.prepareStatement(CREATE_PRODUCT_QUERY)) {
             query.setString(1, product.getName());
             query.setString(2, product.getDescription());
@@ -111,6 +97,8 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public void update(Product product, int id) {
+        checkForNull(product);
+        checkIsSaved(product);
         try (PreparedStatement query=connection.prepareStatement(UPDATE_PRODUCT_QUERY)) {
             query.setString(1, product.getName());
             query.setString(2, product.getDescription());

@@ -20,6 +20,8 @@ public class UpdateOrderCommandValidator implements CommandValidator {
         String message = Localization.getInstance().getLocalizedMessage(request, ORDER_ERROR_MSG);
 
         return (CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_ID_ATTRIBUTE},
-                RESULT_ATTRIBUTE, ADMIN_ORDER_DESTINATION_PAGE, message, request, response));
+                RESULT_ATTRIBUTE, ADMIN_ORDER_DESTINATION_PAGE, message, request, response))
+                && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{ORDER_ID_ATTRIBUTE},
+                RESULT_ATTRIBUTE, ADMIN_ORDER_DESTINATION_PAGE, message, request, response);
     }
 }
