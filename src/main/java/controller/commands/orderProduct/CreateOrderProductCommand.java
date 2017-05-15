@@ -4,7 +4,8 @@ import controller.commands.Command;
 import controller.commands.validators.orderProduct.CreateOrderProductCommandValidator;
 import model.entities.OrderProduct;
 import model.extras.Localization;
-import model.services.service.OrderProductService;
+import model.services.OrderProductService;
+import model.services.service.OrderProductServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  */
 public class CreateOrderProductCommand implements Command {
 
-    private OrderProductService orderProductService=OrderProductService.getInstance();
+    private OrderProductService orderProductService=OrderProductServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)

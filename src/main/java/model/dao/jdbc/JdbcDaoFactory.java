@@ -40,7 +40,6 @@ public class JdbcDaoFactory extends DaoFactory {
 
 
     public DaoConnection getConnectionForTesting() {
-
         try {
             InputStream inputStream=
                     DaoFactory.class.getResourceAsStream(DB_FILE);

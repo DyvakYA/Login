@@ -14,4 +14,5 @@ public interface OrderDao extends GenericDao<Order> {
 
     List<Order> findAll();
 
+    void updateOrderStatus(Order order, int id);
 }

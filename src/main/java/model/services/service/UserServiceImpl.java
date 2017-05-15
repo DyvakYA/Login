@@ -5,7 +5,7 @@ import model.entities.Order;
 import model.entities.OrderProduct;
 import model.entities.Product;
 import model.entities.User;
-import model.services.UserServiceable;
+import model.services.UserService;
 import model.services.exception.ServiceException;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static model.services.exception.ServiceException.USER_ALREADY_EXISTS;
 
-public class UserService implements UserServiceable {
+public class UserServiceImpl implements UserService {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
@@ -24,10 +24,10 @@ public class UserService implements UserServiceable {
     }
 
     private static class Holder {
-        static final UserService INSTANCE = new UserService();
+        static final UserServiceImpl INSTANCE = new UserServiceImpl();
     }
 
-    public static UserService getInstance() {
+    public static UserServiceImpl getInstance() {
         return Holder.INSTANCE;
     }
 
@@ -106,7 +106,7 @@ public class UserService implements UserServiceable {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             UserDao userDao=daoFactory.createUserDao(connection);
-            checkIsUserRegistered(user.getEmail(), userDao);
+            checkIfUserAlreadyExists(user.getEmail(), userDao);
             userDao.create(user);
             connection.commitTransaction();
         }
@@ -130,7 +130,7 @@ public class UserService implements UserServiceable {
         }
     }
 
-    private void checkIsUserRegistered(String email, UserDao userDao){
+    private void checkIfUserAlreadyExists(String email, UserDao userDao){
         if(userDao.getUserByEmail(email).isPresent()){
             throw new ServiceException(USER_ALREADY_EXISTS);
         }

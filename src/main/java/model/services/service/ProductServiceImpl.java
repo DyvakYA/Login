@@ -4,22 +4,22 @@ import model.dao.DaoConnection;
 import model.dao.DaoFactory;
 import model.dao.ProductDao;
 import model.entities.Product;
-import model.services.ProductServiceable;
+import model.services.ProductService;
 
 import java.util.List;
 
 /**
  * Created by Dyvak on 21.01.2017.
  */
-public class ProductService implements ProductServiceable {
+public class ProductServiceImpl implements ProductService {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     private static class Holder {
-        static final ProductService INSTANCE = new ProductService();
+        static final ProductServiceImpl INSTANCE = new ProductServiceImpl();
     }
 
-    public static ProductService getInstance() {
+    public static ProductServiceImpl getInstance() {
         return Holder.INSTANCE;
     }
 
@@ -58,10 +58,12 @@ public class ProductService implements ProductServiceable {
         }
     }
 
-    public List<Product> getProductsByPrice(int first, int second) {
+    public List<Product> getProductsByPrice(double doubleFirst, double doubleSecond) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             ProductDao productDao=daoFactory.createProductDao(connection);
+            long first = (long)doubleFirst * 100;
+            long second = (long)doubleSecond * 100;
             return productDao.findProductsByPrice(first, second);
         }
     }

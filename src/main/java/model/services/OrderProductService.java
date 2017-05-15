@@ -1,14 +1,17 @@
 package model.services;
 
+import model.entities.Order;
 import model.entities.OrderProduct;
+import model.entities.Product;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * Created by Dyvak on 23.01.2017.
  */
-public interface OrderProductServiceable {
+public interface OrderProductService {
 
     List<OrderProduct> getAll();
 
@@ -23,4 +26,10 @@ public interface OrderProductServiceable {
     Optional<OrderProduct> getOrderProductByOrderIdAndProductId(int orderId, int productId);
 
     void deleteProductFromOrder(int orderId, int productId);
+
+    Map<Order,Map<OrderProduct,Product>> getOrdersMap(List<Order> orderList);
+
+    void createUserOrderAndOrderProduct(int userId, int orderId, int productId, int quantity);
+
+    void increaseQuantityWhenAddProduct(OrderProduct orderProduct, int quantity);
 }

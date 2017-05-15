@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="until" required="required" name="second">
+                            <input type="text" class="form-control" placeholder="before" required="required" name="second">
                         </div>
                         <button type="submit" class="btn btn-success btn-default">
                             <i class="fa"><fmt:message key="FindByPrice"/></i>
@@ -46,7 +46,7 @@
                     <form method="get" action="/shop/findByName" class="navbar-form hidden-sm navbar-row">
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="name" name="product_name">
+                            <input type="text" class="form-control" placeholder="name" required="required" name="product_name">
                         </div>
 
                         <button type="submit" class="btn btn-success btn-default">

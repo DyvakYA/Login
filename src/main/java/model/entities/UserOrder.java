@@ -60,13 +60,15 @@ public class UserOrder implements Identified {
 
         UserOrder userOrder=(UserOrder) o;
 
+        if (id != userOrder.id) return false;
         if (userId != userOrder.userId) return false;
         return orderId == userOrder.orderId;
     }
 
     @Override
     public int hashCode() {
-        int result=userId;
+        int result=id;
+        result=31 * result + userId;
         result=31 * result + orderId;
         return result;
     }
@@ -74,7 +76,8 @@ public class UserOrder implements Identified {
     @Override
     public String toString() {
         return "UserOrder{" +
-                "userId=" + userId +
+                "id=" + id +
+                ", userId=" + userId +
                 ", orderId=" + orderId +
                 '}';
     }

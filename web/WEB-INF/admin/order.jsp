@@ -26,9 +26,9 @@
                         <div class="caption">
                             <h5><b><fmt:message key="User"/>${users.key.email}</b><br>
                             <b><fmt:message key="Number"/> ${orders.key.id}</b><br>
-                            <b><fmt:message key="Date"/> ${orders.key.date}</b><br>
+                            <b><fmt:message key="Date"/> ${orders.key.getDate()}</b><br>
                             <b><fmt:message key="Sum"/> ${orders.key.getRealTotalPrice()} <fmt:message key="UAH"/></b></h5>
-                            <form action="/shop/admin/adminUpdateOrder" method="GET">
+                            <form action="/shop/admin/adminUpdateOrderStatus" method="GET">
                                 <div class="form-group">
                                     <input type="text" name="order_status" size="auto" class="form-control"
                                            value="${orders.key.orderStatus}">

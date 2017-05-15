@@ -32,6 +32,7 @@ public final class UrlHolder {
     public static final String FIND_PRODUCT_BY_PRICE = "/shop/findByPrice";
     public static final String ADMIN_DELETE_PRODUCT_GET = "/shop/admin/adminDeleteProduct";
     public static final String USER_DELETE_PRODUCT_GET = "/shop/user/adminDeleteProduct";
+    public static final String ADMIN_UPDATE_ORDER_STATUS = "/shop/admin/adminUpdateOrderStatus";
 
     public static final String LOCALE = "/shop/locale";
     public static final String REGISTRATION = "/shop/registration";
@@ -46,11 +47,13 @@ public final class UrlHolder {
 
     public static final String ADMIN_ORDER_DESTINATION_PAGE = "/WEB-INF/admin/order.jsp";
 
+    public static final String USER_JSP= "/users.jsp";
+    public static final String PRODUCT_JSP= "/product.jsp";
+    public static final String ORDER_JSP= "/order.jsp";
+
+    public static final String GUEST = "/WEB-INF";
     public static final String WEB_INF_ADMIN= "/WEB-INF/admin";
     public static final String WEB_INF_USER= "/WEB-INF/user";
-    public static final String GUEST = "/WEB-INF";
-    public static final String PRODUCT = "/product.jsp";
-    public static final String ORDER = "/order.jsp";
 
     public static final String ADMIN = "/shop/admin";
     public static final String USER = "/shop/user";

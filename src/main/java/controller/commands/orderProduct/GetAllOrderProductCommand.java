@@ -2,7 +2,8 @@ package controller.commands.orderProduct;
 
 import controller.commands.Command;
 import model.entities.OrderProduct;
-import model.services.service.OrderProductService;
+import model.services.OrderProductService;
+import model.services.service.OrderProductServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
  */
 public class GetAllOrderProductCommand implements Command {
 
-    private OrderProductService orderProductsService=OrderProductService.getInstance();
+    private OrderProductService orderProductsService=OrderProductServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)

@@ -10,9 +10,9 @@ import static model.constants.AttributesHolder.*;
 /**
  * Created by User on 5/9/2017.
  */
-public class ResultSetExtractor {
+class ResultSetExtractor {
 
-    public OrderProduct getOrderProductFromResultSet(ResultSet resultSet) throws SQLException {
+    OrderProduct getOrderProductFromResultSet(ResultSet resultSet) throws SQLException {
         return new OrderProduct.Builder()
                 .setId(resultSet.getInt(ORDER_PRODUCT_ID_ATTRIBUTE))
                 .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
@@ -22,7 +22,7 @@ public class ResultSetExtractor {
                 .build();
     }
 
-    public Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
+    Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
         return new Order.Builder()
                 .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
                 .setOrderStatus(resultSet.getString(ORDER_STATUS_ATTRIBUTE))
@@ -31,7 +31,7 @@ public class ResultSetExtractor {
                 .build();
     }
 
-    public Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
+    Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
         return new Product.Builder()
                 .setId(resultSet.getInt(PRODUCT_ID_ATTRIBUTE))
                 .setName(resultSet.getString(PRODUCT_NAME_ATTRIBUTE))
@@ -40,7 +40,7 @@ public class ResultSetExtractor {
                 .build();
     }
 
-    public User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+    User getUserFromResultSet(ResultSet resultSet) throws SQLException {
         return new User.Builder()
                 .setId(resultSet.getInt(USER_ID_ATTRIBUTE))
                 .setName(resultSet.getString(USER_NAME_ATTRIBUTE))
@@ -51,7 +51,7 @@ public class ResultSetExtractor {
                 .build();
     }
 
-    public UserOrder getUserOrderFromResultSet(ResultSet resultSet) throws SQLException {
+    UserOrder getUserOrderFromResultSet(ResultSet resultSet) throws SQLException {
         return new UserOrder.Builder()
                 .setUserId(resultSet.getInt(USER_ID_ATTRIBUTE))
                 .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))

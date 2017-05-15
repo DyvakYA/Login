@@ -4,7 +4,8 @@ import controller.commands.Command;
 import controller.commands.validators.user.RegisterUserCommandValidator;
 import model.entities.User;
 import model.extras.Localization;
-import model.services.service.UserService;
+import model.services.UserService;
+import model.services.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  */
 public class RegisterUserCommand implements Command {
 
-    private UserService userService=UserService.getInstance();
+    private UserService userService=UserServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

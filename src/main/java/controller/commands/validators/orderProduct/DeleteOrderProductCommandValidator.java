@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static model.constants.AttributesHolder.ORDER_PRODUCT_ID_ATTRIBUTE;
 import static model.constants.AttributesHolder.RESULT_ATTRIBUTE;
-import static model.constants.ErrorMsgHolder.PRODUCT_ERROR_MSG;
+import static model.constants.ErrorMsgHolder.ORDER_PRODUCT_ERROR_MSG;
 import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 
 public class DeleteOrderProductCommandValidator implements CommandValidator {
@@ -17,7 +17,7 @@ public class DeleteOrderProductCommandValidator implements CommandValidator {
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
-        String message = Localization.getInstance().getLocalizedMessage(request, PRODUCT_ERROR_MSG);
+        String message = Localization.getInstance().getLocalizedMessage(request, ORDER_PRODUCT_ERROR_MSG);
 
         return CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_PRODUCT_ID_ATTRIBUTE},
                 RESULT_ATTRIBUTE, ORDER_PRODUCT_DESTINATION_PAGE, message, request, response);

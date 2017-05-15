@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Dyvak on 23.01.2017.
  */
-public interface ProductServiceable {
+public interface ProductService {
 
     List<Product> getAll();
 
@@ -17,7 +17,7 @@ public interface ProductServiceable {
 
     void delete(int id);
 
-    List<Product> getProductsByPrice(int first, int second);
+    List<Product> getProductsByPrice(double first, double second);
 
     List<Product> getProductsByName(String name);
 

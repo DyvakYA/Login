@@ -95,7 +95,8 @@ public class OrderProduct implements Identified {
         if (id != that.id) return false;
         if (orderId != that.orderId) return false;
         if (productId != that.productId) return false;
-        return quantity == that.quantity;
+        if (quantity != that.quantity) return false;
+        return productSum == that.productSum;
     }
 
     @Override
@@ -104,6 +105,7 @@ public class OrderProduct implements Identified {
         result=31 * result + orderId;
         result=31 * result + productId;
         result=31 * result + quantity;
+        result=31 * result + (int) (productSum ^ (productSum >>> 32));
         return result;
     }
 

@@ -1,22 +1,21 @@
 package controller.commands.user;
 
 import controller.commands.Command;
+import controller.commands.CommandHelper;
 import controller.commands.validators.user.UserAddProductToOrderValidator;
 import model.entities.Order;
 import model.entities.OrderProduct;
-import model.entities.Product;
 import model.entities.User;
 import model.extras.Localization;
-import model.services.service.OrderProductService;
-import model.services.service.OrderService;
-import model.services.service.UserOrderService;
+import model.services.OrderProductService;
+import model.services.OrderService;
+import model.services.service.OrderProductServiceImpl;
+import model.services.service.OrderServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static model.constants.AttributesHolder.*;
@@ -28,9 +27,8 @@ import static model.constants.UrlHolder.*;
  */
 public class UserAddProductToOrderCommand implements Command {
 
-    private OrderService orderService=OrderService.getInstance();
-    private UserOrderService userOrderService=UserOrderService.getInstance();
-    private OrderProductService orderProductService=OrderProductService.getInstance();
+    private OrderService orderService=OrderServiceImpl.getInstance();
+    private OrderProductService orderProductService=OrderProductServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +42,7 @@ public class UserAddProductToOrderCommand implements Command {
 
         int productId=Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE));
         int orderId;
-        int userId=user.getId();
+        int userId;
         int quantity=Integer.parseInt(request.getParameter(QUANTITY));
 
         if (user == null) {
@@ -52,7 +50,7 @@ public class UserAddProductToOrderCommand implements Command {
             request.setAttribute(RESULT_ATTRIBUTE,
                     Localization.getInstance().getLocalizedMessage
                             (request, USER_NOT_AUTHORIZED));
-            return INDEX;
+            return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP,request);
         } else if (user.isBlocked()) {
             //set error message when user = null
             request.setAttribute(RESULT_ATTRIBUTE,
@@ -60,6 +58,7 @@ public class UserAddProductToOrderCommand implements Command {
                             (request, ACCESS_DENIED));
             return INDEX;
         } else {
+            userId = user.getId();
             //action when user != null
             if (session.getAttribute(ORDER_ID_ATTRIBUTE) == null) {
                 //create Order
@@ -76,10 +75,7 @@ public class UserAddProductToOrderCommand implements Command {
                 OrderIdAttributeNotNull(request, productId, orderId, quantity);
             }
         }
-        List<Order> orderList=userOrderService.getOrdersForUser(userId);
-        Map<Order, Map<OrderProduct, Product>> orderMap=orderProductService.getOrdersMap(orderList);
-        request.setAttribute(ORDER_MAP_ATTRIBUTE, orderMap);
-        return USER_ORDER_DESTINATION_PAGE;
+        return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP,request);
     }
 
     private void OrderIdAttributeNotNull(HttpServletRequest request, int productId, int orderId, int quantity) {

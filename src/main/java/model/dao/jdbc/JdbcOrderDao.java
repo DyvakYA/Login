@@ -22,6 +22,8 @@ public class JdbcOrderDao extends AbstractDao<Order> implements OrderDao {
     private static final String UPDATE_ORDER_QUERY="UPDATE orders SET order_status=?, order_sum=? WHERE order_id=?";
     private static final String DELETE_ORDER_QUERY="DELETE FROM orders WHERE order_id=?";
 
+    private static final String UPDATE_ORDER_STATUS_QUERY="UPDATE orders SET order_status=? WHERE order_id=?";
+
     JdbcOrderDao(Connection connection) {
         super(connection);
     }
@@ -46,6 +48,19 @@ public class JdbcOrderDao extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
+    public void updateOrderStatus(Order order, int id) {
+        checkForNull(order);
+        checkIsSaved(order);
+        try (PreparedStatement query=connection.prepareStatement(UPDATE_ORDER_STATUS_QUERY)) {
+            query.setString(1, order.getOrderStatus());
+            query.setInt(2, id);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(SQL_EXCEPTION + order.toString(), e);
+        }
+    }
+
+    @Override
     public void create(Order order) {
         checkForNull(order);
         checkIsUnsaved(order);
@@ -58,7 +73,7 @@ public class JdbcOrderDao extends AbstractDao<Order> implements OrderDao {
                 order.setId(resultSet.getInt(1));
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(SQL_EXCEPTION + order.toString(), e);
         }
     }
 
@@ -72,7 +87,7 @@ public class JdbcOrderDao extends AbstractDao<Order> implements OrderDao {
             query.setInt(3, id);
             query.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(SQL_EXCEPTION + order.toString(), e);
         }
     }
 

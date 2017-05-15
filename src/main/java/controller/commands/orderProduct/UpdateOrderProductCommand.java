@@ -4,7 +4,8 @@ import controller.commands.Command;
 import controller.commands.validators.orderProduct.UpdateOrderProductCommandValidator;
 import model.entities.OrderProduct;
 import model.extras.Localization;
-import model.services.service.OrderProductService;
+import model.services.OrderProductService;
+import model.services.service.OrderProductServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  */
 public class UpdateOrderProductCommand implements Command {
 
-    private OrderProductService orderProductsService=OrderProductService.getInstance();
+    private OrderProductService orderProductsService=OrderProductServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -30,8 +31,8 @@ public class UpdateOrderProductCommand implements Command {
             return REDIRECTED;
         }
         OrderProduct orderProduct= new OrderProduct.Builder()
-                .setOrderId(Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE)))
-                .setProductId(Integer.valueOf(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
+                .setOrderId(Integer.parseInt((request.getParameter(ORDER_ID_ATTRIBUTE))))
+                .setProductId(Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
                 .build();
         orderProductsService.update(orderProduct, Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)));
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()

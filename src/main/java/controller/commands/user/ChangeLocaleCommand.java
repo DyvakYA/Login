@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import static model.constants.AttributesHolder.LOCALE_ATTRIBUTE;
 import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
-import static model.constants.UrlHolder.INDEX;
+import static model.constants.UrlHolder.*;
 
 /**
  * @author Dyvak Yurii dyvakyurii@gmail.com
@@ -31,14 +31,13 @@ public class ChangeLocaleCommand implements Command {
 
         HttpSession session=request.getSession();
         User user=(User) session.getAttribute(USER_SESSION_ATTRIBUTE);
-        String destinationPage=INDEX;
         if (user == null) {
             setLocalAttribute(request, session);
         } else if (user != null) {
             setLocalAttribute(request, session);
-            destinationPage=CommandHelper.getInstance().getDestinationPageByRole(request, user);
+            return getDestinationPageByUserRole(user,request);
         }
-        return destinationPage;
+        return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request);
     }
 
     private void setLocalAttribute(HttpServletRequest request, HttpSession session) {
@@ -54,6 +53,15 @@ public class ChangeLocaleCommand implements Command {
             return new Locale(RU_LANGUAGE, RU_COUNTRY);
         } else if (locale.equals(new Locale(RU_LANGUAGE, RU_COUNTRY))) {
             return new Locale(EN_LANGUAGE, US_COUNTRY);
+        }
+        return null;
+    }
+
+    private String getDestinationPageByUserRole(User user, HttpServletRequest request) {
+        if (user.isAdmin()) {
+            return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
+        }else if (!user.isAdmin()) {
+            return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
         }
         return null;
     }

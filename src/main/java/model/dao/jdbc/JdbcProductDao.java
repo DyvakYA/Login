@@ -49,7 +49,7 @@ public class JdbcProductDao extends AbstractDao<Product> implements ProductDao {
     }
 
     @Override
-    public List<Product> findProductsByPrice(int first, int second) {
+    public List<Product> findProductsByPrice(long first, long second) {
         List<Product> products=new ArrayList<>();
         try {
             PreparedStatement query=connection.prepareStatement(SELECT_FROM_PRODUCTS_BY_PRICE);

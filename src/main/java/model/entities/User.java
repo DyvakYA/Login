@@ -127,6 +127,7 @@ public class User implements Identified {
         if (id != user.id) return false;
         if (isAdmin != user.isAdmin) return false;
         if (isBlocked != user.isBlocked) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         return passwordHash != null ? passwordHash.equals(user.passwordHash) : user.passwordHash == null;
     }
@@ -134,6 +135,7 @@ public class User implements Identified {
     @Override
     public int hashCode() {
         int result=id;
+        result=31 * result + (name != null ? name.hashCode() : 0);
         result=31 * result + (email != null ? email.hashCode() : 0);
         result=31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
         result=31 * result + (isAdmin ? 1 : 0);
@@ -147,7 +149,7 @@ public class User implements Identified {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", passwordHash=" + passwordHash +
+                ", passwordHash='" + passwordHash + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", isBlocked=" + isBlocked +
                 '}';

@@ -5,7 +5,7 @@ import model.entities.Order;
 import model.entities.OrderProduct;
 import model.entities.Product;
 import model.entities.UserOrder;
-import model.services.OrderProductServiceable;
+import model.services.OrderProductService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +15,15 @@ import java.util.Optional;
 /**
  * Created by Dyvak on 21.01.2017.
  */
-public class OrderProductService implements OrderProductServiceable {
+public class OrderProductServiceImpl implements OrderProductService {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     private static class Holder {
-        static final OrderProductService INSTANCE = new OrderProductService();
+        static final OrderProductServiceImpl INSTANCE = new OrderProductServiceImpl();
     }
 
-    public static OrderProductService getInstance() {
+    public static OrderProductServiceImpl getInstance() {
         return Holder.INSTANCE;
     }
 

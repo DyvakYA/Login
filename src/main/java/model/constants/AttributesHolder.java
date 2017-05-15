@@ -29,9 +29,6 @@ public class AttributesHolder {
     public static final String QUANTITY = "quantity";
     public static final String PRODUCT_SUM = "product_sum";
 
-    public static final String USER_ORDER_ID_ATTRIBUTE="user_order_id";
-
-    public static final String ORDERS_LIST_ATTRIBUTE = "ordersList";
     public static final String ORDER_PRODUCTS_LIST_ATTRIBUTE = "orderProductsList";
     public static final String PRODUCTS_LIST_ATTRIBUTE = "productsList";
     public static final String USERS_LIST_ATTRIBUTE= "usersList";

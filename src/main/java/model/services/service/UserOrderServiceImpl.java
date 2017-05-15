@@ -5,22 +5,22 @@ import model.dao.DaoFactory;
 import model.dao.UserOrderDao;
 import model.entities.Order;
 import model.entities.UserOrder;
-import model.services.UserOrderServiceable;
+import model.services.UserOrderService;
 
 import java.util.List;
 
 /**
  * Created by Dyvak on 21.01.2017.
  */
-public class UserOrderService implements UserOrderServiceable {
+public class UserOrderServiceImpl implements UserOrderService {
 
     private DaoFactory daoFactory=DaoFactory.getInstance();
 
     private static class Holder {
-        static final UserOrderService INSTANCE=new UserOrderService();
+        static final UserOrderServiceImpl INSTANCE=new UserOrderServiceImpl();
     }
 
-    public static UserOrderService getInstance() {
+    public static UserOrderServiceImpl getInstance() {
         return Holder.INSTANCE;
     }
 

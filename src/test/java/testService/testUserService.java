@@ -5,7 +5,7 @@ import model.dao.DaoFactory;
 import model.dao.UserDao;
 import model.entities.User;
 import model.services.exception.ServiceException;
-import model.services.service.UserService;
+import model.services.service.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class testUserService {
     @Mock
     private UserDao userDao;
 
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     private User user1;
     private User user2;
 
@@ -60,8 +60,8 @@ public class testUserService {
 
         when(daoFactory.getConnection()).thenReturn(daoConnection);
         when(daoFactory.createUserDao(daoConnection)).thenReturn(userDao);
-        userService=new UserService();
-        (userService).setDaoFactory(daoFactory);
+        userServiceImpl=new UserServiceImpl();
+        (userServiceImpl).setDaoFactory(daoFactory);
         when(userDao.findById(user1.getId())).thenReturn(Optional.of(user1));
         when(userDao.getUserByEmail(user1.getEmail())).thenReturn(Optional.of(user1));
         doNothing().when(userDao).create(any(User.class));
@@ -70,7 +70,7 @@ public class testUserService {
 
     @Test
     public void testFindByID() {
-        Optional<User> user=userService.getById(1);
+        Optional<User> user=userServiceImpl.getById(1);
         Assert.assertNotNull(user.get());
         Assert.assertEquals(1, user.get().getId());
         verify(userDao, times(1)).findById(1);
@@ -79,14 +79,14 @@ public class testUserService {
     @Test(expected = ServiceException.class)
     public void testLoginWithWrongCredentials(){
         String wrongPassword="wrong password";
-        userService.login(user1.getEmail(), wrongPassword);
+        userServiceImpl.login(user1.getEmail(), wrongPassword);
         verify(userDao, times(1)).getUserByEmail(user1.getEmail());
     }
 
     @Test(expected = ServiceException.class)
     public void testCreateUserWithExistingEmail(){
         User user = new User.Builder().setEmail("John@gmail.com").build();
-        userService.create(user);
+        userServiceImpl.create(user);
     }
 
     @Test
@@ -99,21 +99,21 @@ public class testUserService {
                 .setBlocked(true)
                 .build();
         when(userDao.getUserByEmail(email)).thenReturn(Optional.empty());
-        userService.create(user3);
+        userServiceImpl.create(user3);
         verify(userDao, times(1)).getUserByEmail(email);
         verify(userDao, times(1)).create(user3);
     }
 
     @Test
     public void testFindAll(){
-        List<User> users = userService.getAll();
+        List<User> users = userServiceImpl.getAll();
         Assert.assertEquals(2, users.size());
         verify(userDao, times(1)).findAll();
     }
 
     @Test
     public void testUpdateUserDescription(){
-        userService.update(user1, user1.getId());
+        userServiceImpl.update(user1, user1.getId());
         doNothing().when(userDao).update(user1, user1.getId());
         verify(userDao, times(1)).update(user1, user1.getId());
     }
@@ -122,7 +122,7 @@ public class testUserService {
     public void testCreateUser() {
         doNothing().when(userDao).create(any());
         when(userDao.getUserByEmail(user1.getEmail())).thenReturn(Optional.empty());
-        userService.create(user1);
+        userServiceImpl.create(user1);
         verify(userDao, times(1)).create(user1);
     }
 }

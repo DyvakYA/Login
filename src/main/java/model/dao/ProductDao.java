@@ -12,7 +12,7 @@ public interface ProductDao extends GenericDao<Product> {
 
     List<Product> findAll();
 
-    List<Product> findProductsByPrice(int first, int second);
+    List<Product> findProductsByPrice(long first, long second);
 
     List<Product> findProductsByName(String name);
 }

@@ -1,8 +1,9 @@
 package controller.servlet;
 
 import controller.commands.Command;
-import controller.commands.order.AdminGetProductsFromOrderCommand;
+import controller.commands.order.AdminGetAllOrdersCommand;
 import controller.commands.order.AdminUpdateOrderCommand;
+import controller.commands.order.AdminUpdateOrderStatusCommand;
 import controller.commands.order.DeleteOrderCommand;
 import controller.commands.orderProduct.DeleteProductFromOrderCommand;
 import controller.commands.product.*;
@@ -51,11 +52,12 @@ public class CommandHolder {
         commands.put(GET + FIND_PRODUCT_BY_PRICE, new FindProductsByPriceCommand());
         commands.put(GET + FIND_PRODUCT_BY_NAME, new FindProductsByNameCommand());
         commands.put(GET + USER_ORDERS, new UserGetAllUserOrdersCommand());
-        commands.put(GET + ADMIN_ORDERS, new AdminGetProductsFromOrderCommand());
+        commands.put(GET + ADMIN_ORDERS, new AdminGetAllOrdersCommand());
         commands.put(GET + ADMIN_GET_ALL_USERS, new AdminGetAllUsersCommand());
         commands.put(GET + USER_ADD_TO_ORDER, new UserAddProductToOrderCommand());
         commands.put(GET + ADMIN_UPDATE_ORDER, new AdminUpdateOrderCommand());
-        commands.put(GET +  REGISTRATION, new RegisterUserCommand());
+        commands.put(GET + ADMIN_UPDATE_ORDER_STATUS, new AdminUpdateOrderStatusCommand());
+        commands.put(GET + REGISTRATION, new RegisterUserCommand());
 
         commands.put(POST + ADMIN_GET_ALL_PRODUCTS_POST, new GetAllProductsCommand());
         commands.put(POST + ADMIN_GET_ALL_USERS_POST, new AdminGetAllUsersCommand());
@@ -67,7 +69,6 @@ public class CommandHolder {
         commands.put(POST + ADMIN_UPDATE_PRODUCT, new UpdateProductCommand());
 
         commands.put(POST + ADMIN_DELETE_PRODUCT_POST, new DeleteProductCommand());
-
     }
 
     /**

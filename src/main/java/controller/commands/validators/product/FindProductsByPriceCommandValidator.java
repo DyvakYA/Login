@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import static model.constants.AttributesHolder.*;
 import static model.constants.ErrorMsgHolder.FIND_PRICE_ERROR_MSG;
 import static model.constants.UrlHolder.ADMIN_PRODUCT_DESTINATION_PAGE;
-import static model.constants.UrlHolder.PRODUCT;
+import static model.constants.UrlHolder.PRODUCT_JSP;
 
 public class FindProductsByPriceCommandValidator implements CommandValidator {
 
@@ -23,10 +23,10 @@ public class FindProductsByPriceCommandValidator implements CommandValidator {
         String message = Localization.getInstance().getLocalizedMessage(request, FIND_PRICE_ERROR_MSG);
         
         return CommandValidatorHelper.getInstance().isNullValidate(new String[]{PRICE_FIRST_ATTRIBUTE, PRICE_SECOND_ATTRIBUTE},
-                RESULT_ATTRIBUTE, CommandHelper.getInstance().roleChecker(PRODUCT, request), message, request, response)
+                RESULT_ATTRIBUTE, CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request), message, request, response)
                 && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{PRICE_FIRST_ATTRIBUTE, PRICE_SECOND_ATTRIBUTE},
                 RESULT_ATTRIBUTE, ADMIN_PRODUCT_DESTINATION_PAGE, message, request, response)
                 && CommandValidatorHelper.getInstance().matchesValidate(new String[]{PRICE_FIRST_ATTRIBUTE, PRICE_SECOND_ATTRIBUTE}, REGEX,
-                RESULT_ATTRIBUTE, CommandHelper.getInstance().roleChecker(PRODUCT, request), message, request, response);
+                RESULT_ATTRIBUTE, CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request), message, request, response);
     }
 }

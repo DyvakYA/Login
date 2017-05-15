@@ -1,10 +1,12 @@
 package controller.commands.product;
 
 import controller.commands.Command;
+import controller.commands.CommandHelper;
 import controller.commands.validators.product.CreateProductCommandValidator;
 import model.entities.Product;
 import model.extras.Localization;
-import model.services.service.ProductService;
+import model.services.ProductService;
+import model.services.service.ProductServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +14,7 @@ import java.io.IOException;
 
 import static model.constants.AttributesHolder.*;
 import static model.constants.MsgHolder.CREATE_PRODUCT_SUCCESSFUL_MSG;
-import static model.constants.UrlHolder.ADMIN_PRODUCT_DESTINATION_PAGE;
+import static model.constants.UrlHolder.PRODUCT_JSP;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
@@ -20,7 +22,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  */
 public class CreateProductCommand implements Command {
 
-    private ProductService productService=ProductService.getInstance();
+    private ProductService productService=ProductServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +39,6 @@ public class CreateProductCommand implements Command {
         productService.create(product);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, CREATE_PRODUCT_SUCCESSFUL_MSG));
-        request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, productService.getAll());
-        return ADMIN_PRODUCT_DESTINATION_PAGE;
+        return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request);
     }
 }

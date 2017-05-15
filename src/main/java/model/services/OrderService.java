@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Dyvak on 23.01.2017.
  */
-public interface OrderServiceable {
+public interface OrderService {
 
     List<Order> getAll();
 
@@ -17,4 +17,8 @@ public interface OrderServiceable {
 
     void delete(int id);
 
+    Order createDefaultOrder();
+
+    void updateOrderStatus(Order order, int integer);
 }
+

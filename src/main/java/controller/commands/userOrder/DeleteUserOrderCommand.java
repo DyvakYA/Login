@@ -3,7 +3,8 @@ package controller.commands.userOrder;
 import controller.commands.Command;
 import controller.commands.validators.product.DeleteProductCommandValidator;
 import model.extras.Localization;
-import model.services.service.UserOrderService;
+import model.services.UserOrderService;
+import model.services.service.UserOrderServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
  */
 public class DeleteUserOrderCommand implements Command {
 
-    private UserOrderService userOrderService = UserOrderService.getInstance();
+    private UserOrderService userOrderService = UserOrderServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)

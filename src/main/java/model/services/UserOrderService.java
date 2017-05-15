@@ -1,5 +1,6 @@
 package model.services;
 
+import model.entities.Order;
 import model.entities.UserOrder;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by Dyvak on 23.01.2017.
  */
-public interface UserOrderServiceable {
+public interface UserOrderService {
 
     List<UserOrder> getAll();
 
@@ -17,4 +18,5 @@ public interface UserOrderServiceable {
 
     void delete(int id);
 
+    List<Order> getOrdersForUser(int id);
 }

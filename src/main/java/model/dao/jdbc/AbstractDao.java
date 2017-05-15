@@ -62,7 +62,7 @@ abstract class AbstractDao<E> implements GenericDao<E> {
                 product=Optional.of(resultSetExtractor.getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(SQL_EXCEPTION + product.toString(), e);
         }
         return product;
     }
@@ -76,7 +76,7 @@ abstract class AbstractDao<E> implements GenericDao<E> {
                 order=Optional.of(resultSetExtractor.getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(SQL_EXCEPTION + order.toString(), e);
         }
         return order;
     }
@@ -90,7 +90,7 @@ abstract class AbstractDao<E> implements GenericDao<E> {
                 users.add(resultSetExtractor.getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
+            throw new DAOException(SQL_EXCEPTION + users.toString(), e);
         }
         return users;
     }

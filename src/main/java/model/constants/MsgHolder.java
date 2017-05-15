@@ -8,9 +8,9 @@ package model.constants;
  */
 public class MsgHolder {
 
-    public static final String CREATE_ORDER_PRODUCTS_SUCCESSFUL_MSG = "CreateRouteSuccessful";
-    public static final String UPDATE_ORDER_PRODUCTS_SUCCESSFUL_MSG = "UpdateRouteSuccessful";
-    public static final String DELETE_ORDER_PRODUCTS_SUCCESSFUL_MSG = "DeleteRouteSuccessful";
+    public static final String CREATE_ORDER_PRODUCTS_SUCCESSFUL_MSG = "CreateOrderProductSuccessful";
+    public static final String UPDATE_ORDER_PRODUCTS_SUCCESSFUL_MSG = "UpdateOrderProductSuccessful";
+    public static final String DELETE_ORDER_PRODUCTS_SUCCESSFUL_MSG = "DeleteOrderProductSuccessful";
 
     public static final String CREATE_PRODUCT_SUCCESSFUL_MSG = "CreateProductSuccessful";
     public static final String DELETE_PRODUCT_SUCCESSFUL_MSG = "DeleteProductSuccessful";
@@ -33,8 +33,6 @@ public class MsgHolder {
 
     public static final String USER_NOT_AUTHORIZED="UserNotAuthorized";
     public static final String ACCESS_DENIED="AccessDenied";
-    public static final String USER_BLOCKED="UserBlocked";
-
 
     private MsgHolder(){
 

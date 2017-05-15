@@ -5,7 +5,8 @@ import controller.commands.CommandHelper;
 import controller.commands.validators.user.AuthenticateUserCommandValidator;
 import model.entities.User;
 import model.extras.Localization;
-import model.services.service.UserService;
+import model.services.UserService;
+import model.services.service.UserServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,7 @@ import java.util.Optional;
 import static model.constants.AttributesHolder.*;
 import static model.constants.ErrorMsgHolder.LOGIN_USER_ERROR_MSG;
 import static model.constants.MsgHolder.LOGIN_USER_SUCCESSFUL_MSG;
-import static model.constants.UrlHolder.INDEX;
-import static model.constants.UrlHolder.REDIRECTED;
+import static model.constants.UrlHolder.*;
 
 /**
  * @author Dyvak Yurii dyvakyurii@gmail.com
@@ -28,7 +28,7 @@ public class LoginCommand implements Command {
 
     private static final String USER_LOGGED_IN = "%s id=%s LOGGED IN.";
 
-    private UserService userService=UserService.getInstance();
+    private UserService userService=UserServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -49,14 +49,21 @@ public class LoginCommand implements Command {
                 result=Localization.getInstance()
                         .getLocalizedMessage(request, LOGIN_USER_SUCCESSFUL_MSG) + user.getEmail();
                 request.getSession().setAttribute(USER_SESSION_ATTRIBUTE, user);
-                destinationPage = CommandHelper.getInstance()
-                        .getDestinationPageByRole(request, user);
+                destinationPage = getDestinationPageByUserRole(user, request);
             } else {
-                result=Localization.getInstance()
-                        .getLocalizedMessage(request, LOGIN_USER_ERROR_MSG);
+                result=Localization.getInstance().getLocalizedMessage(request, LOGIN_USER_ERROR_MSG);
             }
             request.setAttribute(RESULT_ATTRIBUTE, result);
         }
         return destinationPage;
+    }
+
+    private String getDestinationPageByUserRole(User user, HttpServletRequest request) {
+        if (user.isAdmin()) {
+            return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
+        }else if (!user.isAdmin()) {
+            return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
+        }
+        return null;
     }
 }

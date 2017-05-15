@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order implements Identified {
@@ -53,8 +54,9 @@ public class Order implements Identified {
         this.orderStatus=orderStatus;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss");
+        return dateFormat.format(new Date(date.getTime()));
     }
 
     public void setDate(Date date) {
@@ -81,6 +83,7 @@ public class Order implements Identified {
         Order order=(Order) o;
 
         if (id != order.id) return false;
+        if (totalPrice != order.totalPrice) return false;
         if (orderStatus != null ? !orderStatus.equals(order.orderStatus) : order.orderStatus != null) return false;
         return date != null ? date.equals(order.date) : order.date == null;
     }
@@ -90,6 +93,7 @@ public class Order implements Identified {
         int result=id;
         result=31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
         result=31 * result + (date != null ? date.hashCode() : 0);
+        result=31 * result + (int) (totalPrice ^ (totalPrice >>> 32));
         return result;
     }
 

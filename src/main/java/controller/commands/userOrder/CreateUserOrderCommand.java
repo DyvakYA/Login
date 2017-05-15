@@ -4,7 +4,8 @@ import controller.commands.Command;
 import controller.commands.validators.product.CreateProductCommandValidator;
 import model.entities.UserOrder;
 import model.extras.Localization;
-import model.services.service.UserOrderService;
+import model.services.UserOrderService;
+import model.services.service.UserOrderServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
  */
 public class CreateUserOrderCommand implements Command {
 
-    private UserOrderService userOrderService=UserOrderService.getInstance();
+    private UserOrderService userOrderService=UserOrderServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -30,8 +31,8 @@ public class CreateUserOrderCommand implements Command {
             return REDIRECTED;
         }
         UserOrder userOrder=new UserOrder.Builder()
-                .setUserId(Integer.valueOf(request.getParameter(USER_ID_ATTRIBUTE)))
-                .setOrderId(Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)))
+                .setUserId(Integer.parseInt((request.getParameter(USER_ID_ATTRIBUTE))))
+                .setOrderId(Integer.parseInt((request.getParameter(ORDER_ID_ATTRIBUTE))))
                 .build();
         userOrderService.create(userOrder);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
