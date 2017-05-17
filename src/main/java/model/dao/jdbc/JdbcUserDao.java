@@ -5,7 +5,6 @@ import model.dao.exception.DAOException;
 import model.entities.User;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,14 +12,15 @@ import static model.constants.AttributesHolder.*;
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
 /**
- * Created by Dyvak on 24.12.2016.
+ * This class is the implementation of User entity DAO
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class JdbcUserDao extends AbstractDao<User> implements UserDao {
 
     private static final String SELECT_FROM_USERS_WHERE_USER_ID="SELECT * FROM users WHERE user_id=?";
     private static final String SELECT_FROM_USERS="SELECT * FROM users";
     private static final String SELECT_USER_BY_EMAIL="SELECT * FROM users WHERE lower(email) = ?";
-    private static final String SELECT_FROM_USERS_WHERE_NAME="SELECT * FROM users WHERE user_name=?";
     private static final String CREATE_USER_QUERY="INSERT INTO users (user_name, email, password, isAdmin ,isBlocked)  " +
             "VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE_USER_QUERY="UPDATE users " +
@@ -32,6 +32,7 @@ public class JdbcUserDao extends AbstractDao<User> implements UserDao {
             "FROM users\n" +
             "INNER JOIN user_orders\n" +
             "ON users.user_id=user_orders.user_id";
+    private static final String SELECT_AUTHENTICATE_FROM_USERS_WHERE_USER_ID="SELECT password FROM users WHERE user_id=?";
 
     JdbcUserDao(Connection connection) {
         super(connection);
@@ -54,23 +55,25 @@ public class JdbcUserDao extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findByName(String name) {
-        Optional<User> user=Optional.empty();
-        try (PreparedStatement query=connection.prepareStatement(SELECT_FROM_USERS_WHERE_NAME)) {
-            query.setString(1, name);
-            ResultSet resultSet=query.executeQuery();
-            if (resultSet.next()) {
-                user=Optional.of(resultSetExtractor.getUserFromResultSet(resultSet));
-            }
-            return user;
-        } catch (SQLException e) {
-            throw new DAOException(SQL_EXCEPTION, e);
-        }
+    public List<User> findAllUsersWithOrders() {
+        return getUsers(SELECT_USERS_FROM_USER_ORDERS_UNIQUE);
     }
 
     @Override
-    public List<User> findAllUsersWithOrders() {
-        return getUsers(SELECT_USERS_FROM_USER_ORDERS_UNIQUE);
+    public String getPasswordForUser(User user) {
+        checkForNull(user);
+        checkIsSaved(user);
+        String PasswordHash=null;
+        try (PreparedStatement query=connection.prepareStatement(SELECT_AUTHENTICATE_FROM_USERS_WHERE_USER_ID)) {
+            query.setInt(1, user.getId());
+            ResultSet resultSet=query.executeQuery();
+            if (resultSet.next()) {
+                PasswordHash=resultSet.getString(USER_AUTHENTICATE_ATTRIBUTE);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(SQL_EXCEPTION, e);
+        }
+        return PasswordHash;
     }
 
     @Override
@@ -82,10 +85,10 @@ public class JdbcUserDao extends AbstractDao<User> implements UserDao {
             if (resultSet.next()) {
                 user=Optional.of(resultSetExtractor.getUserFromResultSet(resultSet));
             }
-            return user;
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
         }
+        return user;
     }
 
     @Override

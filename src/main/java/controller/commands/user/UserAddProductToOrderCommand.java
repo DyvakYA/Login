@@ -23,7 +23,9 @@ import static model.constants.MsgHolder.*;
 import static model.constants.UrlHolder.*;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents user add product to order command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class UserAddProductToOrderCommand implements Command {
 
@@ -87,7 +89,7 @@ public class UserAddProductToOrderCommand implements Command {
             OrderProduct orderProduct=orderProductFromBase.get();
             orderProductService.increaseQuantityWhenAddProduct(orderProduct, quantity);
             request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
-                    .getLocalizedMessage(request, "AmountIncreased"));
+                    .getLocalizedMessage(request, AMOUNT_INCREASED));
             //action when orderProduct not exist in base
         }
         if (!orderProductFromBase.isPresent()) {

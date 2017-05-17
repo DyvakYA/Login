@@ -10,13 +10,25 @@ import java.util.Optional;
  */
 public interface UserDao extends GenericDao<User> {
 
-    Optional<User> findById(int id);
-
-    List<User> findAll();
-
+    /**
+     * Searches for user with specified email.
+     *
+     * @param email instance's field email
+     * @return Optional of entity with specified email
+     */
     Optional<User> getUserByEmail(String email);
 
-    Optional<User> findByName(String login);
-
+    /**
+     * Searches all users in base.
+     *
+     * @return list of User.
+     */
     List<User> findAllUsersWithOrders();
+
+    /**
+     * Get password from base for concrete user.
+     *
+     * @return String password of concrete user.
+     */
+    String getPasswordForUser(User user);
 }

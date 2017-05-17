@@ -1,5 +1,6 @@
 package controller.commands.validators.userOrder;
 
+import controller.commands.CommandHelper;
 import controller.commands.validators.CommandValidator;
 import controller.commands.validators.CommandValidatorHelper;
 import model.extras.Localization;
@@ -19,8 +20,9 @@ public class UpdateUserOrderCommandValidator implements CommandValidator {
                 String message = Localization.getInstance().getLocalizedMessage(request, USER_ORDER_ERROR_MSG);
         
         return CommandValidatorHelper.getInstance().isNullValidate(new String[]{USER_ID_ATTRIBUTE},
-                RESULT_ATTRIBUTE, USER_ORDER_DESTINATION_PAGE, message, request, response)
-                && CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{ORDER_ID_ATTRIBUTE},
-                RESULT_ATTRIBUTE, USER_ORDER_DESTINATION_PAGE, message, request, response);
+                RESULT_ATTRIBUTE, CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request), message, request, response)
+                &&
+                CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{ORDER_ID_ATTRIBUTE},
+                RESULT_ATTRIBUTE, CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request), message, request, response);
     }
 }

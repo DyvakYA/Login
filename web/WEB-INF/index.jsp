@@ -2,29 +2,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page errorPage="/WEB-INF/error/errorPage.jsp" %>
+<%--<%@ page errorPage="/WEB-INF/error/errorPage.jsp" %>--%>
 <jsp:include page="elem/head.jsp"/>
 <body>
-<jsp:include page="elem/header.jsp"/>
+<c:if test="${sessionScope.user == null}">
+    <jsp:include page="elem/header.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user != null}">
+    <c:if test="${sessionScope.user.isAdmin() == true}">
+        <jsp:include page="elem/admin-header.jsp"/>
+    </c:if>
+    <c:if test="${sessionScope.user.isAdmin() == false}">
+         <jsp:include page="elem/user-header.jsp"/>
+    </c:if>
+</c:if>
+<fmt:bundle basename="labels">
 <div class="container">
     <c:if test="${!empty result}">
         <div class="alert alert-warning">
             <c:out value="${result}"/>
         </div>
     </c:if>
-<h3>Рады приветствовать Вас в универсальном интернет-магазине </h3>
-    Мы рады приветствовать вас на нашем сайте магазина одежды «ЛИАНИКА».
-    Качество и богатый ассортимент нашей продукции по достоинству ценят покупатели по всей Украине.
-
-    В нашем магазине вы можете найти одежду и аксессуары на любой вкус и размер.
-    Товары на сайте ориентированы на женскую аудиторию.
-
-    У нас вы можете приобрести практически любой товар по доступным Вам ценам.
-    В нашем ассортименте вы сможете найти тренды 2016-2017 года - платья в пол, очень популярные сейчас платья - транформеры,
-    коктельные платья, платья офисного и делового стиля платья - стиль, а также повседневные платья,
-    в ассортименте также присутствует верхняя одежда пиджаки, ветровки, курточки.
-    У нас вы сможете приобрести одежду классического и делового стиля.
-    Также сможете найти одежду потрясающего качества из французского трикотажа и одежду батальных размеров и многое другое...
+    <h3 class="text-center"><fmt:message key="Welcome"/></h3>
+    <h4 class="text-center"><fmt:message key="description"/></h4>
 </div>
+    <div style="min-height: 594px;">
+
+    </div>
 <jsp:include page="elem/footer.jsp"/>
 </body>
+</fmt:bundle>

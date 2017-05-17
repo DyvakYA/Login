@@ -3,7 +3,9 @@ package model.services.exception;
 import controller.exception.ApplicationException;
 
 /**
- * Created by Dyvak on 26.01.2017.
+ * This class represents custom application exception for service layer.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class ServiceException extends ApplicationException {
 

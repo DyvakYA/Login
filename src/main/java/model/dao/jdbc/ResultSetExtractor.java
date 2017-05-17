@@ -24,7 +24,7 @@ class ResultSetExtractor {
 
     Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
         return new Order.Builder()
-                .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
+                .setId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
                 .setOrderStatus(resultSet.getString(ORDER_STATUS_ATTRIBUTE))
                 .setDate(resultSet.getTimestamp(ORDER_DATE_ATTRIBUTE))
                 .setTotalPrice(resultSet.getInt(ORDER_SUM_ATTRIBUTE))

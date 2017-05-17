@@ -33,6 +33,7 @@ public class MsgHolder {
 
     public static final String USER_NOT_AUTHORIZED="UserNotAuthorized";
     public static final String ACCESS_DENIED="AccessDenied";
+    public static final String AMOUNT_INCREASED="AmountIncreased";
 
     private MsgHolder(){
 

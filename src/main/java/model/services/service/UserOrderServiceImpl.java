@@ -48,11 +48,11 @@ public class UserOrderServiceImpl implements UserOrderService {
         }
     }
 
-    public void update(UserOrder userOrder, int id) {
+    public void update(UserOrder userOrder) {
         try (DaoConnection connection=daoFactory.getConnection()) {
             connection.beginTransaction();
             UserOrderDao userOrderDao=daoFactory.createUserOrderDao(connection);
-            userOrderDao.update(userOrder, id);
+            userOrderDao.update(userOrder, userOrder.getId());
             connection.commitTransaction();
         }
     }

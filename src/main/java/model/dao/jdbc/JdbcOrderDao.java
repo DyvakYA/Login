@@ -12,7 +12,9 @@ import java.util.Optional;
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
 /**
- * Created by Dyvak on 24.12.2016.
+ * This class is the implementation of Order entity DAO
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class JdbcOrderDao extends AbstractDao<Order> implements OrderDao {
 

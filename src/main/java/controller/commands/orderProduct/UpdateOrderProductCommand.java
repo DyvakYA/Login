@@ -17,7 +17,9 @@ import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents updating OrderProduct command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class UpdateOrderProductCommand implements Command {
 
@@ -31,10 +33,11 @@ public class UpdateOrderProductCommand implements Command {
             return REDIRECTED;
         }
         OrderProduct orderProduct= new OrderProduct.Builder()
+                .setId(Integer.parseInt(request.getParameter(ORDER_PRODUCT_ID_ATTRIBUTE)))
                 .setOrderId(Integer.parseInt((request.getParameter(ORDER_ID_ATTRIBUTE))))
                 .setProductId(Integer.parseInt(request.getParameter(PRODUCT_ID_ATTRIBUTE)))
                 .build();
-        orderProductsService.update(orderProduct, Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)));
+        orderProductsService.update(orderProduct);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_ORDER_PRODUCTS_SUCCESSFUL_MSG));
         request.setAttribute(ORDER_PRODUCTS_LIST_ATTRIBUTE, orderProductsService.getAll());

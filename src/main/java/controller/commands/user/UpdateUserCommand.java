@@ -15,10 +15,12 @@ import java.io.IOException;
 import static model.constants.AttributesHolder.*;
 import static model.constants.MsgHolder.UPDATE_USER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.REDIRECTED;
-import static model.constants.UrlHolder.USER;
+import static model.constants.UrlHolder.USER_JSP;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents updating User command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class UpdateUserCommand implements Command {
 
@@ -32,16 +34,17 @@ public class UpdateUserCommand implements Command {
             return REDIRECTED;
         }
         User user = new User.Builder()
+                .setId(Integer.parseInt(request.getParameter(USER_ID_ATTRIBUTE)))
                 .setName(request.getParameter(USER_NAME_ATTRIBUTE))
                 .setEmail(request.getParameter(USER_EMAIL_ATTRIBUTE))
                 .setPasswordHash(request.getParameter(USER_AUTHENTICATE_ATTRIBUTE))
                 .setAdmin(Boolean.parseBoolean(request.getParameter(USER_ADMIN_ATTRIBUTE)))
                 .setBlocked(Boolean.parseBoolean(request.getParameter(USER_BLOCKED_ATTRIBUTE)))
                 .build();
-        userService.update(user, Integer.parseInt(request.getParameter(USER_ID_ATTRIBUTE)));
+        userService.update(user);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_USER_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerSetAttributes(USER, request);
+        return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
     }
 
 }

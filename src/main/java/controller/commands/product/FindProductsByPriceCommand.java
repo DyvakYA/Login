@@ -17,7 +17,9 @@ import static model.constants.UrlHolder.PRODUCT_JSP;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents find Product by price command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class FindProductsByPriceCommand implements Command {
 

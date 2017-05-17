@@ -17,7 +17,9 @@ import static model.constants.UrlHolder.REDIRECTED;
 import static model.constants.UrlHolder.USER;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents deleting User command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class DeleteUserCommand implements Command {
 

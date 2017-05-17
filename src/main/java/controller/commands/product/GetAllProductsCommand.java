@@ -10,7 +10,9 @@ import java.io.IOException;
 import static model.constants.UrlHolder.PRODUCT_JSP;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents get all Products from base.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class GetAllProductsCommand implements Command {
 

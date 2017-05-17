@@ -19,7 +19,9 @@ import static model.constants.UrlHolder.INDEX;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents register User command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class RegisterUserCommand implements Command {
 

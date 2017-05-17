@@ -16,7 +16,9 @@ import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents deleting OrderProduct command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class DeleteOrderProductCommand implements Command {
 

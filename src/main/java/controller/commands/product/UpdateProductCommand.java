@@ -18,7 +18,9 @@ import static model.constants.UrlHolder.PRODUCT_JSP;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents updating Product command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class UpdateProductCommand implements Command {
 
@@ -37,7 +39,7 @@ public class UpdateProductCommand implements Command {
                 .setDescription(request.getParameter(PRODUCT_DESCRIPTION_ATTRIBUTE))
                 .setDoublePrice(Double.parseDouble(request.getParameter(PRODUCT_PRICE_ATTRIBUTE)))
                 .build();
-        productService.update(product, product.getId());
+        productService.update(product);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_PRODUCT_SUCCESSFUL_MSG));
         return CommandHelper.getInstance().roleCheckerDestinationPageReturner(PRODUCT_JSP, request);

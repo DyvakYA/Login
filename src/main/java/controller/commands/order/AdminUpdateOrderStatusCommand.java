@@ -18,7 +18,9 @@ import static model.constants.UrlHolder.ORDER_JSP;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents admin update status of order.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class AdminUpdateOrderStatusCommand implements Command {
 
@@ -32,10 +34,10 @@ public class AdminUpdateOrderStatusCommand implements Command {
             return REDIRECTED;
         }
         Order order= new Order.Builder()
-                .setOrderId(Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)))
+                .setId(Integer.valueOf(request.getParameter(ORDER_ID_ATTRIBUTE)))
                 .setOrderStatus(request.getParameter(ORDER_STATUS_ATTRIBUTE))
                 .build();
-        orderService.updateOrderStatus(order, Integer.parseInt((request.getParameter(ORDER_ID_ATTRIBUTE))));
+        orderService.updateOrderStatus(order);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_ORDER_SUCCESSFUL_MSG));
         return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);

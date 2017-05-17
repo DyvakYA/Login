@@ -11,6 +11,11 @@ import java.util.Optional;
 
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
+/**
+ * This class is the implementation of Product entity DAO
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class JdbcProductDao extends AbstractDao<Product> implements ProductDao {
 
     private static final String SELECT_FROM_PRODUCTS_WHERE_PRODUCT_ID="SELECT * FROM products WHERE product_id=?";

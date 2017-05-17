@@ -1,7 +1,9 @@
 package model.entities;
 
 /**
- * Created by Dyvak on 16.12.2016.
+ * This class represents Product entity.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class Product implements Identified {
 

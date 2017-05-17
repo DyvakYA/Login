@@ -26,6 +26,9 @@ public class ErrorMsgHolder {
     public static final String LOGIN_USER_ERROR_MSG = "AuthenticateUserError";
     public static final String REGISTER_USER_ERROR_MSG = "RegisterUserError";
 
+    public static final String ENTER_EMAIL_AND_AUTHENTICATE_WORD_MSG="EnterEmailAndAuthenticateWord";
+    public static final String ENTER_NAME_AND_PRICE_MSG="EnterNameAndPrice";
+
     public static final String SQL_EXCEPTION="SQLException";
 
     private ErrorMsgHolder(){

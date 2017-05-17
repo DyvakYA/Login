@@ -1,5 +1,6 @@
 package controller.commands.validators.orderProduct;
 
+import controller.commands.CommandHelper;
 import controller.commands.validators.CommandValidator;
 import controller.commands.validators.CommandValidatorHelper;
 import model.extras.Localization;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import static model.constants.AttributesHolder.ORDER_PRODUCT_ID_ATTRIBUTE;
 import static model.constants.AttributesHolder.RESULT_ATTRIBUTE;
 import static model.constants.ErrorMsgHolder.ORDER_PRODUCT_ERROR_MSG;
-import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
+import static model.constants.UrlHolder.ORDER_JSP;
 
 public class DeleteOrderProductCommandValidator implements CommandValidator {
 
@@ -19,7 +20,7 @@ public class DeleteOrderProductCommandValidator implements CommandValidator {
 
         String message = Localization.getInstance().getLocalizedMessage(request, ORDER_PRODUCT_ERROR_MSG);
 
-        return CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_PRODUCT_ID_ATTRIBUTE},
-                RESULT_ATTRIBUTE, ORDER_PRODUCT_DESTINATION_PAGE, message, request, response);
+        return CommandValidatorHelper.getInstance().isNullValidate(new String[]{ORDER_PRODUCT_ID_ATTRIBUTE}, RESULT_ATTRIBUTE,
+                CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request), message, request, response);
     }
 }

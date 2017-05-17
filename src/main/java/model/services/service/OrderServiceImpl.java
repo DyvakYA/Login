@@ -18,8 +18,6 @@ public class OrderServiceImpl implements OrderService {
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-
-
     private static class Holder {
         static final OrderServiceImpl INSTANCE = new OrderServiceImpl();
     }
@@ -52,11 +50,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrderStatus(Order order, int id) {
+    public void updateOrderStatus(Order order) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             OrderDao orderDao=daoFactory.createOrderDao(connection);
-            orderDao.updateOrderStatus(order,id);
+            orderDao.updateOrderStatus(order,order.getId());
             connection.commitTransaction();
         }
     }
@@ -70,11 +68,11 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public void update(Order order, int id) {
+    public void update(Order order) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             OrderDao orderDao=daoFactory.createOrderDao(connection);
-            orderDao.update(order, id);
+            orderDao.update(order, order.getId());
             connection.commitTransaction();
         }
     }

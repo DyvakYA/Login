@@ -18,7 +18,9 @@ import static model.constants.UrlHolder.REDIRECTED;
 import static model.constants.UrlHolder.USER;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents creating User command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class CreateUserCommand implements Command {
 

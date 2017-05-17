@@ -15,6 +15,11 @@ import java.util.Optional;
 
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
+/**
+ * This class is the implementation of UserOrder entity DAO
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class JdbcUserOrderDao extends AbstractDao<UserOrder> implements UserOrderDao {
 
     private static final String SELECT_FROM_USER_ORDER_WHERE_USER_ID="SELECT * FROM user_orders WHERE user_id=?";

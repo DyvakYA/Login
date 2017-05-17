@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
  * Created by User on 4/24/2017.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class testUserService {
+public class TestUserService {
 
     @Mock
     private DaoFactory daoFactory;
@@ -113,7 +113,7 @@ public class testUserService {
 
     @Test
     public void testUpdateUserDescription(){
-        userServiceImpl.update(user1, user1.getId());
+        userServiceImpl.update(user1);
         doNothing().when(userDao).update(user1, user1.getId());
         verify(userDao, times(1)).update(user1, user1.getId());
     }

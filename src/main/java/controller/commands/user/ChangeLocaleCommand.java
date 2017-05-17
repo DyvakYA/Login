@@ -15,7 +15,9 @@ import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
 import static model.constants.UrlHolder.*;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents change local command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class ChangeLocaleCommand implements Command {
 
@@ -35,9 +37,8 @@ public class ChangeLocaleCommand implements Command {
             setLocalAttribute(request, session);
         } else if (user != null) {
             setLocalAttribute(request, session);
-            return getDestinationPageByUserRole(user,request);
         }
-        return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request);
+        return getDestinationPageByUserRole(user, request);
     }
 
     private void setLocalAttribute(HttpServletRequest request, HttpSession session) {
@@ -58,7 +59,9 @@ public class ChangeLocaleCommand implements Command {
     }
 
     private String getDestinationPageByUserRole(User user, HttpServletRequest request) {
-        if (user.isAdmin()) {
+        if (user == null){
+            return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request);
+        }else if (user.isAdmin()) {
             return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
         }else if (!user.isAdmin()) {
             return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);

@@ -20,7 +20,9 @@ import static model.constants.UrlHolder.ORDER_JSP;
 import static model.constants.UrlHolder.REDIRECTED;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents admin create order.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class CreateOrderCommand implements Command {
 

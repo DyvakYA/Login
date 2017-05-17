@@ -9,6 +9,12 @@ import java.sql.SQLException;
 import static java.sql.Connection.TRANSACTION_READ_COMMITTED;
 import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 
+/**
+ * This class represents JDBC implementation of DaoConnection.
+ * It performs rollback if transaction began but was not committed or rolled back before close method was called.
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class JdbcDaoConnection implements DaoConnection {
 
     private static final String CAN_NOT_BEGIN_TRANSACTION="Can not begin transaction";

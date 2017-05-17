@@ -3,6 +3,13 @@ package model.entities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static model.constants.Config.DD_MM_YYYY_AT_HH_MM_SS;
+
+/**
+ * This class represents Order entity.
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class Order implements Identified {
 
     private int id;
@@ -13,7 +20,7 @@ public class Order implements Identified {
     public static class Builder {
         Order instance=new Order();
 
-        public Builder setOrderId(int id) {
+        public Builder setId(int id) {
             instance.id=id;
             return this;
         }
@@ -54,8 +61,15 @@ public class Order implements Identified {
         this.orderStatus=orderStatus;
     }
 
-    public String getDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss");
+    public Date getDate() {
+        return date;
+    }
+
+    /**
+     * @return Real amount of date in human friendly format.
+     */
+    public String getRealDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DD_MM_YYYY_AT_HH_MM_SS);
         return dateFormat.format(new Date(date.getTime()));
     }
 
@@ -67,8 +81,11 @@ public class Order implements Identified {
         return totalPrice;
     }
 
+    /**
+     * @return Real amount of price in human friendly format with fractional digits
+     */
     public double getRealTotalPrice() {
-        return totalPrice / 100;
+        return (double)totalPrice / 100;
     }
 
     public void setTotalPrice(long totalPrice) {

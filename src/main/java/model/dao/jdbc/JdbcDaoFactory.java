@@ -13,7 +13,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Created by Dyvak on 17.12.2016.
+ * This class defines DAO Factory
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class JdbcDaoFactory extends DaoFactory {
 

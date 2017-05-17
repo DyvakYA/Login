@@ -1,5 +1,10 @@
 package model.entities;
 
+/**
+ * This class represents UserOrder entity.
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class UserOrder implements Identified {
 
     private int id;

@@ -51,10 +51,7 @@ public class AuthFilter implements Filter {
                             (request, USER_NOT_AUTHORIZED));
             request.getRequestDispatcher(INDEX).forward(request, response);
             return false;
-        }
-
-        if(isAdmin(user, uri)|| (isUser(user, uri) || (user.isBlocked()))) {
-            System.out.println(user.isBlocked());
+        }else if(isAdmin(user, uri) || (isUser(user, uri) || (user.isBlocked()))) {
             logger.info(ACCESS_DENIED);
             request.setAttribute(RESULT_ATTRIBUTE,
                     Localization.getInstance().getLocalizedMessage
@@ -66,11 +63,11 @@ public class AuthFilter implements Filter {
     }
 
     private boolean isAdmin(User user, String uri){
-        return ((user.isAdmin()) && (uri.startsWith(USER)));
+        return (user.isAdmin() && uri.startsWith(USER));
     }
 
     private boolean isUser(User user, String uri){
-        return ((!user.isAdmin()) && (uri.startsWith(ADMIN)));
+        return (!user.isAdmin() && uri.startsWith(ADMIN));
     }
 
     /**

@@ -32,8 +32,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public Optional<User> login(String email, String password) {
-        System.out.println(email);
-        System.out.println(password);
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             UserDao userDao=daoFactory.createUserDao(connection);
@@ -112,11 +110,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void update(User user, int id) {
+    public void update(User user) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             UserDao userDao=daoFactory.createUserDao(connection);
-            userDao.update(user, id);
+            user.setPasswordHash(userDao.getPasswordForUser(user));
+            userDao.update(user, user.getId());
             connection.commitTransaction();
         }
     }

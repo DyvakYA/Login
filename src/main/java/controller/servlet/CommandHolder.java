@@ -22,9 +22,9 @@ import static model.constants.UrlHolder.*;
  */
 public class CommandHolder {
 
-    public static final String DELIMITER = ":";
-    private static final String GET = "GET" + DELIMITER;
-    public static final String POST = "POST" + DELIMITER;
+    protected static final String DELIMITER = ":";
+    protected static final String GET = "GET";
+    protected static final String POST = "POST";
 
     /**
      * Holder for GET commands
@@ -37,38 +37,33 @@ public class CommandHolder {
 
     private void init() {
 
-        commands.put(GET + LOCALE, new ChangeLocaleCommand());
-        commands.put(GET + LOGIN, new LoginCommand());
-        commands.put(GET + LOGOUT, new LogoutCommand());
-        commands.put(GET + PRODUCTS, new GetAllProductsCommand());
-        commands.put(GET + USER_PRODUCTS, new GetAllProductsCommand());
-        commands.put(GET + ADMIN_PRODUCTS, new GetAllProductsCommand());
-        commands.put(GET + ADMIN_DELETE_ORDER, new DeleteOrderCommand());
-        commands.put(GET + USER_DELETE_ORDER, new DeleteOrderCommand());
-
-        commands.put(GET + ADMIN_DELETE_PRODUCT_GET, new DeleteProductFromOrderCommand());
-        commands.put(GET + USER_DELETE_PRODUCT_GET, new DeleteProductFromOrderCommand());
-
-        commands.put(GET + FIND_PRODUCT_BY_PRICE, new FindProductsByPriceCommand());
-        commands.put(GET + FIND_PRODUCT_BY_NAME, new FindProductsByNameCommand());
-        commands.put(GET + USER_ORDERS, new UserGetAllUserOrdersCommand());
-        commands.put(GET + ADMIN_ORDERS, new AdminGetAllOrdersCommand());
-        commands.put(GET + ADMIN_GET_ALL_USERS, new AdminGetAllUsersCommand());
-        commands.put(GET + USER_ADD_TO_ORDER, new UserAddProductToOrderCommand());
-        commands.put(GET + ADMIN_UPDATE_ORDER, new AdminUpdateOrderCommand());
-        commands.put(GET + ADMIN_UPDATE_ORDER_STATUS, new AdminUpdateOrderStatusCommand());
-        commands.put(GET + REGISTRATION, new RegisterUserCommand());
-
-        commands.put(POST + ADMIN_GET_ALL_PRODUCTS_POST, new GetAllProductsCommand());
-        commands.put(POST + ADMIN_GET_ALL_USERS_POST, new AdminGetAllUsersCommand());
-        commands.put(POST + ADMIN_CREATE_USER, new CreateUserCommand());
-        commands.put(POST + ADMIN_UPDATE_USER, new UpdateUserCommand());
-        commands.put(POST + ADMIN_DELETE_USER, new DeleteUserCommand());
-        commands.put(POST + ADMIN_CREATE_PRODUCT, new CreateProductCommand());
-
-        commands.put(POST + ADMIN_UPDATE_PRODUCT, new UpdateProductCommand());
-
-        commands.put(POST + ADMIN_DELETE_PRODUCT_POST, new DeleteProductCommand());
+        commands.put(GET + DELIMITER + LOCALE, new ChangeLocaleCommand());
+        commands.put(GET + DELIMITER + LOGIN, new LoginCommand());
+        commands.put(GET + DELIMITER + LOGOUT, new LogoutCommand());
+        commands.put(GET + DELIMITER + PRODUCTS, new GetAllProductsCommand());
+        commands.put(GET + DELIMITER + USER_PRODUCTS, new GetAllProductsCommand());
+        commands.put(GET + DELIMITER + ADMIN_PRODUCTS, new GetAllProductsCommand());
+        commands.put(GET + DELIMITER + ADMIN_DELETE_ORDER, new DeleteOrderCommand());
+        commands.put(GET + DELIMITER + USER_DELETE_ORDER, new DeleteOrderCommand());
+        commands.put(GET + DELIMITER + ADMIN_DELETE_PRODUCT_GET, new DeleteProductFromOrderCommand());
+        commands.put(GET + DELIMITER + USER_DELETE_PRODUCT_GET, new DeleteProductFromOrderCommand());
+        commands.put(GET + DELIMITER + FIND_PRODUCT_BY_PRICE, new FindProductsByPriceCommand());
+        commands.put(GET + DELIMITER + FIND_PRODUCT_BY_NAME, new FindProductsByNameCommand());
+        commands.put(GET + DELIMITER + USER_ORDERS, new UserGetAllUserOrdersCommand());
+        commands.put(GET + DELIMITER + ADMIN_ORDERS, new AdminGetAllOrdersCommand());
+        commands.put(GET + DELIMITER + ADMIN_GET_ALL_USERS, new AdminGetAllUsersCommand());
+        commands.put(GET + DELIMITER + USER_ADD_TO_ORDER, new UserAddProductToOrderCommand());
+        commands.put(GET + DELIMITER + ADMIN_UPDATE_ORDER, new AdminUpdateOrderCommand());
+        commands.put(GET + DELIMITER + ADMIN_UPDATE_ORDER_STATUS, new AdminUpdateOrderStatusCommand());
+        commands.put(GET + DELIMITER + REGISTRATION, new RegisterUserCommand());
+        commands.put(POST + DELIMITER + ADMIN_GET_ALL_PRODUCTS_POST, new GetAllProductsCommand());
+        commands.put(POST + DELIMITER + ADMIN_GET_ALL_USERS_POST, new AdminGetAllUsersCommand());
+        commands.put(POST + DELIMITER + ADMIN_CREATE_USER, new CreateUserCommand());
+        commands.put(POST + DELIMITER + ADMIN_UPDATE_USER, new UpdateUserCommand());
+        commands.put(POST + DELIMITER + ADMIN_DELETE_USER, new DeleteUserCommand());
+        commands.put(POST + DELIMITER + ADMIN_CREATE_PRODUCT, new CreateProductCommand());
+        commands.put(POST + DELIMITER + ADMIN_UPDATE_PRODUCT, new UpdateProductCommand());
+        commands.put(POST + DELIMITER + ADMIN_DELETE_PRODUCT_POST, new DeleteProductCommand());
     }
 
     /**

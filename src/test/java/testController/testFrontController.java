@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by User on 4/24/2017.
  */
-public class testFrontController {
+public class TestFrontController {
 
     @Mock
     HttpServletRequest request;

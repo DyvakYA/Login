@@ -3,12 +3,17 @@ package model.entities;
 import model.security.PasswordEncrypt;
 
 /**
- * Created by Dyvak on 16.12.2016.
+ * This class represents User entity.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class User implements Identified {
 
     private int id;
     private String name;
+    /**
+     * Email field is used as login
+     */
     private String email;
     private String passwordHash;
     boolean isAdmin;

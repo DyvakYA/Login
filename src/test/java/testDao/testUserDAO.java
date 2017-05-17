@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * Created by User on 4/9/2017.
  */
-public class testUserDAO {
+public class TestUserDAO {
 
     @Test
     public void testGetAll() throws Exception {
@@ -44,7 +44,7 @@ public class testUserDAO {
         Optional<User> user;
         try (DaoConnection connection = daoFactory.getConnectionForTesting()) {
             JdbcUserDao dao =(JdbcUserDao) daoFactory.createUserDao(connection);
-            user = dao.findByName("user");
+            user = dao.getUserByEmail("user");
         }
         Assert.assertNotNull(user);
     }
@@ -85,7 +85,7 @@ public class testUserDAO {
         Optional<User> user2;
         try (DaoConnection connection = daoFactory.getConnectionForTesting()) {
             JdbcUserDao dao =(JdbcUserDao) daoFactory.createUserDao(connection);
-            user1 = dao.findByName("test");
+            user1 = dao.getUserByEmail("test");
             dao.update(new User.Builder()
                     .setName("test2")
                     .setEmail("test2")
@@ -105,9 +105,9 @@ public class testUserDAO {
         Optional<User> user2;
         try (DaoConnection connection = daoFactory.getConnectionForTesting()) {
             JdbcUserDao dao =(JdbcUserDao) daoFactory.createUserDao(connection);
-            user1 = dao.findByName("test2");
+            user1 = dao.getUserByEmail("test2");
             dao.delete(user1.get().getId());
-            user2 = dao.findByName("test2");
+            user2 = dao.getUserByEmail("test2");
         }
         Assert.assertEquals(Optional.empty(), user2);    }
 }

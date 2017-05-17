@@ -1,5 +1,10 @@
 package model.entities;
 
+/**
+ * This class represents OrderProduct entity.
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class OrderProduct implements Identified {
 
     private int id;
@@ -78,7 +83,7 @@ public class OrderProduct implements Identified {
     }
 
     public double getRealProductSum() {
-        return productSum / 100;
+        return (double)productSum / 100;
     }
 
     public void setProductSum(long productSum) {

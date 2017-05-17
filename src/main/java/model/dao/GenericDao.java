@@ -42,6 +42,4 @@ public interface GenericDao<E> {
      * @return Optional of entity with specified Id
      */
     Optional<E> findById(int id);
-
-
 }

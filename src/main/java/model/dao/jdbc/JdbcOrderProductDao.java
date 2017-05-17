@@ -14,6 +14,11 @@ import java.util.Optional;
 import static model.constants.AttributesHolder.PRODUCT_PRICE_ATTRIBUTE;
 import static model.constants.ErrorMsgHolder.SQL_EXCEPTION;
 
+/**
+ * This class is the implementation of OrderProduct entity DAO
+ *
+ * @author dyvakyurii@gmail.com
+ */
 public class JdbcOrderProductDao extends AbstractDao<OrderProduct> implements OrderProductDao {
 
     private static final String SELECT_FROM_ORDER_PRODUCT_WHERE_ORDER_PRODUCT_ID="SELECT * FROM order_products " +
@@ -127,7 +132,7 @@ public class JdbcOrderProductDao extends AbstractDao<OrderProduct> implements Or
     }
 
     @Override
-    public int getProductPrice(OrderProduct orderProduct) {
+    public long getProductPrice(OrderProduct orderProduct) {
         int price=0;
         try (PreparedStatement query=connection
                 .prepareStatement(SELECT_PRODUCT_PRICE_FROM_ORDER_PRODUCT)) {

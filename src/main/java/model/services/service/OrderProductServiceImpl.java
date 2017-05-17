@@ -82,12 +82,12 @@ public class OrderProductServiceImpl implements OrderProductService {
         }
     }
 
-    public void update(OrderProduct orderProduct, int id) {
+    public void update(OrderProduct orderProduct) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             OrderProductDao orderProductDao=daoFactory.createOrderProductDao(connection);
             orderProduct.setProductSum((long)orderProduct.getQuantity() * orderProductDao.getProductPrice(orderProduct));
-            orderProductDao.update(orderProduct, id);
+            orderProductDao.update(orderProduct, orderProduct.getId());
             setOrderTotalPrice(orderProduct, connection, orderProductDao);
             connection.commitTransaction();
         }

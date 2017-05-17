@@ -40,11 +40,11 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public void update(Product product, int id) {
+    public void update(Product product) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
             ProductDao productDao=daoFactory.createProductDao(connection);
-            productDao.update(product, id);
+            productDao.update(product, product.getId());
             connection.commitTransaction();
         }
     }

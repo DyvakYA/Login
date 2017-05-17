@@ -13,7 +13,9 @@ import static model.constants.AttributesHolder.USER_SESSION_ATTRIBUTE;
 import static model.constants.UrlHolder.INDEX;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents logout for User command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class LogoutCommand implements Command {
 

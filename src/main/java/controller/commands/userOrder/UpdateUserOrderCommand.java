@@ -17,7 +17,9 @@ import static model.constants.UrlHolder.REDIRECTED;
 import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents updating UserOrder command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class UpdateUserOrderCommand implements Command {
 
@@ -31,10 +33,11 @@ public class UpdateUserOrderCommand implements Command {
             return REDIRECTED;
         }
         UserOrder userOrder = new UserOrder.Builder()
+                .setId(Integer.parseInt(USER_ORDER_ID_ATTRIBUTE))
                 .setUserId(Integer.parseInt(USER_ID_ATTRIBUTE))
                 .setOrderId(Integer.parseInt(ORDER_ID_ATTRIBUTE))
                 .build();
-        userOrderService.update(userOrder, userOrder.getOrderId());
+        userOrderService.update(userOrder);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_USER_ORDERS_SUCCESSFUL_MSG));
         request.setAttribute(USER_ORDERS_LIST_ATTRIBUTE, userOrderService.getAll());

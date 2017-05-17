@@ -10,7 +10,9 @@ import java.io.IOException;
 import static model.constants.UrlHolder.ORDER_JSP;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents get all UserOrder from base command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class UserGetAllUserOrdersCommand implements Command {
 

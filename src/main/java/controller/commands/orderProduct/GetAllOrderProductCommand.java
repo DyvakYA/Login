@@ -14,7 +14,9 @@ import static model.constants.AttributesHolder.ORDER_PRODUCTS_LIST_ATTRIBUTE;
 import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents get all OrderProduct from base command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class GetAllOrderProductCommand implements Command {
 

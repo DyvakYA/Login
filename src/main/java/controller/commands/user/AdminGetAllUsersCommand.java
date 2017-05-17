@@ -10,7 +10,9 @@ import java.io.IOException;
 import static model.constants.UrlHolder.USER_JSP;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents get all Users command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class AdminGetAllUsersCommand implements Command {
 

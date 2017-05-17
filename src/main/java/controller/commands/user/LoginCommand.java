@@ -20,7 +20,9 @@ import static model.constants.MsgHolder.LOGIN_USER_SUCCESSFUL_MSG;
 import static model.constants.UrlHolder.*;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents login for User command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class LoginCommand implements Command {
 

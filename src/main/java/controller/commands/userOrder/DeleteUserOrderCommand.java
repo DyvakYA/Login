@@ -16,7 +16,9 @@ import static model.constants.UrlHolder.REDIRECTED;
 import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
 
 /**
- * @author Dyvak Yurii dyvakyurii@gmail.com
+ * This class represents deleting UserOrder command.
+ *
+ * @author dyvakyurii@gmail.com
  */
 public class DeleteUserOrderCommand implements Command {
 
