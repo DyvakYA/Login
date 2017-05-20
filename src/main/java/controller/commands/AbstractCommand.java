@@ -23,7 +23,7 @@ import static model.constants.UrlHolder.*;
 /**
  * @author Dyvak Yurii dyvakyurii@gmail.com
  */
-public class CommandHelper {
+public abstract class AbstractCommand {
 
     private OrderProductServiceImpl orderProductService=OrderProductServiceImpl.getInstance();
     private UserOrderServiceImpl userOrderService=UserOrderServiceImpl.getInstance();
@@ -31,15 +31,7 @@ public class CommandHelper {
     private UserServiceImpl userServiceImpl=UserServiceImpl.getInstance();
     private UserService userService=UserServiceImpl.getInstance();
 
-    private static class Holder {
-        static final CommandHelper INSTANCE=new CommandHelper();
-    }
-
-    public static CommandHelper getInstance() {
-        return CommandHelper.Holder.INSTANCE;
-    }
-
-    /**
+     /**
      *  This role checker check the role of authorized user
      *  and depending on it return destination page
      */

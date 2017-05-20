@@ -1,7 +1,7 @@
 package controller.commands.product;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.product.FindProductsByNameCommandValidator;
 import model.entities.Product;
 import model.services.ProductService;
@@ -22,7 +22,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class FindProductsByNameCommand implements Command {
+public class FindProductsByNameCommand extends AbstractCommand implements Command {
 
     private ProductService productService=ProductServiceImpl.getInstance();
 
@@ -35,6 +35,6 @@ public class FindProductsByNameCommand implements Command {
         }
         List<Product> products=productService.getProductsByName(request.getParameter(PRODUCT_NAME_ATTRIBUTE));
         request.setAttribute(PRODUCTS_LIST_ATTRIBUTE, products);
-        return CommandHelper.getInstance().roleCheckerDestinationPageReturner(PRODUCT_JSP, request);
+        return roleCheckerDestinationPageReturner(PRODUCT_JSP, request);
     }
 }

@@ -1,7 +1,7 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.user.AuthenticateUserCommandValidator;
 import model.entities.User;
 import model.extras.Localization;
@@ -24,7 +24,7 @@ import static model.constants.UrlHolder.*;
  *
  * @author dyvakyurii@gmail.com
  */
-public class LoginCommand implements Command {
+public class LoginCommand extends AbstractCommand implements Command {
 
     private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
@@ -62,9 +62,9 @@ public class LoginCommand implements Command {
 
     private String getDestinationPageByUserRole(User user, HttpServletRequest request) {
         if (user.isAdmin()) {
-            return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
+            return roleCheckerSetAttributes(USER_JSP, request);
         }else if (!user.isAdmin()) {
-            return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
+            return roleCheckerSetAttributes(ORDER_JSP, request);
         }
         return null;
     }

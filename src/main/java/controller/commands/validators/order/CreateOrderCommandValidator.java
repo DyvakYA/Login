@@ -1,8 +1,7 @@
 package controller.commands.validators.order;
 
-import controller.commands.CommandHelper;
+import controller.commands.validators.AbstractValidator;
 import controller.commands.validators.CommandValidator;
-import controller.commands.validators.CommandValidatorHelper;
 import model.extras.Localization;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,17 +11,15 @@ import static model.constants.AttributesHolder.RESULT_ATTRIBUTE;
 import static model.constants.ErrorMsgHolder.ORDER_ERROR_MSG;
 import static model.constants.UrlHolder.ORDER_JSP;
 
-public class CreateOrderCommandValidator implements CommandValidator {
+public class CreateOrderCommandValidator extends AbstractValidator implements CommandValidator {
 
     @Override
     public boolean validate(HttpServletRequest request, HttpServletResponse response) {
 
         String message = Localization.getInstance().getLocalizedMessage(request, ORDER_ERROR_MSG);
 
-        return CommandValidatorHelper.getInstance().isNullValidate(new String[]{}, RESULT_ATTRIBUTE,
-                CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP,request), message, request, response)
+        return isNullValidate(new String[]{}, RESULT_ATTRIBUTE, roleCheckerSetAttributes(ORDER_JSP,request), message, request, response)
                 &&
-                CommandValidatorHelper.getInstance().isEmptyValidate(new String[]{}, RESULT_ATTRIBUTE,
-                CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP,request), message, request, response);
+                isEmptyValidate(new String[]{}, RESULT_ATTRIBUTE, roleCheckerSetAttributes(ORDER_JSP,request), message, request, response);
     }
 }

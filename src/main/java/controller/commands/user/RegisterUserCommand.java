@@ -1,5 +1,6 @@
 package controller.commands.user;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import controller.commands.validators.user.RegisterUserCommandValidator;
 import model.entities.User;
@@ -23,7 +24,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class RegisterUserCommand implements Command {
+public class RegisterUserCommand extends AbstractCommand implements Command {
 
     private UserService userService=UserServiceImpl.getInstance();
 

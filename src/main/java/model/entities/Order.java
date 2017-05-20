@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -84,8 +85,10 @@ public class Order implements Identified {
     /**
      * @return Real amount of price in human friendly format with fractional digits
      */
-    public double getRealTotalPrice() {
-        return (double)totalPrice / 100;
+    public String getRealTotalPrice() {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(4);
+        return nf.format(totalPrice / 100);
     }
 
     public void setTotalPrice(long totalPrice) {

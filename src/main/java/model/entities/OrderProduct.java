@@ -1,5 +1,7 @@
 package model.entities;
 
+import java.text.NumberFormat;
+
 /**
  * This class represents OrderProduct entity.
  *
@@ -82,8 +84,10 @@ public class OrderProduct implements Identified {
         return productSum;
     }
 
-    public double getRealProductSum() {
-        return (double)productSum / 100;
+    public String getRealProductSum() {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(4);
+        return nf.format(productSum / 100);
     }
 
     public void setProductSum(long productSum) {

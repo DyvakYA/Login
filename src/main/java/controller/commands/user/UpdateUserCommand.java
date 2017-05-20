@@ -1,7 +1,7 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.user.UpdateUserCommandValidator;
 import model.entities.User;
 import model.extras.Localization;
@@ -22,7 +22,7 @@ import static model.constants.UrlHolder.USER_JSP;
  *
  * @author dyvakyurii@gmail.com
  */
-public class UpdateUserCommand implements Command {
+public class UpdateUserCommand extends AbstractCommand implements Command {
 
     private UserService userService= UserServiceImpl.getInstance();
 
@@ -44,7 +44,7 @@ public class UpdateUserCommand implements Command {
         userService.update(user);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_USER_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
+        return roleCheckerSetAttributes(USER_JSP, request);
     }
 
 }

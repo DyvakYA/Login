@@ -1,5 +1,7 @@
 package model.entities;
 
+import java.text.NumberFormat;
+
 /**
  * This class represents Product entity.
  *
@@ -75,8 +77,10 @@ public class Product implements Identified {
         return price;
     }
 
-    public double getRealPrice() {
-        return (double) price / 100;
+    public String getRealPrice() {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(4);
+        return nf.format(price / 100);
     }
 
     public void setPrice(long price) {

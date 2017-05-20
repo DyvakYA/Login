@@ -1,5 +1,6 @@
 package controller.commands.user;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import model.entities.User;
 import org.apache.log4j.Logger;
@@ -17,7 +18,7 @@ import static model.constants.UrlHolder.INDEX;
  *
  * @author dyvakyurii@gmail.com
  */
-public class LogoutCommand implements Command {
+public class LogoutCommand extends AbstractCommand implements Command {
 
     private static final Logger logger = Logger.getLogger(LogoutCommand.class);
 

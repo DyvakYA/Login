@@ -1,7 +1,7 @@
 package controller.commands.order;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.order.CreateOrderCommandValidator;
 import model.entities.Order;
 import model.extras.Localization;
@@ -24,7 +24,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class CreateOrderCommand implements Command {
+public class CreateOrderCommand extends AbstractCommand implements Command {
 
     private OrderService orderService=OrderServiceImpl.getInstance();
 
@@ -42,6 +42,6 @@ public class CreateOrderCommand implements Command {
         orderService.create(order);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, CREATE_ORDER_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
+        return roleCheckerSetAttributes(ORDER_JSP, request);
     }
 }

@@ -32,7 +32,7 @@
                             <div class="col-xs-6">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input type="text" class="form-control" required="required" name="name">
+                                    <input type="text" class="form-control" required="required" name="user_name">
                                 </div>
                                 <span class="glyphicon form-control-feedback"></span>
                             </div>

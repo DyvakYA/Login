@@ -1,7 +1,7 @@
 package controller.commands.product;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +14,12 @@ import static model.constants.UrlHolder.PRODUCT_JSP;
  *
  * @author dyvakyurii@gmail.com
  */
-public class GetAllProductsCommand implements Command {
+public class GetAllProductsCommand extends AbstractCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request);
+        return roleCheckerSetAttributes(PRODUCT_JSP, request);
     }
 }

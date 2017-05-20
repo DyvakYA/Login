@@ -1,7 +1,7 @@
 package controller.commands.order;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
-import controller.commands.CommandHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +14,12 @@ import static model.constants.UrlHolder.ORDER_JSP;
  *
  * @author dyvakyurii@gmail.com
  */
-public class AdminGetAllOrdersCommand implements Command {
+public class AdminGetAllOrdersCommand extends AbstractCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
+        return roleCheckerSetAttributes(ORDER_JSP, request);
     }
 }

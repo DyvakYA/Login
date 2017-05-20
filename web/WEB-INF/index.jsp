@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%--<%@ page errorPage="/WEB-INF/error/errorPage.jsp" %>--%>
+<%@ page errorPage="/WEB-INF/error/errorPage.jsp" %>
 <jsp:include page="elem/head.jsp"/>
 <body>
 <c:if test="${sessionScope.user == null}">
@@ -26,7 +26,8 @@
     <h3 class="text-center"><fmt:message key="Welcome"/></h3>
     <h4 class="text-center"><fmt:message key="description"/></h4>
 </div>
-    <div style="min-height: 594px;">
+    <div style="min-height: 600px">
+
 
     </div>
 <jsp:include page="elem/footer.jsp"/>

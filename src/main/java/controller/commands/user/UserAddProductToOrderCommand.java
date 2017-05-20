@@ -1,7 +1,7 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.user.UserAddProductToOrderValidator;
 import model.entities.Order;
 import model.entities.OrderProduct;
@@ -27,7 +27,7 @@ import static model.constants.UrlHolder.*;
  *
  * @author dyvakyurii@gmail.com
  */
-public class UserAddProductToOrderCommand implements Command {
+public class UserAddProductToOrderCommand extends AbstractCommand implements Command {
 
     private OrderService orderService=OrderServiceImpl.getInstance();
     private OrderProductService orderProductService=OrderProductServiceImpl.getInstance();
@@ -52,7 +52,7 @@ public class UserAddProductToOrderCommand implements Command {
             request.setAttribute(RESULT_ATTRIBUTE,
                     Localization.getInstance().getLocalizedMessage
                             (request, USER_NOT_AUTHORIZED));
-            return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP,request);
+            return roleCheckerSetAttributes(PRODUCT_JSP,request);
         } else if (user.isBlocked()) {
             //set error message when user = null
             request.setAttribute(RESULT_ATTRIBUTE,
@@ -77,7 +77,7 @@ public class UserAddProductToOrderCommand implements Command {
                 OrderIdAttributeNotNull(request, productId, orderId, quantity);
             }
         }
-        return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP,request);
+        return roleCheckerSetAttributes(ORDER_JSP,request);
     }
 
     private void OrderIdAttributeNotNull(HttpServletRequest request, int productId, int orderId, int quantity) {

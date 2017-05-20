@@ -18,7 +18,7 @@ class ResultSetExtractor {
                 .setOrderId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
                 .setProductId(resultSet.getInt(PRODUCT_ID_ATTRIBUTE))
                 .setQuantity(resultSet.getInt(QUANTITY))
-                .setProductSum(resultSet.getInt(PRODUCT_SUM))
+                .setProductSum(resultSet.getLong(PRODUCT_SUM))
                 .build();
     }
 
@@ -27,7 +27,7 @@ class ResultSetExtractor {
                 .setId(resultSet.getInt(ORDER_ID_ATTRIBUTE))
                 .setOrderStatus(resultSet.getString(ORDER_STATUS_ATTRIBUTE))
                 .setDate(resultSet.getTimestamp(ORDER_DATE_ATTRIBUTE))
-                .setTotalPrice(resultSet.getInt(ORDER_SUM_ATTRIBUTE))
+                .setTotalPrice(resultSet.getLong(ORDER_SUM_ATTRIBUTE))
                 .build();
     }
 
@@ -36,7 +36,7 @@ class ResultSetExtractor {
                 .setId(resultSet.getInt(PRODUCT_ID_ATTRIBUTE))
                 .setName(resultSet.getString(PRODUCT_NAME_ATTRIBUTE))
                 .setDescription(resultSet.getString(PRODUCT_DESCRIPTION_ATTRIBUTE))
-                .setPrice(resultSet.getInt(PRODUCT_PRICE_ATTRIBUTE))
+                .setPrice(resultSet.getLong(PRODUCT_PRICE_ATTRIBUTE))
                 .build();
     }
 

@@ -1,7 +1,7 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import model.entities.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import static model.constants.UrlHolder.*;
  *
  * @author dyvakyurii@gmail.com
  */
-public class ChangeLocaleCommand implements Command {
+public class ChangeLocaleCommand extends AbstractCommand implements Command {
 
     private static final String RU_COUNTRY="RU";
     private static final String RU_LANGUAGE="ru";
@@ -60,11 +60,11 @@ public class ChangeLocaleCommand implements Command {
 
     private String getDestinationPageByUserRole(User user, HttpServletRequest request) {
         if (user == null){
-            return CommandHelper.getInstance().roleCheckerSetAttributes(PRODUCT_JSP, request);
+            return roleCheckerSetAttributes(PRODUCT_JSP, request);
         }else if (user.isAdmin()) {
-            return CommandHelper.getInstance().roleCheckerSetAttributes(USER_JSP, request);
+            return roleCheckerSetAttributes(USER_JSP, request);
         }else if (!user.isAdmin()) {
-            return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
+            return roleCheckerSetAttributes(ORDER_JSP, request);
         }
         return null;
     }

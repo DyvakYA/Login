@@ -1,5 +1,6 @@
 package controller.commands.userOrder;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import controller.commands.validators.userOrder.UpdateUserOrderCommandValidator;
 import model.entities.UserOrder;
@@ -21,7 +22,7 @@ import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
  *
  * @author dyvakyurii@gmail.com
  */
-public class UpdateUserOrderCommand implements Command {
+public class UpdateUserOrderCommand extends AbstractCommand implements Command {
 
     private UserOrderService userOrderService = UserOrderServiceImpl.getInstance();
 

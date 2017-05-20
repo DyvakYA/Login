@@ -1,7 +1,7 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.user.CreateUserCommandValidator;
 import model.entities.User;
 import model.extras.Localization;
@@ -22,7 +22,7 @@ import static model.constants.UrlHolder.USER;
  *
  * @author dyvakyurii@gmail.com
  */
-public class CreateUserCommand implements Command {
+public class CreateUserCommand extends AbstractCommand implements Command {
 
     private UserService userService= UserServiceImpl.getInstance();
 
@@ -43,6 +43,6 @@ public class CreateUserCommand implements Command {
         userService.create(user);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, CREATE_USER_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerSetAttributes(USER, request);
+        return roleCheckerSetAttributes(USER, request);
     }
 }

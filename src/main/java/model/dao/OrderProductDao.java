@@ -20,8 +20,7 @@ public interface OrderProductDao extends GenericDao<OrderProduct> {
     /**
      * Find Order by orderId and productId in order.
      * @return  OrderProduct with correct parameters orderId and productId
-     *
-     * @param orderId with this Order need to find OrderProduct.
+     *@param orderId with this Order need to find OrderProduct.
      * @param productId with this Product need to find OrderProduct.
      */
     Optional<OrderProduct> findOrderProductByOrderIdAndProductId(int orderId, int productId);

@@ -72,6 +72,7 @@ abstract class AbstractDao<E> implements GenericDao<E> {
         try (PreparedStatement query=connection.prepareStatement(statement)) {
             query.setInt(1, id);
             ResultSet resultSet=query.executeQuery();
+            System.out.println(query);
             if (resultSet.next()) {
                 order=Optional.of(resultSetExtractor.getOrderFromResultSet(resultSet));
             }

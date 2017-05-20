@@ -132,8 +132,20 @@ public class OrderProductServiceImpl implements OrderProductService {
     public void deleteProductFromOrder(int orderId, int productId) {
         try(DaoConnection connection = daoFactory.getConnection()) {
             connection.beginTransaction();
+            OrderProduct orderProduct=null;
             OrderProductDao orderProductDao=daoFactory.createOrderProductDao(connection);
+            Optional<OrderProduct> optionalOrderProduct = orderProductDao.findOrderProductByOrderIdAndProductId(orderId, productId);
+            if (optionalOrderProduct.isPresent()) {
+                orderProduct=optionalOrderProduct.get();
+            }
+            Optional<Order> optionalOrder = orderProductDao.findOrderByOrderProductId(orderProduct.getId());
             orderProductDao.deleteProductFromOrder(orderId, productId);
+            if (optionalOrder.isPresent()) {
+                Order order = optionalOrder.get();
+                order.setTotalPrice(orderProductDao.getOrderTotalPrice(order));
+                OrderDao orderDao=daoFactory.createOrderDao(connection);
+                orderDao.update(order, order.getId());
+            }
             connection.commitTransaction();
         }
     }

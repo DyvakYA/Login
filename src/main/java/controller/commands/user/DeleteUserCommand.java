@@ -1,7 +1,7 @@
 package controller.commands.user;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.user.DeleteUserCommandValidator;
 import model.extras.Localization;
 import model.services.UserService;
@@ -21,7 +21,7 @@ import static model.constants.UrlHolder.USER;
  *
  * @author dyvakyurii@gmail.com
  */
-public class DeleteUserCommand implements Command {
+public class DeleteUserCommand extends AbstractCommand implements Command {
 
     private UserService userService= UserServiceImpl.getInstance();
 
@@ -35,6 +35,6 @@ public class DeleteUserCommand implements Command {
         userService.delete(Integer.valueOf(request.getParameter(USER_ID_ATTRIBUTE)));
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
             .getLocalizedMessage(request, DELETE_USER_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerSetAttributes(USER, request);
+        return roleCheckerSetAttributes(USER, request);
     }
 }

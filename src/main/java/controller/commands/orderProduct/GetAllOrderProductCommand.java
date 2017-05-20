@@ -1,5 +1,6 @@
 package controller.commands.orderProduct;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import model.entities.OrderProduct;
 import model.services.OrderProductService;
@@ -18,7 +19,7 @@ import static model.constants.UrlHolder.ORDER_PRODUCT_DESTINATION_PAGE;
  *
  * @author dyvakyurii@gmail.com
  */
-public class GetAllOrderProductCommand implements Command {
+public class GetAllOrderProductCommand extends AbstractCommand implements Command {
 
     private OrderProductService orderProductsService=OrderProductServiceImpl.getInstance();
 

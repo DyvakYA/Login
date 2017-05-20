@@ -1,7 +1,7 @@
 package controller.commands.product;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.product.UpdateProductCommandValidator;
 import model.entities.Product;
 import model.extras.Localization;
@@ -22,7 +22,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class UpdateProductCommand implements Command {
+public class UpdateProductCommand extends AbstractCommand implements Command {
 
     private ProductService productService=ProductServiceImpl.getInstance();
 
@@ -42,6 +42,6 @@ public class UpdateProductCommand implements Command {
         productService.update(product);
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, UPDATE_PRODUCT_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerDestinationPageReturner(PRODUCT_JSP, request);
+        return roleCheckerDestinationPageReturner(PRODUCT_JSP, request);
     }
 }

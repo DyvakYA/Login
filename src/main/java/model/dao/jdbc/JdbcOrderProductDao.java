@@ -96,14 +96,14 @@ public class JdbcOrderProductDao extends AbstractDao<OrderProduct> implements Or
 
     @Override
     public Optional<OrderProduct> findOrderProductByOrderIdAndProductId(int orderId, int productId) {
-        Optional<OrderProduct> orderProduct=Optional.empty();
+        Optional<OrderProduct> orderProduct = Optional.empty();
         try (PreparedStatement query=connection
                 .prepareStatement(SELECT_FROM_ORDER_PRODUCT_WHERE_ORDER_ID_AND_PRODUCT_ID)) {
             query.setInt(1, orderId);
             query.setInt(2, productId);
             ResultSet resultSet=query.executeQuery();
             if (resultSet.next()) {
-                orderProduct=Optional.of(resultSetExtractor.getOrderProductFromResultSet(resultSet));
+                orderProduct=Optional.ofNullable(resultSetExtractor.getOrderProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
@@ -149,13 +149,13 @@ public class JdbcOrderProductDao extends AbstractDao<OrderProduct> implements Or
 
     @Override
     public long getOrderTotalPrice(Order order) {
-        int price=0;
+        long price=0;
         try (PreparedStatement query=connection
                 .prepareStatement(SELECT_ORDER_TOTAL_PRICE)) {
             query.setInt(1, order.getId());
             ResultSet resultSet=query.executeQuery();
             while (resultSet.next()) {
-                price=resultSet.getInt("Sum(product_sum)");
+                price=resultSet.getLong("Sum(product_sum)");
             }
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);

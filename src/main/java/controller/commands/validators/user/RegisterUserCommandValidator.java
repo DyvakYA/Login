@@ -1,5 +1,6 @@
 package controller.commands.validators.user;
 
+import controller.commands.validators.AbstractValidator;
 import controller.commands.validators.CommandValidator;
 import controller.servlet.exception.ControllerException;
 import model.extras.Localization;
@@ -14,7 +15,7 @@ import static model.constants.ErrorMsgHolder.*;
 import static model.constants.UrlHolder.INDEX;
 
 
-public class RegisterUserCommandValidator implements CommandValidator {
+public class RegisterUserCommandValidator extends AbstractValidator implements CommandValidator {
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String AUTHENTICATE_PATTERN = "^[a-z0-9_-]{6,18}$";

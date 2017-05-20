@@ -1,5 +1,6 @@
 package controller.commands.orderProduct;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import controller.commands.validators.orderProduct.UpdateOrderProductCommandValidator;
 import model.entities.OrderProduct;
@@ -21,7 +22,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class UpdateOrderProductCommand implements Command {
+public class UpdateOrderProductCommand extends AbstractCommand implements Command {
 
     private OrderProductService orderProductsService=OrderProductServiceImpl.getInstance();
 

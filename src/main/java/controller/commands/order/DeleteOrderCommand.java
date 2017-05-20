@@ -1,7 +1,7 @@
 package controller.commands.order;
 
 import controller.commands.Command;
-import controller.commands.CommandHelper;
+import controller.commands.AbstractCommand;
 import controller.commands.validators.order.DeleteOrderCommandValidator;
 import model.extras.Localization;
 import model.services.OrderService;
@@ -22,7 +22,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class DeleteOrderCommand implements Command {
+public class DeleteOrderCommand extends AbstractCommand implements Command {
 
     private OrderService orderService=OrderServiceImpl.getInstance();
 
@@ -36,6 +36,6 @@ public class DeleteOrderCommand implements Command {
         orderService.delete(Integer.parseInt(request.getParameter(ORDER_ID_ATTRIBUTE)));
         request.setAttribute(RESULT_ATTRIBUTE, Localization.getInstance()
                 .getLocalizedMessage(request, DELETE_ORDER_SUCCESSFUL_MSG));
-        return CommandHelper.getInstance().roleCheckerSetAttributes(ORDER_JSP, request);
+        return roleCheckerSetAttributes(ORDER_JSP, request);
     }
 }

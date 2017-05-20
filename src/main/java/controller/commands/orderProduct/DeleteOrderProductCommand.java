@@ -1,5 +1,6 @@
 package controller.commands.orderProduct;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import controller.commands.validators.orderProduct.DeleteOrderProductCommandValidator;
 import model.extras.Localization;
@@ -20,7 +21,7 @@ import static model.constants.UrlHolder.REDIRECTED;
  *
  * @author dyvakyurii@gmail.com
  */
-public class DeleteOrderProductCommand implements Command {
+public class DeleteOrderProductCommand extends AbstractCommand implements Command {
 
     private OrderProductService orderProductsService = OrderProductServiceImpl.getInstance();
 

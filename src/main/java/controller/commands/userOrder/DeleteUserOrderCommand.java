@@ -1,5 +1,6 @@
 package controller.commands.userOrder;
 
+import controller.commands.AbstractCommand;
 import controller.commands.Command;
 import controller.commands.validators.product.DeleteProductCommandValidator;
 import model.extras.Localization;
@@ -20,7 +21,7 @@ import static model.constants.UrlHolder.USER_ORDER_DESTINATION_PAGE;
  *
  * @author dyvakyurii@gmail.com
  */
-public class DeleteUserOrderCommand implements Command {
+public class DeleteUserOrderCommand extends AbstractCommand implements Command {
 
     private UserOrderService userOrderService = UserOrderServiceImpl.getInstance();
 
